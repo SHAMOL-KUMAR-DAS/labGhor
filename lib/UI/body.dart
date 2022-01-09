@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/UI/Appointments/appointment_body.dart';
@@ -19,7 +18,6 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
 
   int _currentIndex = 0;
-  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   final _page1 = GlobalKey<NavigatorState>();
   final _page2 = GlobalKey<NavigatorState>();
@@ -90,7 +88,7 @@ class _BodyState extends State<Body> {
           items: [
             //Home
             SalomonBottomBarItem(
-              icon: Icon(Icons.home),
+              icon: ImageIcon(AssetImage('assets/images/medicine.png')),
               title: Text("Medicine",style: bodyStyle,),
               selectedColor: colors,
             ),
@@ -104,7 +102,7 @@ class _BodyState extends State<Body> {
 
             //Cash
             SalomonBottomBarItem(
-              icon: Icon(Icons.money),
+              icon: Icon(Icons.local_hospital_outlined),
               title: Text("Hospitals",style: bodyStyle,),
               selectedColor: colors,
             ),
@@ -117,7 +115,7 @@ class _BodyState extends State<Body> {
             ),
 
             SalomonBottomBarItem(
-              icon: Icon(Icons.person_outline),
+              icon: Icon(Icons.more_outlined),
               title: Text("More",style: bodyStyle,),
               selectedColor: colors,
             ),
