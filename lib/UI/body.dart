@@ -1,6 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
+import 'package:online_doctor_booking/UI/Appointments/appointment_body.dart';
+import 'package:online_doctor_booking/UI/Doctors/doctors_body.dart';
+import 'package:online_doctor_booking/UI/Medicine/medicine_body.dart';
+import 'package:online_doctor_booking/UI/More/more_body.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+
+import 'Hospitals/hospital_body.dart';
 
 
 class Body extends StatefulWidget {
@@ -18,6 +25,7 @@ class _BodyState extends State<Body> {
   final _page2 = GlobalKey<NavigatorState>();
   final _page3 = GlobalKey<NavigatorState>();
   final _page4 = GlobalKey<NavigatorState>();
+  final _page5 = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +38,7 @@ class _BodyState extends State<Body> {
             key: _page1,
             onGenerateRoute: (route) => MaterialPageRoute(
               settings: route,
-              builder: (context) => HomePageScreen(),
+              builder: (context) => MedicineBody(),
             ),
           ),
 
@@ -38,7 +46,7 @@ class _BodyState extends State<Body> {
             key: _page2,
             onGenerateRoute: (route) => MaterialPageRoute(
               settings: route,
-              builder: (context) => DashBoardScreen(),
+              builder: (context) => DoctorsBody(),
             ),
           ),
 
@@ -46,7 +54,7 @@ class _BodyState extends State<Body> {
             key: _page3,
             onGenerateRoute: (route) => MaterialPageRoute(
               settings: route,
-              builder: (context) => CashScreen(),
+              builder: (context) => HospitalBody(),
             ),
           ),
 
@@ -54,29 +62,67 @@ class _BodyState extends State<Body> {
             key: _page4,
             onGenerateRoute: (route) => MaterialPageRoute(
               settings: route,
-              builder: (context) => ProfileScreen(),
+              builder: (context) => AppontmentBody(),
             ),
           ),
+
+          Navigator(
+            key: _page5,
+            onGenerateRoute: (route) => MaterialPageRoute(
+              settings: route,
+              builder: (context) => MoreBody(),
+            ),
+          ),
+
+
         ],
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: backColors,
-        height: MediaQuery.of(context).size.height * 0.075,
-        color: colors,
-        key: _bottomNavigationKey,
-        items: <Widget>[
-          Tab(
-            icon: Icon(Icons.account_circle_outlined,color: Colors.white,),
-          ),
-          Tab(
-            icon: Icon(Icons.history,color: Colors.white,),
-          ),
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        clipBehavior: Clip.antiAlias,
+        child: SalomonBottomBar(
+          currentIndex: _currentIndex,
+          onTap: (int index){
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: [
+            //Home
+            SalomonBottomBarItem(
+              icon: Icon(Icons.home),
+              title: Text("Medicine",style: bodyStyle,),
+              selectedColor: colors,
+            ),
+
+            //DashBoard
+            SalomonBottomBarItem(
+              icon: Icon(Icons.dashboard),
+              title: Text("Doctors",style: bodyStyle,),
+              selectedColor: colors,
+            ),
+
+            //Cash
+            SalomonBottomBarItem(
+              icon: Icon(Icons.money),
+              title: Text("Hospitals",style: bodyStyle,),
+              selectedColor: colors,
+            ),
+
+            //Profile
+            SalomonBottomBarItem(
+              icon: Icon(Icons.person_outline),
+              title: Text("Appointments",style: bodyStyle,),
+              selectedColor: colors,
+            ),
+
+            SalomonBottomBarItem(
+              icon: Icon(Icons.person_outline),
+              title: Text("More",style: bodyStyle,),
+              selectedColor: colors,
+            ),
+          ],
+        ),
       ),
     );
   }
