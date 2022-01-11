@@ -129,6 +129,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
+import 'package:online_doctor_booking/MODEL/blogs.dart';
 import 'package:online_doctor_booking/MODEL/carousel.dart';
 
 import 'drawer_page.dart';
@@ -162,7 +163,7 @@ class Body extends StatelessWidget {
             child: Icon(Icons.shopping_cart_outlined,color: colors,),
           )
         ],
-        elevation: 0,
+        elevation: 2,
       ),
 
       drawer: DrawerPage(),
@@ -171,41 +172,41 @@ class Body extends StatelessWidget {
         child: Column(
           children: [
             //Search
-            Container(
-              color: backColors,
-              height: size.height * 0.058,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15, top: 0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    fillColor: Color(0xFFdbdbdb),
-                    filled: true,
-                    hintText:
-                    'Search for shops & restaurants',
-                    prefixIcon: Icon(Icons.person_search),
-                    // border: new OutlineInputBorder(
-                    //     borderSide: new BorderSide(color: Colors.teal),
-                    //     borderRadius: BorderRadius.circular(20)),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(color: Color(0xFFdbdbdb), width: 2),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(
-                        color: Color(0xFFdbdbdb),
-                        width: 2.0,
-                      ),
-                    ),
-                    contentPadding: EdgeInsets.only(top: 10, left: 20,bottom: 10),
-                  ),
-                ),
-              ),
-            ),
+            // Container(
+            //   color: backColors,
+            //   height: size.height * 0.058,
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(left: 15, right: 15, top: 0),
+            //     child: TextFormField(
+            //       decoration: InputDecoration(
+            //         fillColor: Color(0xFFdbdbdb),
+            //         filled: true,
+            //         hintText:
+            //         'Search for shops & restaurants',
+            //         prefixIcon: Icon(Icons.person_search),
+            //         // border: new OutlineInputBorder(
+            //         //     borderSide: new BorderSide(color: Colors.teal),
+            //         //     borderRadius: BorderRadius.circular(20)),
+            //         focusedBorder: OutlineInputBorder(
+            //           borderRadius: BorderRadius.circular(15),
+            //           borderSide: BorderSide(color: Color(0xFFdbdbdb), width: 2),
+            //         ),
+            //         enabledBorder: OutlineInputBorder(
+            //           borderRadius: BorderRadius.circular(15),
+            //           borderSide: BorderSide(
+            //             color: Color(0xFFdbdbdb),
+            //             width: 2.0,
+            //           ),
+            //         ),
+            //         contentPadding: EdgeInsets.only(top: 10, left: 20,bottom: 10),
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
             //Carousel Slider
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 20),
               child: CarouselSlider.builder(
                 itemCount: Carousel().lists.length,
                 options: CarouselOptions(
@@ -251,7 +252,7 @@ class Body extends StatelessWidget {
                         child: Image(image: AssetImage('assets/images/diagnosis.png'),height: 150,),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 20,right: 45, bottom: 15),
+                        padding: const EdgeInsets.only(top: 20,right: 45, bottom: 5),
                         child: Text('Diagnosis',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
                       ),
                       Padding(
@@ -281,11 +282,11 @@ class Body extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 0,right: 85, bottom: 5),
-                            child: Text('Shops',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+                            child: Text('Shops',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
-                            child: Text('All Kind of shops Center',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
+                            child: Text('All Kind of shops Center',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
                           )
                         ],
                       ),
@@ -303,11 +304,11 @@ class Body extends StatelessWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 120,top: 5),
-                            child: Image(image: AssetImage('assets/images/remainder.png'),height: 25,),
+                            child: Image(image: AssetImage('assets/images/remainder.png'),height: 35,),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10, bottom: 5,top: 0),
-                            child: Text('Medicine Remainder',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                            padding: const EdgeInsets.only(left: 10,right: 10, bottom: 0,top: 5),
+                            child: Text('Book a Doctor',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                           ),
                         ],
                       ),
@@ -315,6 +316,41 @@ class Body extends StatelessWidget {
                   ],
                 )
               ],
+            ),
+
+            //Blogs
+            SizedBox(
+              width: double.infinity,
+              height: size.height * 0.22,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                  itemCount: Blogs().lists.length,
+                  itemBuilder: (BuildContext context, int index){
+                    var data = Blogs().lists;
+                    return Container(
+                        height: MediaQuery.of(context).size.height * 0.22,
+                        width: size.width * 0.35,
+
+                        padding: EdgeInsets.only(left: 15,top: 25),
+                        child: Card(
+                            shadowColor: colors,
+                            //color: Color(0xFF999999),
+                            elevation: 5,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image(image: AssetImage(data[index].image),height: 80,),
+
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 15),
+                                  child: Text(data[index].title),
+                                )
+                              ],
+                            ))
+                      //Text(snapshot.data[index].name != null ? snapshot.data[index].name : '')),
+                    );
+                  }),
             )
           ],
         ),
