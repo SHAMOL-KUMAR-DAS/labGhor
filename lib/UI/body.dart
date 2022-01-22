@@ -125,13 +125,15 @@
 //     );
 //   }
 // }
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/blogs.dart';
 import 'package:online_doctor_booking/MODEL/carousel.dart';
-
+import 'package:online_doctor_booking/UI/Diagnosis/diagnosis_category.dart';
+import 'package:online_doctor_booking/UI/Shops/shop_category.dart';
+import 'Shops/shop_sub_category.dart';
+import 'diagnosis/sub_category.dart';
 import 'drawer_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -169,191 +171,171 @@ class Body extends StatelessWidget {
       drawer: DrawerPage(),
 
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            //Search
-            // Container(
-            //   color: backColors,
-            //   height: size.height * 0.058,
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(left: 15, right: 15, top: 0),
-            //     child: TextFormField(
-            //       decoration: InputDecoration(
-            //         fillColor: Color(0xFFdbdbdb),
-            //         filled: true,
-            //         hintText:
-            //         'Search for shops & restaurants',
-            //         prefixIcon: Icon(Icons.person_search),
-            //         // border: new OutlineInputBorder(
-            //         //     borderSide: new BorderSide(color: Colors.teal),
-            //         //     borderRadius: BorderRadius.circular(20)),
-            //         focusedBorder: OutlineInputBorder(
-            //           borderRadius: BorderRadius.circular(15),
-            //           borderSide: BorderSide(color: Color(0xFFdbdbdb), width: 2),
-            //         ),
-            //         enabledBorder: OutlineInputBorder(
-            //           borderRadius: BorderRadius.circular(15),
-            //           borderSide: BorderSide(
-            //             color: Color(0xFFdbdbdb),
-            //             width: 2.0,
-            //           ),
-            //         ),
-            //         contentPadding: EdgeInsets.only(top: 10, left: 20,bottom: 10),
-            //       ),
-            //     ),
-            //   ),
-            // ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
 
-            //Carousel Slider
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: CarouselSlider.builder(
-                itemCount: Carousel().lists.length,
-                options: CarouselOptions(
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    autoPlay: true,
-                    autoPlayInterval: Duration(milliseconds: 2000),
-                    viewportFraction: 0.65
-                  //reverse: true
-                ),
-                itemBuilder: (context, index, realIndex) {
-                  var data = Carousel().lists;
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 5),
-                    color: Color(0xFFf3f6fb),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image(
-                        image: AssetImage(data[index].image),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-
-            //Diagnosis + Shops + Medicine Remainder
-            Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 15, right: 8,top: 15),
-
-                  height: size.height * 0.35,
-                  width: size.width * 0.43,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFfed271),
-                    borderRadius: BorderRadius.circular(8)
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: CarouselSlider.builder(
+                  itemCount: Carousel().lists.length,
+                  options: CarouselOptions(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      autoPlay: true,
+                      autoPlayInterval: Duration(milliseconds: 2000),
+                      viewportFraction: 0.65
+                    //reverse: true
                   ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 40),
-                        child: Image(image: AssetImage('assets/images/diagnosis.png'),height: 150,),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20,right: 45, bottom: 5),
-                        child: Text('Diagnosis',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text('All Kind of Diagonis Center',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
-                      )
-                    ],
-                  ),
-                ),
-
-                Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 15, right: 15,top: 15),
-
-                      height: size.height * 0.23,
-                      width: size.width * 0.43,
-                      decoration: BoxDecoration(
-                          color: Color(0xFF84c0ff),
-                          borderRadius: BorderRadius.circular(8)
-                      ),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 40,top: 5),
-                            child: Image(image: AssetImage('assets/images/shop.png'),height: 100,),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0,right: 85, bottom: 5),
-                            child: Text('Shops',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Text('All Kind of shops Center',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 15, right: 15,top: 15),
-
-                      height: size.height * 0.1,
-                      width: size.width * 0.43,
-                      decoration: BoxDecoration(
-                          color: Color(0xFFef9fc4),
-                          borderRadius: BorderRadius.circular(8)
-                      ),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 120,top: 5),
-                            child: Image(image: AssetImage('assets/images/remainder.png'),height: 35,),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10,right: 10, bottom: 0,top: 5),
-                            child: Text('Book a Doctor',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-
-            //Blogs
-            SizedBox(
-              width: double.infinity,
-              height: size.height * 0.22,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                  itemCount: Blogs().lists.length,
-                  itemBuilder: (BuildContext context, int index){
-                    var data = Blogs().lists;
+                  itemBuilder: (context, index, realIndex) {
+                    var data = Carousel().lists;
                     return Container(
-                        height: MediaQuery.of(context).size.height * 0.22,
-                        width: size.width * 0.35,
-
-                        padding: EdgeInsets.only(left: 15,top: 25),
-                        child: Card(
-                            shadowColor: colors,
-                            //color: Color(0xFF999999),
-                            elevation: 5,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image(image: AssetImage(data[index].image),height: 80,),
-
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 15),
-                                  child: Text(data[index].title),
-                                )
-                              ],
-                            ))
-                      //Text(snapshot.data[index].name != null ? snapshot.data[index].name : '')),
+                      margin: EdgeInsets.symmetric(horizontal: 5),
+                      color: Color(0xFFf3f6fb),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image(
+                          image: AssetImage(data[index].image),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     );
-                  }),
-            )
-          ],
-        ),
+                  },
+                ),
+              ),
+
+              //Diagnosis + Shops + Medicine Remainder
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => DiagonisCategory()));
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(left: 15, right: 0,top: 15),
+                      height: size.height * 0.35,
+                      width: size.width * 0.43,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFfed271),
+                        borderRadius: BorderRadius.circular(8)
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 40),
+                              child: Image(image: AssetImage('assets/images/diagnosis.png'),height: 150,),
+                            ),
+                            Text('Diagnosis',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+                            Text('All Kind of Diagonis Center',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ShopCategory()));
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(left: 0, right: 0,top: 15),
+
+                          height: size.height * 0.23,
+                          width: size.width * 0.43,
+                          decoration: BoxDecoration(
+                              color: Color(0xFF84c0ff),
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 50,top: 5),
+                                  child: Image(image: AssetImage('assets/images/shop.png'),height: 80,),
+                                ),
+                                Text('Shops',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                                Text('All Kind of shops Center',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 15, right: 15,top: 15),
+
+                        height: size.height * 0.1,
+                        width: size.width * 0.43,
+                        decoration: BoxDecoration(
+                            color: Color(0xFFef9fc4),
+                            borderRadius: BorderRadius.circular(8)
+                        ),
+                        child: Column(
+
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 120,top: 5),
+                              child: Image(image: AssetImage('assets/images/remainder.png'),height: 35,),
+                            ),
+                            Text('Book a Doctor',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+
+              //Blogs
+              Padding(
+                padding: const EdgeInsets.only(top: 15,left: 20),
+                child: Text('Favourites',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700),),
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: size.height * 0.2,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                    itemCount: Blogs().lists.length,
+                    itemBuilder: (BuildContext context, int index){
+                      var data = Blogs().lists;
+                      return Container(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          width: size.width * 0.8,
+
+                          padding: EdgeInsets.only(left: 15,top: 5),
+                          child: Card(
+                              color: index % 6 == 0 ? colorOne : index % 5 == 0 ? colorFive : index % 4 == 0 ? colorFour :
+                              index % 3 == 0 ? colorSix : index % 2 == 0 ? colorTwo : index % 1 == 0 ? colorThree : backColors,
+                              shadowColor: colors,
+                              //color: Color(0xFF999999),
+                              elevation: 5,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image(image: AssetImage(data[index].image),height: 80,),
+
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 15),
+                                    child: Text(data[index].title),
+                                  )
+                                ],
+                              ))
+                        //Text(snapshot.data[index].name != null ? snapshot.data[index].name : '')),
+                      );
+                    }),
+              )
+            ],
+          ),
       ),
     );
   }
