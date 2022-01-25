@@ -24,7 +24,7 @@ class DiagonisCategory extends StatelessWidget {
     ),
 
       body: Container(
-        padding: EdgeInsets.only(top: 10, bottom: 10),
+        padding: EdgeInsets.only(top: 10, bottom: 10,left: 0,right: 0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +32,7 @@ class DiagonisCategory extends StatelessWidget {
 
               Padding(
                 padding: EdgeInsets.only(top: 15, left: 15, right: 15,bottom: 15),
-                child: Text("Offer", //theme.textTheme.headline3
+                child: Text("Offer", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                   //kTitleStyle
                 ),
               ),
@@ -98,46 +98,49 @@ class DiagonisCategory extends StatelessWidget {
                 ),
               ),
               //SizedBox(height: 25.0),
-              GridView.builder(
-                  itemCount: Category().lists.length,
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: 110,
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 0,
-                      crossAxisCount: 3),
-                  itemBuilder: (BuildContext context, int index){
-                    var data = Category().lists;
-                    return GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => DiaggnosisSubProducts(data[index].item_name)));
-                      },
-                      child: Card(
-                        // color: index % 6 == 0 ? colorOne : index % 5 == 0 ? colorTwo : index % 4 == 0 ? colorThree :
-                        // index % 3 == 0 ? colorFour : index % 2 == 0 ? colorFive : index % 1 == 0 ? colorSix : backColors,
-                        shadowColor: colors,
-                        elevation: 4,
-                        //margin: EdgeInsets.only(top: 5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 10),
-                              child: Image(
-                                image: AssetImage(data[index].item_image),
-                                height: 50,
+              Container(
+                margin: EdgeInsets.only(left: 10, right: 10),
+                child: GridView.builder(
+                    itemCount: Category().lists.length,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        mainAxisExtent: 110,
+                        mainAxisSpacing: 0,
+                        crossAxisSpacing: 0,
+                        crossAxisCount: 3),
+                    itemBuilder: (BuildContext context, int index){
+                      var data = Category().lists;
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => DiaggnosisSubProducts(data[index].item_name)));
+                        },
+                        child: Card(
+                          // color: index % 6 == 0 ? colorOne : index % 5 == 0 ? colorTwo : index % 4 == 0 ? colorThree :
+                          // index % 3 == 0 ? colorFour : index % 2 == 0 ? colorFive : index % 1 == 0 ? colorSix : backColors,
+                          shadowColor: colors,
+                          elevation: 4,
+                          //margin: EdgeInsets.only(top: 5),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                                child: Image(
+                                  image: AssetImage(data[index].item_image),
+                                  height: 50,
+                                ),
                               ),
-                            ),
-                            Flexible(child: Text(data[index].item_name, style: TextStyle(fontSize: 12,color: Colors.black),))
-                          ],
+                              Flexible(child: Text(data[index].item_name, style: TextStyle(fontSize: 12,color: Colors.black),))
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  })
+                      );
+                    }),
+              )
 
 
             ],

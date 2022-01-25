@@ -210,6 +210,16 @@ class Body extends StatelessWidget {
                       width: size.width * 0.43,
                       decoration: BoxDecoration(
                         color: Color(0xFF9ae471),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black26,
+                              blurRadius: 4.0,
+                              spreadRadius: 2.0,
+                              //offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                              offset: Offset(0.0, 3.0)
+                            )
+                          ],
+
                         borderRadius: BorderRadius.circular(8)
                       ),
                       child: Padding(
@@ -243,6 +253,15 @@ class Body extends StatelessWidget {
                           width: size.width * 0.43,
                           decoration: BoxDecoration(
                               color: Color(0xFF98e4fe),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 4.0,
+                                    spreadRadius: 2.0,
+                                    //offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                                    offset: Offset(2.0, 2.0)
+                                )
+                              ],
                               borderRadius: BorderRadius.circular(8)
                           ),
                           child: Padding(
@@ -269,6 +288,15 @@ class Body extends StatelessWidget {
                         width: size.width * 0.43,
                         decoration: BoxDecoration(
                             color: Color(0xFFef9fc4),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 4.0,
+                                  spreadRadius: 2.0,
+                                  //offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                                  offset: Offset(2.0, 2.0)
+                              )
+                            ],
                             borderRadius: BorderRadius.circular(8)
                         ),
                         child: Column(
