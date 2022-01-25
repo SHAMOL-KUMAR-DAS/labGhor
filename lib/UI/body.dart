@@ -151,14 +151,7 @@ class Body extends StatelessWidget {
           // },
         //),
         iconTheme: IconThemeData(color: colors),
-        title: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Current Location',style: TextStyle(color: colors,fontWeight: FontWeight.w600),),
-            Text('Location',style: TextStyle(color: Colors.black54,fontSize: 16),)
-          ],
-        ),
+        title: Text('LabGhor',style: TextStyle(color: colors,fontWeight: FontWeight.w600),),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
@@ -216,7 +209,7 @@ class Body extends StatelessWidget {
                       height: size.height * 0.35,
                       width: size.width * 0.43,
                       decoration: BoxDecoration(
-                        color: Color(0xFFfed271),
+                        color: Color(0xFF9ae471),
                         borderRadius: BorderRadius.circular(8)
                       ),
                       child: Padding(
@@ -227,7 +220,7 @@ class Body extends StatelessWidget {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(left: 40),
-                              child: Image(image: AssetImage('assets/images/diagnosis.png'),height: 150,),
+                              child: Image(image: AssetImage('assets/images/diagnosis.png'),height: size.height * 0.23,),
                             ),
                             Text('Diagnosis',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
                             Text('All Kind of Diagonis Center',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),)
@@ -249,7 +242,7 @@ class Body extends StatelessWidget {
                           height: size.height * 0.23,
                           width: size.width * 0.43,
                           decoration: BoxDecoration(
-                              color: Color(0xFF84c0ff),
+                              color: Color(0xFF98e4fe),
                               borderRadius: BorderRadius.circular(8)
                           ),
                           child: Padding(
@@ -260,7 +253,7 @@ class Body extends StatelessWidget {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(left: 50,top: 5),
-                                  child: Image(image: AssetImage('assets/images/shop.png'),height: 80,),
+                                  child: Image(image: AssetImage('assets/images/shop.png'),height: size.height * 0.12,),
                                 ),
                                 Text('Shops',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                                 Text('All Kind of shops Center',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),)
@@ -283,7 +276,7 @@ class Body extends StatelessWidget {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(left: 120,top: 5),
-                              child: Image(image: AssetImage('assets/images/remainder.png'),height: 35,),
+                              child: Image(image: AssetImage('assets/images/remainder.png'),height: size.height * 0.05,),
                             ),
                             Text('Book a Doctor',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                           ],
@@ -299,41 +292,66 @@ class Body extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 15,left: 20),
                 child: Text('Favourites',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700),),
               ),
-              SizedBox(
+
+              Container(
                 width: double.infinity,
-                height: size.height * 0.2,
+                height: MediaQuery.of(context).size.height * 0.2,
+                margin: EdgeInsets.only(top: 10),
                 child: ListView.builder(
+                  itemCount: Blogs().lists.length,
                   scrollDirection: Axis.horizontal,
-                    itemCount: Blogs().lists.length,
-                    itemBuilder: (BuildContext context, int index){
-                      var data = Blogs().lists;
-                      return Container(
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          width: size.width * 0.8,
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    var data = Blogs().lists;
+                    return GestureDetector(
+                        onTap: (){
+                          //Navigator.push(context, MaterialPageRoute(builder: (context) => BlogsDetails(snapshot.data[index].id.toString())));
+                        },
+                        child:Card(
+                          // color: index % 6 == 0 ? colorOne : index % 5 == 0 ? colorFive : index % 4 == 0 ? colorFour :
+                          // index % 3 == 0 ? colorSix : index % 2 == 0 ? colorTwo : index % 1 == 0 ? colorThree : backColors,
+                          shadowColor: colors,
+                          elevation: 5,
+                          margin: EdgeInsets.only(left: 18.0, bottom: 2.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.red,width: 2)
+                            ),
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            padding: EdgeInsets.only(top: 10,left: 10,right: 10, bottom: 0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  data[index].image,
+                                  fit: BoxFit.cover,
+                                  height: MediaQuery.of(context).size.height * 0.12,
+                                ),
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                Flexible(
+                                  child: Text(data[index].title != null ? data[index].title : '',style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600
+                                  ),),
+                                ),
+                                // SizedBox(height: 6.0),
 
-                          padding: EdgeInsets.only(left: 15,top: 5),
-                          child: Card(
-                              color: index % 6 == 0 ? colorOne : index % 5 == 0 ? colorFive : index % 4 == 0 ? colorFour :
-                              index % 3 == 0 ? colorSix : index % 2 == 0 ? colorTwo : index % 1 == 0 ? colorThree : backColors,
-                              shadowColor: colors,
-                              //color: Color(0xFF999999),
-                              elevation: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image(image: AssetImage(data[index].image),height: 80,),
+                              ],
+                            ),
+                          ),
+                        )
+                    );
 
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 15),
-                                    child: Text(data[index].title),
-                                  )
-                                ],
-                              ))
-                        //Text(snapshot.data[index].name != null ? snapshot.data[index].name : '')),
-                      );
-                    }),
-              )
+                  },
+                ),
+              ),
+
             ],
           ),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_doctor_booking/UI/body.dart';
 import 'package:online_doctor_booking/splash.dart';
+import 'package:online_doctor_booking/test.dart';
 
 import 'UI/SignIng/sign_in.dart';
 
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.pink,
       ),
       home: AnimatedSplashScreen(),
+      //home: Testing(),
       debugShowCheckedModeBanner: false,
     );
   }

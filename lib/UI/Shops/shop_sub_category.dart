@@ -29,7 +29,8 @@ class ShopSubCategory extends StatelessWidget {
           ],
         ),
         body: Container(
-            padding: EdgeInsets.only(left: 5, right: 5),
+          height: double.infinity,
+            padding: EdgeInsets.only(left: 5, right: 5,top: 0,bottom: 10),
             child: StaggeredGridView.countBuilder(
               crossAxisCount: 2,
               itemCount: SubCategory().lists.length,
@@ -38,7 +39,7 @@ class ShopSubCategory extends StatelessWidget {
 
                 return GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShopDetail(data[index].sub_image, data[index].sub_name, data[index].sub_price, data[index].sub_description)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ShopDetail(data[index].sub_image, data[index].sub_name, data[index].sub_price, data[index].sub_description)));
                   },
                   child: Column(
                     children: [
