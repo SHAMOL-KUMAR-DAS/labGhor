@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:online_doctor_booking/UI/SignIng/sign_in.dart';
+
 
 class AnimatedSplashScreen extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
   }
 
   _loadUserInfo() async {
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SignIn()), (route) => false);
+    // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SignIn()), (route) => false);
   }
 
   @override

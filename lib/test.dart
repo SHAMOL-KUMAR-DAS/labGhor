@@ -1,141 +1,213 @@
+// import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
-// import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-// import 'package:online_doctor_booking/MODEL/category.dart';
 //
-// import 'CONFIGURE/color_config.dart';
-// import 'MODEL/sub_category.dart';
-//
-// class Testing extends StatelessWidget {
+// import 'MODEL/carousel.dart';
+// class HomePage extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
+//     Size size = MediaQuery.of(context).size;
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: Text('Testing'),
-//         centerTitle: true,
+//         backgroundColor: Color(0xFFacdbf9),
+//         title: Text('Shop'),
+//         actions: [
+//           Padding(
+//             padding: const EdgeInsets.only(right: 10),
+//             child: Row(
+//               children: const [
+//                 Icon(Icons.search_rounded),
+//                 Icon(Icons.menu)
+//               ],
+//             ),
+//           )
+//         ],
 //       ),
 //
-//       body: Container(
-//         padding: EdgeInsets.only(top: 10, bottom: 10),
-//         child: SingleChildScrollView(
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: <Widget>[
+//       body: Column(
+//         children:  [
 //
-//               Padding(
-//                 padding: EdgeInsets.only(top: 15, left: 15, right: 15,bottom: 15),
-//                 child: Text("Offer", //theme.textTheme.headline3
-//                 //kTitleStyle
-//                 ),
+//           Padding(
+//             padding: const EdgeInsets.only(top: 20),
+//             child: CarouselSlider.builder(
+//               itemCount: Carousel().lists.length,
+//               options: CarouselOptions(
+//                   height: MediaQuery.of(context).size.height * 0.2,
+//                   autoPlay: true,
+//                   autoPlayInterval: Duration(milliseconds: 2000),
+//                   viewportFraction: 0.65
+//                 //reverse: true
 //               ),
-//               //SizedBox(height: 25.0),
-//               Container(
-//                 width: double.infinity,
-//                 height: MediaQuery.of(context).size.height * 0.2,
-//                 child: ListView.builder(
-//                   itemCount: Category().lists.length,
-//                   scrollDirection: Axis.horizontal,
-//                   shrinkWrap: true,
-//                   physics: BouncingScrollPhysics(),
-//                   itemBuilder: (context, index) {
-//                     var data = Category().lists;
-//                     return GestureDetector(
-//                         onTap: (){
-//                           //Navigator.push(context, MaterialPageRoute(builder: (context) => BlogsDetails(snapshot.data[index].id.toString())));
-//                         },
-//                         child:Card(
-//                           margin: EdgeInsets.only(left: 18.0, bottom: 2.0),
+//               itemBuilder: (context, index, realIndex) {
+//                 var data = Carousel().lists;
+//                 return Container(
+//                   margin: EdgeInsets.symmetric(horizontal: 5),
+//                   color: Color(0xFFf3f6fb),
+//                   child: ClipRRect(
+//                     borderRadius: BorderRadius.circular(8),
+//                     child: Image(
+//                       image: AssetImage(data[index].image),
+//                       fit: BoxFit.cover,
+//                     ),
+//                   ),
+//                 );
+//               },
+//             ),
+//           ),
+//
+//           Container(
+//             margin: const EdgeInsets.only(top: 25, left: 10, right: 10, bottom: 0),
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               children:  [
+//                 Text('Category', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+//                 Row(
+//                   children: [
+//                     Column(
+//                       children: [
+//                         Card(
+//                           color: Colors.white,
+//                           elevation: 10,
 //                           shape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.circular(12.0),
+//                             borderRadius: BorderRadius.circular(10),
+//                           ),
+//
+//                           child: Container(
+//                             height: size.height * 0.1,
+//                             width: size.width * 0.29,
+//                             decoration: BoxDecoration(
+//                               borderRadius: BorderRadius.circular(25)
+//                             ),
+//                             child: Column(
+//                               children: [
+//                                 Image(image: AssetImage('assets/images/demo1.png'),height: size.height * 0.065,),
+//                                 Text('Medicine')
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//
+//                         Card(
+//                           color: Colors.white,
+//                           elevation: 10,
+//                           margin: EdgeInsets.only(top: 25),
+//                           shape: RoundedRectangleBorder(
+//                             borderRadius: BorderRadius.circular(10),
 //                           ),
 //                           child: Container(
-//                             decoration: BoxDecoration(
-//                                 borderRadius: BorderRadius.circular(10),
-//                                 border: Border.all(color: Colors.red,width: 2)
-//                             ),
-//                             width: MediaQuery.of(context).size.width * 0.4,
-//                             padding: EdgeInsets.only(top: 10,left: 10,right: 10, bottom: 0),
+//                             height: size.height * 0.2,
+//                             width: size.width * 0.29,
 //                             child: Column(
-//                               mainAxisAlignment: MainAxisAlignment.center,
-//                               crossAxisAlignment: CrossAxisAlignment.center,
-//                               children: <Widget>[
-//                                 Image.asset(
-//                                   data[index].item_image,
-//                                   fit: BoxFit.cover,
-//                                   height: MediaQuery.of(context).size.height * 0.12,
-//                                 ),
-//                                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-//                                 Flexible(
-//                                   child: Text(data[index].item_name != null ? data[index].item_name : '',style: TextStyle(
-//                                       fontSize: 12,
-//                                       fontWeight: FontWeight.w600
-//                                   ),),
-//                                 ),
-//                                 // SizedBox(height: 6.0),
-//
+//                               children: [
+//                                 Image(image: AssetImage('assets/images/demo2.png'),height: size.height * 0.17,),
+//                                 Text('Syrup')
 //                               ],
 //                             ),
 //                           ),
 //                         )
-//                     );
+//                       ],
+//                     ),
+//                     Spacer(),
 //
-//                   },
-//                 ),
-//               ),
+//                     Column(
+//                       children: [
 //
-//               Padding(
-//                 padding: EdgeInsets.only(top: 15, left: 15, right: 15,bottom: 15),
-//                 child: Text("All Test", //theme.textTheme.headline3
-//                   //kTitleStyle
-//                 ),
-//               ),
-//               //SizedBox(height: 25.0),
-//               GridView.builder(
-//                   itemCount: Category().lists.length,
-//                   scrollDirection: Axis.vertical,
-//                   shrinkWrap: true,
-//                   physics: NeverScrollableScrollPhysics(),
-//                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//                       mainAxisExtent: 110,
-//                       mainAxisSpacing: 0,
-//                       crossAxisSpacing: 0,
-//                       crossAxisCount: 3),
-//                   itemBuilder: (BuildContext context, int index){
-//                     var data = Category().lists;
-//                     return GestureDetector(
-//                       onTap: (){
-//                         //Navigator.push(context, MaterialPageRoute(builder: (context) => ShopSubCategory(data[index].item_name)));
-//                       },
-//                       child: Card(
-//                         // color: index % 6 == 0 ? colorOne : index % 5 == 0 ? colorTwo : index % 4 == 0 ? colorThree :
-//                         // index % 3 == 0 ? colorFour : index % 2 == 0 ? colorFive : index % 1 == 0 ? colorSix : backColors,
-//                         shadowColor: colors,
-//                         elevation: 4,
-//                         //margin: EdgeInsets.only(top: 5),
-//                         shape: RoundedRectangleBorder(
-//                           borderRadius: BorderRadius.circular(8),
-//                         ),
-//                         child: Column(
-//                           children: [
-//                             Padding(
-//                               padding: const EdgeInsets.only(top: 10, bottom: 10),
-//                               child: Image(
-//                                 image: AssetImage(data[index].item_image),
-//                                 height: 50,
-//                               ),
+//
+//                         Card(
+//                           color: Colors.white,
+//                           elevation: 10,
+//                           shape: RoundedRectangleBorder(
+//                             borderRadius: BorderRadius.circular(10),
+//                           ),
+//                           child: Container(
+//                             height: size.height * 0.2,
+//                             width: size.width * 0.29,
+//                             child: Column(
+//                               children: [
+//                                 Image(image: AssetImage('assets/images/demo2.png'),height: size.height * 0.17,),
+//                                 Text('Syrup')
+//                               ],
 //                             ),
-//                             Flexible(child: Text(data[index].item_name, style: TextStyle(fontSize: 12,color: Colors.black),))
-//                           ],
+//                           ),
 //                         ),
-//                       ),
-//                     );
-//                   })
+//                         Card(
+//                           color: Colors.white,
+//                           elevation: 10,
+//                           margin: EdgeInsets.only(top: 25),
+//                           shape: RoundedRectangleBorder(
+//                             borderRadius: BorderRadius.circular(10),
+//                           ),
 //
+//                           child: Container(
+//                             height: size.height * 0.1,
+//                             width: size.width * 0.29,
+//                             decoration: BoxDecoration(
+//                                 borderRadius: BorderRadius.circular(25)
+//                             ),
+//                             child: Column(
+//                               children: [
+//                                 Image(image: AssetImage('assets/images/demo1.png'),height: size.height * 0.065,),
+//                                 Text('Medicine')
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                     Spacer(),
 //
-//             ],
-//           ),
-//         ),
+//                     Column(
+//                       children: [
+//                         Card(
+//                           color: Colors.white,
+//                           elevation: 10,
+//                           shape: RoundedRectangleBorder(
+//                             borderRadius: BorderRadius.circular(10),
+//                           ),
+//
+//                           child: Container(
+//                             height: size.height * 0.1,
+//                             width: size.width * 0.29,
+//                             decoration: BoxDecoration(
+//                                 borderRadius: BorderRadius.circular(25)
+//                             ),
+//                             child: Column(
+//                               children: [
+//                                 Image(image: AssetImage('assets/images/demo5.png'),height: size.height * 0.065,),
+//                                 Text('Medicine')
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//
+//                         Card(
+//                           color: Colors.white,
+//                           elevation: 10,
+//                           margin: EdgeInsets.only(top: 25),
+//                           shape: RoundedRectangleBorder(
+//                             borderRadius: BorderRadius.circular(10),
+//                           ),
+//                           child: Container(
+//                             height: size.height * 0.2,
+//                             width: size.width * 0.29,
+//                             child: Column(
+//                               children: [
+//                                 Image(image: AssetImage('assets/images/demo6.png'),height: size.height * 0.17,),
+//                                 Text('Syrup')
+//                               ],
+//                             ),
+//                           ),
+//                         )
+//                       ],
+//                     )
+//                   ],
+//                 )
+//               ],
+//             )
+//           )
+//         ],
 //       ),
-//
 //     );
 //   }
 // }
