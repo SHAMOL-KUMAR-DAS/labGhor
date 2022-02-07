@@ -1,9 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/MODEL/category.dart';
 import 'package:online_doctor_booking/MODEL/sub_category.dart';
-import 'package:online_doctor_booking/UI/Shops/details_page.dart';
-import 'package:online_doctor_booking/UI/Shops/shop_sub_category.dart';
 
 class SearchSubCategory extends SearchDelegate{
   @override
@@ -40,7 +37,7 @@ class SearchSubCategory extends SearchDelegate{
                   if(data[index].sub_name.toString().toLowerCase().contains(query.toLowerCase())){
                     return GestureDetector(
                       onTap: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShopDetail(data[index].sub_image, data[index].sub_name, data[index].sub_price, data[index].sub_description)));
+                        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShopDetail(data[index].sub_image, data[index].sub_name, data[index].sub_price, data[index].sub_description)));
                       },
                       child: ListTile(
                         leading: CircleAvatar(
@@ -71,7 +68,7 @@ class SearchSubCategory extends SearchDelegate{
                   if(data[index].sub_name.toString().toLowerCase().contains(query.toLowerCase())){
                     return GestureDetector(
                       onTap: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShopDetail(data[index].sub_image, data[index].sub_name, data[index].sub_price, data[index].sub_description)));
+                        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ShopDetail(data[index].sub_image, data[index].sub_name, data[index].sub_price, data[index].sub_description)));
                       },
                       child: ListTile(
                         leading: CircleAvatar(

@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/MODEL/category.dart';
-import 'package:online_doctor_booking/UI/Shops/shop_sub_category.dart';
 
 class SearchCategory extends SearchDelegate{
   @override
@@ -38,7 +37,7 @@ class SearchCategory extends SearchDelegate{
                   if(data[index].item_name.toString().toLowerCase().contains(query.toLowerCase())){
                     return GestureDetector(
                       onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ShopSubCategory(data[index].item_name)));
+                          //Navigator.push(context, MaterialPageRoute(builder: (context) => ShopSubCategory(data[index].item_name)));
                       },
                       child: ListTile(
                         leading: CircleAvatar(
@@ -69,7 +68,7 @@ class SearchCategory extends SearchDelegate{
                   if(data[index].item_name.toString().toLowerCase().contains(query.toLowerCase())){
                     return GestureDetector(
                       onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ShopSubCategory(data[index].item_name)));
+                          //Navigator.push(context, MaterialPageRoute(builder: (context) => ShopSubCategory(data[index].item_name)));
                       },
                       child: ListTile(
                         leading: CircleAvatar(

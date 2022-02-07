@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const colors = Color(0xFFd90d64);
 const backColors = Colors.white;
+const appBarColor = Color(0xFFacdbf9);
 const colorOne = Color(0xFF4cd1bc);
 const colorTwo = Color(0xFF71b4fb);
 const colorThree = Color(0xFFfc9781);

@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/carousel.dart';
 import 'package:online_doctor_booking/MODEL/category.dart';
+import 'package:online_doctor_booking/UI/DIAGNOSIS/diagnostics.dart';
+import 'package:online_doctor_booking/UI/DOCTOR/book_doctor.dart';
+import 'package:online_doctor_booking/UI/SHOP/shop.dart';
 
-class PageTwo extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFacdbf9),
+        backgroundColor: appBarColor,
         title: Text('LabGhor', style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
         automaticallyImplyLeading: false,
@@ -63,37 +66,42 @@ class PageTwo extends StatelessWidget {
           Row(
             children: [
 
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 0,top: 15),
-                height: size.height * 0.32,
-                width: size.width * 0.45,
-                decoration: BoxDecoration(
-                    color: backColors,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4.0,
-                          spreadRadius: 2.0,
-                          //offset: Offset(2.0, 2.0), // shadow direction: bottom right
-                          offset: Offset(0.0, 3.0)
-                      )
-                    ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Diagnosis()));
+                },
+                child: Container(
+                  margin: EdgeInsets.only(left: 15, right: 0,top: 15),
+                  height: size.height * 0.32,
+                  width: size.width * 0.45,
+                  decoration: BoxDecoration(
+                      color: backColors,
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 4.0,
+                            spreadRadius: 2.0,
+                            //offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                            offset: Offset(0.0, 3.0)
+                        )
+                      ],
 
-                    borderRadius: BorderRadius.circular(8)
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image(image: AssetImage('assets/images/diagnosis.png'),height: size.height * 0.2,),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Text('Diagnosis',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
-                      ),
+                      borderRadius: BorderRadius.circular(8)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image(image: AssetImage('assets/images/diagnosis.png'),height: size.height * 0.2,),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Text('Diagnosis',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+                        ),
 
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -101,68 +109,79 @@ class PageTwo extends StatelessWidget {
 
               Column(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 0, right: 0,top: 15),
 
-                    height: size.height * 0.19,
-                    width: size.width * 0.43,
-                    decoration: BoxDecoration(
-                        color: backColors,
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 4.0,
-                              spreadRadius: 2.0,
-                              //offset: Offset(2.0, 2.0), // shadow direction: bottom right
-                              offset: Offset(2.0, 2.0)
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(8)
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image(image: AssetImage('assets/images/shop.png'),height: size.height * 0.12,),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 10),
-                            child: Text('Shops',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                          ),
-                        ],
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Shop()));
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(left: 0, right: 0,top: 15),
+
+                      height: size.height * 0.19,
+                      width: size.width * 0.43,
+                      decoration: BoxDecoration(
+                          color: backColors,
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 4.0,
+                                spreadRadius: 2.0,
+                                //offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                                offset: Offset(2.0, 2.0)
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(8)
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image(image: AssetImage('assets/images/shop.png'),height: size.height * 0.12,),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: Text('Shops',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
 
-                  Container(
-                    margin: EdgeInsets.only(left: 15, right: 15,top: 15),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => BookDoctor()));
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(left: 15, right: 15,top: 15),
 
-                    height: size.height * 0.11,
-                    width: size.width * 0.43,
-                    decoration: BoxDecoration(
-                        color: backColors,
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 4.0,
-                              spreadRadius: 2.0,
-                              //offset: Offset(2.0, 2.0), // shadow direction: bottom right
-                              offset: Offset(2.0, 2.0)
-                          )
+                      height: size.height * 0.11,
+                      width: size.width * 0.43,
+                      decoration: BoxDecoration(
+                          color: backColors,
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 4.0,
+                                spreadRadius: 2.0,
+                                //offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                                offset: Offset(2.0, 2.0)
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(8)
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image(image: AssetImage('assets/images/remainder.png'),height: size.height * 0.05,),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Text('Book a Doctor',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                          ),
                         ],
-                        borderRadius: BorderRadius.circular(8)
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image(image: AssetImage('assets/images/remainder.png'),height: size.height * 0.05,),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Text('Book a Doctor',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -171,14 +190,18 @@ class PageTwo extends StatelessWidget {
           ),
 
           Padding(
-            padding: EdgeInsets.only(top: 15, left: 25, right: 25,bottom: 10),
+            padding: const EdgeInsets.only(top: 12, left: 25, right: 25,bottom: 0),
             child: Row(
-              children: [
+              children: const [
                 Text("Offers", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),),
                 Spacer(),
                 Text("See All", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
               ],
             ),
+          ),
+
+          const Divider(
+            thickness: 2,
           ),
 
           Container(
@@ -238,23 +261,24 @@ class PageTwo extends StatelessWidget {
             ),
           ),
 
-          Divider(
+          const Divider(
             thickness: 2,
           ),
 
           Expanded(
             child: Container(
-              margin: const EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 0),
+              width: double.infinity,
+              margin: const EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 10),
               child: GridView.builder(
                   itemCount: Category().lists.length,
-                  scrollDirection: Axis.vertical,
+                  scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  //physics: NeverScrollableScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: 100,
-                      mainAxisSpacing: 10,
+                      mainAxisExtent: 115,
+                      mainAxisSpacing: 20,
                       crossAxisSpacing: 0,
-                      crossAxisCount: 3),
+                      crossAxisCount: 1),
                   itemBuilder: (BuildContext context, int index){
                     var data = Category().lists;
                     return Card(
@@ -273,7 +297,7 @@ class PageTwo extends StatelessWidget {
                               height: size.height * 0.06,
                             ),
                           ),
-                          Flexible(child: Text(data[index].item_name, style: TextStyle(fontSize: 12,color: Colors.black),))
+                          Flexible(child: Text(data[index].item_name, style: TextStyle(fontSize: 12,color: Colors.black),textAlign: TextAlign.center,))
                         ],
                       ),
                     );
