@@ -150,8 +150,8 @@ class Diagnosis extends StatelessWidget {
             ],
           ),
 
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
+          const Padding(
+            padding: EdgeInsets.only(top: 15),
             child: Text('Health Packages', textAlign: TextAlign.center,style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
           ),
 
@@ -162,7 +162,7 @@ class Diagnosis extends StatelessWidget {
                   itemCount: Category().lists.length,
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       mainAxisExtent: 80,
                       mainAxisSpacing: 0,

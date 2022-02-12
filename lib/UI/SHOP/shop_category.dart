@@ -5,6 +5,7 @@ import 'package:online_doctor_booking/MODEL/carousel.dart';
 import 'package:online_doctor_booking/MODEL/category.dart';
 import 'package:online_doctor_booking/MODEL/sub_category.dart';
 import 'package:online_doctor_booking/UI/DIAGNOSIS/diagnostics.dart';
+import 'package:online_doctor_booking/UI/OREDER/order_page.dart';
 
 class ShopCategory extends StatelessWidget {
 
@@ -109,29 +110,35 @@ class ShopCategory extends StatelessWidget {
                               crossAxisCount: 2),
                           itemBuilder: (BuildContext context, int index){
                             var data = SubCategory().lists;
-                            return Card(
-                              shadowColor: colors,
-                              elevation: 4,
-                              //margin: EdgeInsets.only(top: 5),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Image(
-                                      image: AssetImage(data[index].sub_image),
-                                      height: size.height * 0.06,
+                            return GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderPage()));
+                              },
+                              child:
+                              Card(
+                                shadowColor: colors,
+                                elevation: 4,
+                                //margin: EdgeInsets.only(top: 5),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 5, bottom: 5),
+                                      child: Image(
+                                        image: AssetImage(data[index].sub_image),
+                                        height: size.height * 0.06,
+                                      ),
                                     ),
-                                  ),
-                                  Flexible(child: Text(data[index].sub_name, style: TextStyle(fontSize: 12,color: Colors.black),)),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 3, bottom: 2),
-                                    child: Text(data[index].sub_price),
-                                  ),
-                                  Text(data[index].sub_description, style: TextStyle(color: data[index].sub_description == 'In Stock' ? Colors.green : Colors.red),)
-                                ],
+                                    Flexible(child: Text(data[index].sub_name, style: TextStyle(fontSize: 12,color: Colors.black),)),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 3, bottom: 2),
+                                      child: Text(data[index].sub_price),
+                                    ),
+                                    Text(data[index].sub_description, style: TextStyle(color: data[index].sub_description == 'In Stock' ? Colors.green : Colors.red),)
+                                  ],
+                                ),
                               ),
                             );
                           }),
