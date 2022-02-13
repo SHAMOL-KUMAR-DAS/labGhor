@@ -16,7 +16,7 @@ class Category{
     ),
     Item(
       item_image: 'assets/images/demo3.png',
-      item_name: 'Hallucinogens',
+      item_name: 'Hallucinogen',
     ),
     Item(
       item_image: 'assets/images/demo4.png',

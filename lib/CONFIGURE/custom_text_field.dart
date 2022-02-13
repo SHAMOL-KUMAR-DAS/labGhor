@@ -1,0 +1,43 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class CustomTextField extends StatelessWidget {
+  String hint;
+  bool issecured;
+
+  CustomTextField({Key? key, required this.hint, required this.issecured}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.only(left: 25, right: 25),
+        child: TextField(obscureText: issecured,
+          cursorColor: Colors.white,
+          style: const TextStyle(color: Colors.white),
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(left: 25.0),
+
+              disabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(35),
+              ),
+              hintText: hint,
+              hintStyle: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white70,
+                  fontWeight: FontWeight.w500),
+              filled: true,
+              hoverColor: Colors.white,
+              focusColor: Colors.white,
+              fillColor: Colors.transparent,
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(35),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(35),
+              )),
+        ));
+  }
+}

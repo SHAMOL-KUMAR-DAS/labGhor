@@ -30,7 +30,8 @@ class HomePage extends StatelessWidget {
         ],
       ),
 
-      body: Column(
+      body:
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
@@ -97,7 +98,7 @@ class HomePage extends StatelessWidget {
                         Image(image: AssetImage('assets/images/diagnosis.png'),height: size.height * 0.2,),
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
-                          child: Text('Diagnosis',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+                          child: Text('Diagnosis',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                         ),
 
                       ],
@@ -141,7 +142,7 @@ class HomePage extends StatelessWidget {
                             Image(image: AssetImage('assets/images/shop.png'),height: size.height * 0.12,),
                             const Padding(
                               padding: EdgeInsets.only(top: 10),
-                              child: Text('Shops',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                              child: Text('Shops',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                             ),
                           ],
                         ),
@@ -178,7 +179,7 @@ class HomePage extends StatelessWidget {
                           Image(image: AssetImage('assets/images/remainder.png'),height: size.height * 0.05,),
                           Padding(
                             padding: const EdgeInsets.only(top: 5),
-                            child: Text('Book a Doctor',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                            child: Text('Book a Doctor',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
                           ),
                         ],
                       ),
@@ -291,10 +292,10 @@ class HomePage extends StatelessWidget {
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 5),
+                            padding: const EdgeInsets.only(top: 2, bottom: 2),
                             child: Image(
                               image: AssetImage(data[index].item_image),
-                              height: size.height * 0.06,
+                              height: size.height * 0.05,
                             ),
                           ),
                           Flexible(child: Text(data[index].item_name, style: TextStyle(fontSize: 12,color: Colors.black),textAlign: TextAlign.center,))

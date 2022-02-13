@@ -102,7 +102,7 @@ class Diagnosis extends StatelessWidget {
                       Image(image: AssetImage('assets/images/diagnosis.png'),height: size.height * 0.12,),
                       const Padding(
                         padding: EdgeInsets.only(top: 20),
-                        child: Text('BOOK A DOCTOR',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                        child: Text('BOOK A DOCTOR',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                       ),
 
                     ],
@@ -140,7 +140,7 @@ class Diagnosis extends StatelessWidget {
                       Image(image: AssetImage('assets/images/diagnosis.png'),height: size.height * 0.12,),
                       const Padding(
                         padding: EdgeInsets.only(top: 20),
-                        child: Text('TEST',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                        child: Text('TEST',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                       ),
 
                     ],
