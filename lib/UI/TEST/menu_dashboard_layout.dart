@@ -1,10 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
-import 'package:online_doctor_booking/MODEL/carousel.dart';
-import 'package:online_doctor_booking/MODEL/category.dart';
+import 'package:online_doctor_booking/MODEL/carousel_p.dart';
+import 'package:online_doctor_booking/MODEL/category_p.dart';
 import 'package:online_doctor_booking/UI/DIAGNOSIS/diagnostics.dart';
 import 'package:online_doctor_booking/UI/DOCTOR/book_doctor.dart';
+import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
 import 'package:online_doctor_booking/UI/SHOP/shop.dart';
 
 final Color backgroundColor =  const Color(0xFF6FC1F9);
@@ -117,11 +118,16 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                 ),
                 SizedBox(height: 200),
 
-                Row(
-                  children: const [
-                    Icon(Icons.logout,color: Colors.white,size: 30,),
-                    Text(" Sign out", style: TextStyle(color: Colors.white, fontSize: 18)),
-                  ],
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
+                  },
+                  child: Row(
+                    children: const [
+                      Icon(Icons.logout,color: Colors.white,size: 30,),
+                      Text(" Log out", style: TextStyle(color: Colors.white, fontSize: 18)),
+                    ],
+                  ),
                 ),
               ],
             ),

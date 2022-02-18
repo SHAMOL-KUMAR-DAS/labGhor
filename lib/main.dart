@@ -20,15 +20,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         textTheme: GoogleFonts.mcLarenTextTheme(
             Theme.of(context).textTheme
         ),
         primarySwatch: Colors.pink,
       ),
-      //home: AnimatedSplashScreen(),
-      home: LoginScreen(),
+      home: AnimatedSplashScreen(),
+      //home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

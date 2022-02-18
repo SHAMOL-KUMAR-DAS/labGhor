@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
-import 'package:online_doctor_booking/MODEL/category.dart';
+import 'package:online_doctor_booking/MODEL/category_p.dart';
 
 class PageFive extends StatelessWidget {
   @override

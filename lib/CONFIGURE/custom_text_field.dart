@@ -4,17 +4,21 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   String hint;
   bool issecured;
+  var controller, maxLength;
 
-  CustomTextField({Key? key, required this.hint, required this.issecured}) : super(key: key);
+  CustomTextField({Key? key, required this.hint, required this.issecured, this.controller, this.maxLength}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(left: 25, right: 25),
         child: TextField(obscureText: issecured,
+          controller: controller,
           cursorColor: Colors.white,
           style: const TextStyle(color: Colors.white),
+          maxLength: maxLength,
           decoration: InputDecoration(
+            counter: Offstage(),
             contentPadding: EdgeInsets.only(left: 25.0),
 
               disabledBorder: OutlineInputBorder(

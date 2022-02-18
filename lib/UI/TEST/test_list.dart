@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
-import 'package:online_doctor_booking/MODEL/category.dart';
-import 'package:online_doctor_booking/MODEL/sub_category.dart';
+import 'package:online_doctor_booking/MODEL/category_p.dart';
+import 'package:online_doctor_booking/MODEL/sub_category_p.dart';
 
 class TestList extends StatelessWidget {
   @override

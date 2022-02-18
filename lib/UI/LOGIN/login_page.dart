@@ -1,19 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/custom_text_field.dart';
+import 'package:online_doctor_booking/CONFIGURE/loader_config.dart';
 import 'package:online_doctor_booking/UI/HOME/home_page.dart';
 import 'package:online_doctor_booking/UI/SIGNUP/signup_page.dart';
 import 'package:online_doctor_booking/UI/TEST/menu_dashboard_layout.dart';
 
 class LoginScreen extends StatelessWidget {
+
+  var mobile   = TextEditingController();
+  var password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back, color: Colors.white),
-        //   onPressed: () => Navigator.of(context).pop(),
-        // ),
         backgroundColor:const Color(0xff6FC1F9),
         centerTitle: true,
         // automaticallyImplyLeading: true,
@@ -31,7 +34,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               const Text(
-                'Welcome to LabGhur',
+                'Welcome to LabGhor',
                 style:   TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -52,15 +55,18 @@ class LoginScreen extends StatelessWidget {
               ),
 
               CustomTextField(
-                hint: 'Email/Mobile Number',
+                hint: 'Mobile Number',
                 issecured: false,
+                controller: mobile,
+                maxLength: 11,
               ),
               const SizedBox(
                 height: 15,
               ),
               CustomTextField(
                 hint: 'Password',
-                issecured: false,
+                issecured: true,
+                controller: password,
               ),
               const SizedBox(
                 height: 15,
@@ -76,8 +82,8 @@ class LoginScreen extends StatelessWidget {
                     height: 45,
                     child: RaisedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>MenuDashboardPage()));
-
+                        Loader().showLoaderDialog(context, text: 'Loading');
+                        Login(context, mobile: mobile.text, password: password.text);
                       },
                       child: const Text(
                         'Login',

@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
-import 'package:online_doctor_booking/MODEL/carousel.dart';
-import 'package:online_doctor_booking/MODEL/category.dart';
+import 'package:online_doctor_booking/MODEL/carousel_p.dart';
+import 'package:online_doctor_booking/MODEL/category_p.dart';
 import 'package:online_doctor_booking/UI/DIAGNOSIS/diagnostics.dart';
 import 'package:online_doctor_booking/UI/DOCTOR/book_doctor.dart';
 import 'package:online_doctor_booking/UI/SHOP/shop.dart';

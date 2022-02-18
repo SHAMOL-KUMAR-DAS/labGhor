@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import 'UI/LOGIN/login_page.dart';
+
 
 class AnimatedSplashScreen extends StatefulWidget {
   @override
@@ -16,12 +18,12 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
 
 
   startTime() async {
-    var _duration = new Duration(milliseconds: 3000);
+    var _duration = new Duration(milliseconds: 1800);
     return new Timer(_duration, _loadUserInfo);
   }
 
   _loadUserInfo() async {
-    // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SignIn()), (route) => false);
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
   }
 
   @override

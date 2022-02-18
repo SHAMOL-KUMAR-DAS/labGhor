@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:online_doctor_booking/MODEL/category.dart';
-import 'package:online_doctor_booking/MODEL/sub_category.dart';
+import 'package:online_doctor_booking/MODEL/category_p.dart';
+import 'package:online_doctor_booking/MODEL/sub_category_p.dart';
 
 class SearchSubCategory extends SearchDelegate{
   @override
