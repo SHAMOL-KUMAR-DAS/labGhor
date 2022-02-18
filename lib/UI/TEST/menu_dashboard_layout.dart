@@ -6,6 +6,7 @@ import 'package:online_doctor_booking/MODEL/category_p.dart';
 import 'package:online_doctor_booking/UI/DIAGNOSIS/diagnostics.dart';
 import 'package:online_doctor_booking/UI/DOCTOR/book_doctor.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
+import 'package:online_doctor_booking/UI/PROFILE/profile.dart';
 import 'package:online_doctor_booking/UI/SHOP/shop.dart';
 
 final Color backgroundColor =  const Color(0xFF6FC1F9);
@@ -70,11 +71,16 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children:  <Widget>[
-                Row(
-                  children: const [
-                    Icon(Icons.account_circle_outlined,color: Colors.white,size: 30,),
-                    Text(" Profile", style: TextStyle(color: Colors.white, fontSize: 18)),
-                  ],
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreen()));
+                  },
+                  child: Row(
+                    children: const [
+                      Icon(Icons.account_circle_outlined,color: Colors.white,size: 30,),
+                      Text(" Profile", style: TextStyle(color: Colors.white, fontSize: 18)),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 10),
                 Divider(

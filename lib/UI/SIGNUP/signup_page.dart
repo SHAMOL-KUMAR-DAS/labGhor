@@ -107,7 +107,8 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 25, right: 25,bottom: 15),
-                  child: ButtonTheme(
+                  child:
+                  ButtonTheme(
                       buttonColor: Colors.white,
                       minWidth: MediaQuery.of(context).size.width,
                       height: 45,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
+import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 class OrderPage extends StatefulWidget {
   @override
@@ -128,13 +129,19 @@ class _OrderPageState extends State<OrderPage> {
       bottomNavigationBar: Container(
         color: appBarColor,
         height: size.height * 0.07,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            Icon(Icons.shopping_cart_outlined, color: Colors.blue,),
-            Text('Add To Cart')
-          ],
+        child:
+        GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>My_Cart()));
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              Icon(Icons.shopping_cart_outlined, color: Colors.blue,),
+              Text('Add To Cart')
+            ],
+          ),
         ),
       ),
     );

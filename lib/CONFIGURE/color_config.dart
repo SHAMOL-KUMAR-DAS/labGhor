@@ -9,6 +9,7 @@ const colorThree = Color(0xFFfc9781);
 const colorFour = Color(0xFF9ae471);
 const colorFive = Color(0xFF98e4fe);
 const colorSix = Color(0xFFfdd36d);
+const deepBlue = Color(0xFF6FC1F9);
 
 const bodyStyle = TextStyle(fontWeight: FontWeight.bold);
 const productText = TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: backColors);
