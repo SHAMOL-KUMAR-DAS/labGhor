@@ -1,17 +1,23 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
-import 'package:online_doctor_booking/MODEL/carousel_p.dart';
-import 'package:online_doctor_booking/MODEL/sub_category_p.dart';
 
-class BookDoctor extends StatelessWidget {
+import 'confirm_booking.dart';
+
+class Book_Doctor extends StatefulWidget {
+  @override
+  State<Book_Doctor> createState() => _Book_DoctorState();
+}
+
+class _Book_DoctorState extends State<Book_Doctor> {
+  DateTime? dateTime;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
-        title: Text('Doctors', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text('Book Doctor', style: TextStyle(fontWeight: FontWeight.bold),),
         automaticallyImplyLeading: true,
         elevation: 0,
         actions: [
@@ -19,7 +25,7 @@ class BookDoctor extends StatelessWidget {
             padding: const EdgeInsets.only(right: 10),
             child: Row(
               children: const [
-                Icon(Icons.notifications_none),
+                Image(image: AssetImage("assets/images/img_3.png"),height: 30,),
               ],
             ),
           )
@@ -30,98 +36,198 @@ class BookDoctor extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: CarouselSlider.builder(
-              itemCount: Carousel().lists.length,
-              options: CarouselOptions(
-                  height: MediaQuery.of(context).size.height * 0.14,
-                  autoPlay: true,
-                  autoPlayInterval: Duration(milliseconds: 2000),
-                  viewportFraction: 0.45
-                //reverse: true
-              ),
-              itemBuilder: (context, index, realIndex) {
-                var data = Carousel().lists;
-                return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5),
-                  color: Color(0xFFf3f6fb),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image(
-                      image: AssetImage(data[index].image),
-                      fit: BoxFit.cover,
+          Container(
+            height: size.height*.12,
+            margin: EdgeInsets.only(left: 15, right: 15, top: 8),
+            child: Card(
+                      shadowColor: colors,
+                      elevation: 4,
+                      //margin: EdgeInsets.only(top: 5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 25,
+                            backgroundColor: appBarColor,
+                            backgroundImage: AssetImage("assets/images/img_4.png"),
+                          ),
+                          title: Text('Dr. Juli', textAlign: TextAlign.start,),
+
+                        ),
+                      )
+                  )
+          ),
+          Container(
+            height: size.height*.12,
+            width: size.width,
+            margin: EdgeInsets.only(left: 15, right: 15, top: 8,bottom: 8),
+            child: Card(
+                      shadowColor: colors,
+                      elevation: 4,
+                      //margin: EdgeInsets.only(top: 5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("  Consultation Fee",style: TextStyle(color: Color(0xff78000000)),),
+                          Text("  100 BDT",style: TextStyle(color: deepBlue,fontSize: 18),),
+                        ],
+                      )
+                  )
+          ),
+          Text("    Select a Date",style: TextStyle(fontWeight: FontWeight.bold),),
+          Container(
+            padding: const EdgeInsets.all(16),
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    "Date selected",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey[600],
                     ),
                   ),
-                );
-              },
+                  Text(
+                    "${dateTime?.day}-${dateTime?.month}-${dateTime?.year}",
+                    style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ),
-
-          Container(
-            height: size.height * 0.06,
-            width: size.width,
-            margin: EdgeInsets.only(bottom: 12,left: 15, right: 15, top: 15),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(
-                    color: Color(0xFFdbdbdb),
-                    width: 2
-                )
-            ),
-            child: Row(
-              children: const[
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Icon(Icons.search),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+              children: <Widget>[
+                const SizedBox(height: 12),
+                FloatingActionButton.extended(
+                  backgroundColor: Colors.blue,
+                  onPressed: () async {
+                    DateTime? newDateTime = await showRoundedDatePicker(
+                      context: context,
+                      theme: ThemeData(primarySwatch: Colors.pink),
+                    );
+                    if (newDateTime != null) {
+                      setState(() => dateTime = newDateTime);
+                    }
+                  },
+                  label: Text("Select a Date From Calender"),
                 ),
-                Text('    Search')
               ],
             ),
           ),
-
-          Text('     SELECT A DOCTOR'),
-
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.only(left: 15, right: 15, top: 8),
-              child: GridView.builder(
-                  itemCount: SubCategory().lists.length,
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: 80,
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 0,
-                      crossAxisCount: 2),
-                  itemBuilder: (BuildContext context, int index){
-                    var data = SubCategory().lists;
-                    return Card(
-                        shadowColor: colors,
-                        elevation: 4,
-                        //margin: EdgeInsets.only(top: 5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              radius: 25,
-                              backgroundColor: appBarColor,
-                              backgroundImage: AssetImage(data[index].sub_image),
+          Container(
+              height: size.height*.22,
+              width: size.width,
+              margin: EdgeInsets.only(left: 15, right: 15,bottom: 8),
+              child: Card(
+                  shadowColor: colors,
+                  elevation: 4,
+                  //margin: EdgeInsets.only(top: 5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Availability",style: TextStyle(fontWeight: FontWeight.bold),),
+                        Text("For Selected Date",style: TextStyle(fontSize: 12,color: Color(0xff78000000,)),),
+                        SizedBox(height: MediaQuery.of(context).size.height*.01,),
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.access_time_outlined,color: deepBlue),
+                                    Text("9:00 AM")
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(Icons.access_time_outlined,color: deepBlue,),
+                                    Text("9:00 AM")
+                                  ],
+                                ),
+                              ],
                             ),
-                            title: Text('Dr. '+data[index].sub_name.toString().substring(0, 5), textAlign: TextAlign.start,),
-
-                          ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.access_time_outlined,color: deepBlue),
+                                    Text("9:00 AM")
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(Icons.access_time_outlined,color: deepBlue),
+                                    Text("9:00 AM")
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.access_time_outlined,color: deepBlue),
+                                    Text("9:00 AM")
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(Icons.access_time_outlined,color: deepBlue),
+                                    Text("9:00 AM")
+                                  ],
+                                ),
+                              ],
+                            )
+                          ],
                         )
-                    );
-                  }),
-            ),
-          )
-
+                      ],
+                    ),
+                  )
+              )
+          ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        height: size.height*.1,
+        width: size.width,
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20.0,right: 20.0,top: 12.0,bottom: 12.0),
+          child: ButtonTheme(
+              buttonColor: deepBlue,
+              minWidth: MediaQuery.of(context).size.width*.4,
+              height: 45,
+              child: RaisedButton(
+                onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Confirm_Booking()));
+                },
+                child: const Text(
+                  'Confirm Booking',
+                  style:  TextStyle(color: Colors.white, fontSize: 18),
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+              )),
+        ),
       ),
     );
   }

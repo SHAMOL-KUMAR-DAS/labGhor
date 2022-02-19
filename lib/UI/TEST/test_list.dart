@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/category_p.dart';
 import 'package:online_doctor_booking/MODEL/sub_category_p.dart';
+import 'package:online_doctor_booking/UI/OREDER/order_page.dart';
 
 class TestList extends StatelessWidget {
   @override
@@ -92,16 +93,21 @@ class TestList extends StatelessWidget {
         ),
       ),
 
-      bottomNavigationBar: Container(
-        color: appBarColor,
-        height: size.height * 0.07,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(Icons.shopping_cart_outlined, color: Colors.blue,),
-            Text('Add To Cart')
-          ],
+      bottomNavigationBar: GestureDetector(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderPage()));
+        },
+        child: Container(
+          color: appBarColor,
+          height: size.height * 0.07,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(Icons.shopping_cart_outlined, color: Colors.blue,),
+              Text('Add To Cart')
+            ],
+          ),
         ),
       ),
     );

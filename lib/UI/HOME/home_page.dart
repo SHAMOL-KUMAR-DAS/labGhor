@@ -4,7 +4,7 @@ import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/carousel_p.dart';
 import 'package:online_doctor_booking/MODEL/category_p.dart';
 import 'package:online_doctor_booking/UI/DIAGNOSIS/diagnostics.dart';
-import 'package:online_doctor_booking/UI/DOCTOR/book_doctor.dart';
+import 'package:online_doctor_booking/UI/DOCTOR/doctors.dart';
 import 'package:online_doctor_booking/UI/SHOP/shop.dart';
 
 class HomePage extends StatelessWidget {
@@ -152,7 +152,7 @@ class HomePage extends StatelessWidget {
 
                   GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => BookDoctor()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Doctors()));
                     },
                     child: Container(
                       margin: EdgeInsets.only(left: 15, right: 15,top: 15),

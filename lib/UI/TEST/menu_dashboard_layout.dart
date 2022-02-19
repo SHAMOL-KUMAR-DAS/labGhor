@@ -4,8 +4,9 @@ import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/carousel_p.dart';
 import 'package:online_doctor_booking/MODEL/category_p.dart';
 import 'package:online_doctor_booking/UI/DIAGNOSIS/diagnostics.dart';
-import 'package:online_doctor_booking/UI/DOCTOR/book_doctor.dart';
+import 'package:online_doctor_booking/UI/DOCTOR/doctors.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
+import 'package:online_doctor_booking/UI/ORDER_HISTORY/order_history.dart';
 import 'package:online_doctor_booking/UI/PROFILE/profile.dart';
 import 'package:online_doctor_booking/UI/SHOP/shop.dart';
 
@@ -86,11 +87,16 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                 Divider(
                     color: Colors.white70,
                 ),
-                Row(
-                  children: const [
-                    Icon(Icons.add_shopping_cart,color: Colors.white,size: 30,),
-                    Text(" My Orders", style: TextStyle(color: Colors.white, fontSize: 18)),
-                  ],
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Order_History()));
+                  },
+                  child: Row(
+                    children: const [
+                      Icon(Icons.add_shopping_cart,color: Colors.white,size: 30,),
+                      Text(" My Orders", style: TextStyle(color: Colors.white, fontSize: 18)),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 10),
                 Divider(
@@ -306,7 +312,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
 
                           GestureDetector(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => BookDoctor()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Doctors()));
                             },
                             child: Container(
                               margin: const EdgeInsets.only(left: 15, right: 15,top: 15),

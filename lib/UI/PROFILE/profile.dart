@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:online_doctor_booking/UI/TEST/menu_dashboard_layout.dart';
 
 class ProfileScreen extends StatelessWidget {
