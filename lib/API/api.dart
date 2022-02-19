@@ -34,12 +34,14 @@ Future Login(BuildContext context, {mobile, password}) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print(loginData.mgs);
     print(loginData.data.token);
+    print(loginData.data.id);
     if(loginData.mgs == 'Login Success' )
     {
       String token = await loginData.data.token;
       await prefs.setString('token', token);
 
-      String user_id = await loginData.data.user_id;
+      String user_id = await loginData.data.id.toString();
+      await prefs.setString('user_id', user_id);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MenuDashboardPage()));
     }
 
