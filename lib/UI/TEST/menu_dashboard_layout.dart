@@ -230,6 +230,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
 
                       GestureDetector(
                         onTap: (){
+
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Diagnosis()));
                         },
                         child: Container(

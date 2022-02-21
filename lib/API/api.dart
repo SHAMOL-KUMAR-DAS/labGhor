@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:online_doctor_booking/MODEL/diagnostic.dart';
 import 'package:online_doctor_booking/MODEL/login.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
 import 'package:online_doctor_booking/UI/TEST/menu_dashboard_layout.dart';
@@ -22,7 +23,7 @@ Future Register(BuildContext context, {name, mobile, password}) async{
   }
 }
 
-//User Login(/user-login)
+//User Login(/user-login) - COMPLETE
 Future Login(BuildContext context, {mobile, password}) async{
   var url = '$_baseUrl/user-login';
   var response = await http.post(Uri.parse(url), body: {
@@ -32,9 +33,7 @@ Future Login(BuildContext context, {mobile, password}) async{
   if(response.statusCode == 200){
     LoginResponse loginData = loginResponseFromJson(response.body);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(loginData.mgs);
-    print(loginData.data.token);
-    print(loginData.data.id);
+
     if(loginData.mgs == 'Login Success' )
     {
       String token = await loginData.data.token;
@@ -42,7 +41,7 @@ Future Login(BuildContext context, {mobile, password}) async{
 
       String user_id = await loginData.data.id.toString();
       await prefs.setString('user_id', user_id);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MenuDashboardPage()));
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MenuDashboardPage()), (route) => false);
     }
 
     else
@@ -84,13 +83,15 @@ Future UpdateProfile({name, mobile, email, district, thana, full_address}) async
   });
 }
 
-//Thana Wise Diagonstics(diagnostics-list-by-thana/ThanaName)
+//Thana Wise Diagonstics(diagnostics-list-by-thana/ThanaName) - COMPLETE
 Future Diagonstics({thanaName}) async{
   var url = '$_baseUrl/diagnostics-list-by-thana/$thanaName';
   var response = await http.get(Uri.parse(url));
 
   if(response.statusCode == 200){
-
+    ViewDiagnosticResponse diagnosticData = viewDiagnosticResponseFromJson(response.body);
+    print(diagnosticData.data[0].id);
+    return diagnosticData;
   }
 }
 

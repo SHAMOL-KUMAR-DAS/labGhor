@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/carousel_p.dart';
 import 'package:online_doctor_booking/MODEL/category_p.dart';
@@ -152,44 +153,56 @@ class Diagnosis extends StatelessWidget {
 
           const Padding(
             padding: EdgeInsets.only(top: 15),
-            child: Text('Health Packages', textAlign: TextAlign.center,style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
+            child: Text('Diagnostic List', textAlign: TextAlign.center,style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
           ),
 
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
-              child: GridView.builder(
-                  itemCount: Category().lists.length,
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: 80,
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 0,
-                      crossAxisCount: 1),
-                  itemBuilder: (BuildContext context, int index){
-                    var data = Category().lists;
-                    return Card(
-                        shadowColor: colors,
-                        elevation: 4,
-                        //margin: EdgeInsets.only(top: 5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: ListTile(
-                              leading: Text(data[index].item_name, textAlign: TextAlign.center,),
-                              //title: Text('//'),
-                              trailing: CircleAvatar(
-                                radius: 25,
-                                backgroundColor: appBarColor,
-                                backgroundImage: AssetImage(data[index].item_image),
+              child: FutureBuilder(
+                future: Diagonstics(thanaName: 'Tangail Sadar'),
+                builder: (BuildContext context, AsyncSnapshot snapshot){
+                  if(snapshot.connectionState != ConnectionState.done){
+                    return CircularProgressIndicator();
+                  }
+
+                  if(snapshot.hasData){
+                    return GridView.builder(
+                        itemCount: snapshot.data.data.length,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 80,
+                            mainAxisSpacing: 0,
+                            crossAxisSpacing: 0,
+                            crossAxisCount: 1),
+                        itemBuilder: (BuildContext context, int index){
+                          var data = snapshot.data.data;
+                          return Card(
+                              shadowColor: colors,
+                              elevation: 4,
+                              //margin: EdgeInsets.only(top: 5),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Center(
+                                child: ListTile(
+                                    title: Text(data[index].name, textAlign: TextAlign.start,),
+                                    subtitle: Text('Contact No: ${data[index].contactMobile}'),
+                                    // trailing: CircleAvatar(
+                                    //   radius: 25,
+                                    //   backgroundColor: appBarColor,
+                                    //   backgroundImage: AssetImage(data[index].item_image),
+                                    // )
+                                ),
                               )
-                          ),
-                        )
-                    );
-                  }),
+                          );
+                        });
+                  }
+                  return Container();
+                },
+              ),
             ),
           ),
         ],
