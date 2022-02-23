@@ -5,6 +5,7 @@ import 'package:online_doctor_booking/MODEL/carousel_p.dart';
 import 'package:online_doctor_booking/MODEL/category_p.dart';
 import 'package:online_doctor_booking/UI/DIAGNOSIS/diagnostics.dart';
 import 'package:online_doctor_booking/UI/DOCTOR/doctors.dart';
+import 'package:online_doctor_booking/UI/HOME/diagonsis_detail.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
 import 'package:online_doctor_booking/UI/ORDER_HISTORY/order_history.dart';
 import 'package:online_doctor_booking/UI/PROFILE/profile.dart';
@@ -230,8 +231,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
 
                       GestureDetector(
                         onTap: (){
-
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Diagnosis()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => DiagonsisDetails()));
                         },
                         child: Container(
                           margin: const EdgeInsets.only(left: 15, right: 0,top: 15),
@@ -256,10 +256,10 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Image(image: const AssetImage('assets/images/diagnosis.png'),height: size.height * 0.2,),
+                                Image(image: const AssetImage('assets/images/img_10.png'),height: size.height * 0.2,),
                                 const Padding(
                                   padding: EdgeInsets.only(top: 20),
-                                  child: Text('Diagnosis',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                                  child: Text('Diagnosis',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                                 ),
 
                               ],
@@ -300,10 +300,10 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Image(image: const AssetImage('assets/images/shop.png'),height: size.height * 0.12,),
+                                    Image(image: const AssetImage('assets/images/img_11.png'),height: size.height * 0.12,),
                                     const Padding(
                                       padding: EdgeInsets.only(top: 10),
-                                      child: Text('Shops',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                                      child: Text('Shops',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                                     ),
                                   ],
                                 ),
@@ -337,10 +337,10 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Image(image: const AssetImage('assets/images/remainder.png'),height: size.height * 0.05,),
+                                  Image(image: const AssetImage('assets/images/img_12.png'),height: size.height * 0.05,),
                                   const Padding(
                                     padding: EdgeInsets.only(top: 5),
-                                    child: Text('Book a Doctor',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                                    child: Text('Book a Doctor',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                                   ),
                                 ],
                               ),

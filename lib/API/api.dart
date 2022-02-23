@@ -4,7 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/MODEL/diagnostic.dart';
 import 'package:online_doctor_booking/MODEL/login.dart';
+import 'package:online_doctor_booking/MODEL/test_category.dart';
+import 'package:online_doctor_booking/MODEL/test_details.dart';
+import 'package:online_doctor_booking/MODEL/test_list.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
+import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 import 'package:online_doctor_booking/UI/TEST/menu_dashboard_layout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,7 +45,7 @@ Future Login(BuildContext context, {mobile, password}) async{
 
       String user_id = await loginData.data.id.toString();
       await prefs.setString('user_id', user_id);
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MenuDashboardPage()), (route) => false);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => My_Cart()), (route) => false);
     }
 
     else
@@ -101,7 +105,9 @@ Future TestCategory({diagnosticsId}) async{
   var response = await http.get(Uri.parse(url));
 
   if(response.statusCode == 200){
+    ShowTestCategoryResponse testCategory = showTestCategoryResponseFromJson(response.body);
 
+    return testCategory;
   }
 }
 
@@ -111,7 +117,9 @@ Future ShowTest({categoryName, diagnosticsId}) async{
   var response = await http.get(Uri.parse(url));
 
   if(response.statusCode == 200){
+    ShowTestListResponse testList = showTestListResponseFromJson(response.body);
 
+    return testList;
   }
 }
 
@@ -134,7 +142,8 @@ Future TestDetails({diagnosticTestId}) async{
   var response = await http.get(Uri.parse(url));
 
   if(response.statusCode == 200){
-
+    ShowTestDetailResponse testDetail = showTestDetailResponseFromJson(response.body);
+    return testDetail;
   }
 }
 

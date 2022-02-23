@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:online_doctor_booking/UI/TEST/menu_dashboard_layout.dart';
 
 import 'UI/LOGIN/login_page.dart';
 
@@ -23,7 +24,7 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
   }
 
   _loadUserInfo() async {
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MenuDashboardPage()), (route) => false);
   }
 
   @override

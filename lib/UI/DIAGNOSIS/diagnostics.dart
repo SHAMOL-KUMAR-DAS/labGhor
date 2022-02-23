@@ -5,10 +5,14 @@ import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/carousel_p.dart';
 import 'package:online_doctor_booking/MODEL/category_p.dart';
 import 'package:online_doctor_booking/UI/DOCTOR/doctors.dart';
-import 'package:online_doctor_booking/UI/PAGE/page_five.dart';
+import 'package:online_doctor_booking/UI/PAGE/test_category.dart';
 import 'package:online_doctor_booking/UI/TEST/test_list.dart';
 
 class Diagnosis extends StatelessWidget {
+
+  var diagnosisId;
+  Diagnosis({this.diagnosisId});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -19,21 +23,7 @@ class Diagnosis extends StatelessWidget {
         //centerTitle: true,
         automaticallyImplyLeading: true,
         elevation: 0,
-        actions: [
-          GestureDetector(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PageFive()));
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Row(
-                children: const [
-                  Icon(Icons.notifications_none),
-                ],
-              ),
-            ),
-          )
-        ],
+
       ),
 
       body: Column(
@@ -62,6 +52,7 @@ class Diagnosis extends StatelessWidget {
                     child: Image(
                       image: AssetImage(data[index].image),
                       fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.height * 0.80,
                     ),
                   ),
                 );
@@ -100,7 +91,7 @@ class Diagnosis extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image(image: AssetImage('assets/images/diagnosis.png'),height: size.height * 0.12,),
+                      Image(image: AssetImage('assets/images/img_7.png'),height: size.height * 0.12,),
                       const Padding(
                         padding: EdgeInsets.only(top: 20),
                         child: Text('BOOK A DOCTOR',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
@@ -114,7 +105,7 @@ class Diagnosis extends StatelessWidget {
 
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => TestList()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => TestCategories(diagnosisId: diagnosisId,)));
                 },
                 child: Container(
                   margin: EdgeInsets.only(left: 0, right: 15,top: 15),
@@ -131,14 +122,13 @@ class Diagnosis extends StatelessWidget {
                             offset: Offset(0.0, 3.0)
                         )
                       ],
-
                       borderRadius: BorderRadius.circular(8)
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image(image: AssetImage('assets/images/diagnosis.png'),height: size.height * 0.12,),
+                      Image(image: AssetImage('assets/images/img_8.png'),height: size.height * 0.12,),
                       const Padding(
                         padding: EdgeInsets.only(top: 20),
                         child: Text('TEST',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
@@ -153,56 +143,43 @@ class Diagnosis extends StatelessWidget {
 
           const Padding(
             padding: EdgeInsets.only(top: 15),
-            child: Text('Diagnostic List', textAlign: TextAlign.center,style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
+            child: Text('Health Packages', textAlign: TextAlign.center,style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
           ),
 
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
-              child: FutureBuilder(
-                future: Diagonstics(thanaName: 'Tangail Sadar'),
-                builder: (BuildContext context, AsyncSnapshot snapshot){
-                  if(snapshot.connectionState != ConnectionState.done){
-                    return CircularProgressIndicator();
-                  }
+              child: GridView.builder(
+                  itemCount: 10,
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      mainAxisExtent: 80,
+                      mainAxisSpacing: 0,
+                      crossAxisSpacing: 0,
+                      crossAxisCount: 1),
+                  itemBuilder: (BuildContext context, int index){
+                    return Card(
+                        shadowColor: colors,
+                        elevation: 4,
+                        //margin: EdgeInsets.only(top: 5),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: ListTile(
+                            title: Text('Package $index', textAlign: TextAlign.start,),
 
-                  if(snapshot.hasData){
-                    return GridView.builder(
-                        itemCount: snapshot.data.data.length,
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisExtent: 80,
-                            mainAxisSpacing: 0,
-                            crossAxisSpacing: 0,
-                            crossAxisCount: 1),
-                        itemBuilder: (BuildContext context, int index){
-                          var data = snapshot.data.data;
-                          return Card(
-                              shadowColor: colors,
-                              elevation: 4,
-                              //margin: EdgeInsets.only(top: 5),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Center(
-                                child: ListTile(
-                                    title: Text(data[index].name, textAlign: TextAlign.start,),
-                                    subtitle: Text('Contact No: ${data[index].contactMobile}'),
-                                    // trailing: CircleAvatar(
-                                    //   radius: 25,
-                                    //   backgroundColor: appBarColor,
-                                    //   backgroundImage: AssetImage(data[index].item_image),
-                                    // )
-                                ),
-                              )
-                          );
-                        });
-                  }
-                  return Container();
-                },
-              ),
+                            // trailing: CircleAvatar(
+                            //   radius: 25,
+                            //   backgroundColor: appBarColor,
+                            //   backgroundImage: AssetImage(data[index].item_image),
+                            // )
+                          ),
+                        )
+                    );
+                  })
             ),
           ),
         ],

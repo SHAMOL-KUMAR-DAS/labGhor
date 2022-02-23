@@ -34,6 +34,21 @@ class _Order_HistoryState extends State<Order_History> {
           )
         ],
       ),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Text("Transactions"),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+
+                ),
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 }

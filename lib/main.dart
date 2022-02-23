@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.mcLarenTextTheme(
             Theme.of(context).textTheme
         ),
-        primarySwatch: Colors.pink,
+        // primarySwatch: Colors.pink,
       ),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
       ],
       // home: Home(),
       home: AnimatedSplashScreen(),
+      // home: MenuDashboardPage(),
       // home: DropdownScreen(),
       // home: LoginScreen(),
       debugShowCheckedModeBanner: false,
