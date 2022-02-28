@@ -49,6 +49,36 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
     screenWidth = size.width;
 
     return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: appBarColor,
+      //  title: Text("LabGhor"),
+      //   centerTitle: true,
+      //   elevation: 0,
+      //   leading: InkWell(
+      //         child: const Icon(Icons.menu, color: Colors.white),
+      //         onTap: () {
+      //           setState(() {
+      //             if (isCollapsed)
+      //               _controller!.forward();
+      //             else
+      //               _controller!.reverse();
+      //
+      //             isCollapsed = !isCollapsed;
+      //           });
+      //         },
+      //       ),
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(right: 10),
+      //       child: Row(
+      //         children: const [
+      //           Image(image: AssetImage("assets/images/img_15.png"),height: 30,),
+      //         ],
+      //       ),
+      //     )
+      //   ],
+      //
+      // ),
       backgroundColor: backgroundColor,
       body: Stack(
         children: <Widget>[
@@ -207,7 +237,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                           height: MediaQuery.of(context).size.height * 0.14,
                           autoPlay: true,
                           autoPlayInterval: const Duration(milliseconds: 2000),
-                          viewportFraction: 0.45
+                          viewportFraction: 0.45,
                         //reverse: true
                       ),
                       itemBuilder: (context, index, realIndex) {
@@ -220,6 +250,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                             child: Image(
                               image: AssetImage(data[index].image),
                               fit: BoxFit.cover,
+                              width: double.infinity,
                             ),
                           ),
                         );
