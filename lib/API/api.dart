@@ -4,9 +4,14 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/MODEL/diagnostic.dart';
 import 'package:online_doctor_booking/MODEL/login.dart';
+import 'package:online_doctor_booking/MODEL/my_test_order_details.dart';
+import 'package:online_doctor_booking/MODEL/my_test_order_list.dart';
 import 'package:online_doctor_booking/MODEL/test_category.dart';
 import 'package:online_doctor_booking/MODEL/test_details.dart';
 import 'package:online_doctor_booking/MODEL/test_list.dart';
+import 'package:online_doctor_booking/MODEL/test_order.dart';
+import 'package:online_doctor_booking/MODEL/test_package_details.dart';
+import 'package:online_doctor_booking/MODEL/test_package_list.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
 import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 import 'package:online_doctor_booking/UI/TEST/menu_dashboard_layout.dart';
@@ -165,4 +170,109 @@ Future TestOrder({patientName, patientAddress, mobile, age, diagnosticTestId, pa
     'payment_txn'           : paymentTx,
     'payment_method'        : paymentMethod,
   });
+  
+  if(response.statusCode == 200){
+    TestOrderResponse testOrder = testOrderResponseFromJson(response.body);
+  }
+}
+
+
+//*****************************************************28/02/22*********************************************
+
+//My Test Order List
+Future MyTestOrderList() async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = (prefs.getString('token') ?? '0');
+  var user_id = (prefs.getString('user_id') ?? '0');
+  var url = '$_baseUrl/my-order-list/$user_id';
+  var response = await http.get(Uri.parse(url), headers: {
+    'Authorization' : 'Bearer $token'
+  });
+
+  if(response.statusCode == 200){
+    MyTestOrderListResponse myTestOrder = myTestOrderListResponseFromJson(response.body);
+  }
+}
+
+//My Test Order Details
+Future MyTestOrderdetails(invoice) async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = (prefs.getString('token') ?? '0');
+  var url = '$_baseUrl/my-order-details/$invoice';
+  var response = await http.get(Uri.parse(url), headers: {
+    'Authorization' : 'Bearer $token'
+  });
+
+  if(response.statusCode == 200){
+    MyTestOrderDetailsResponse myTestOrderDetail = myTestOrderDetailsResponseFromJson(response.body);
+  }
+}
+
+//Test Package List
+Future TestPackageList(diagnosticId) async{
+  var url = '$_baseUrl/diagnostic-wise-package-list/$diagnosticId';
+  var response = await http.get(Uri.parse(url));
+
+  if(response.statusCode == 200){
+    TestPackageListResponse testPackageData = testPackageListResponseFromJson(response.body);
+  }
+}
+
+//Test Package Details
+Future TestPackageDetails(packageId) async{
+  var url = '$_baseUrl/package-details/$packageId';
+  var response = await http.get(Uri.parse(url));
+
+  if(response.statusCode == 200){
+    TestPackageDetailsResponse testPackageDetailData = testPackageDetailsResponseFromJson(response.body);
+  }
+}
+
+//Package Order
+Future PackageOrder({packageId, patientName, patientAddress, patientMobile, patientAge, paymentTxn, paymentMethod}) async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = (prefs.getString('token') ?? '0');
+  var user_id = (prefs.getString('user_id') ?? '0');
+  var url = '$_baseUrl/package-order';
+  var response = await http.post(Uri.parse(url), headers: {
+    'Authorization' : 'Bearer $token'
+  }, body: {
+    'user_id'                 : user_id,
+    'package_id'              : packageId,
+    'patient_name'            : patientName,
+    'patient_address'         : patientAddress,
+    'patient_contect_mobile'  : patientMobile,
+    'patient_age'             : patientAge,
+    'payment_txn'             : paymentTxn,
+    'payment_method'          : paymentMethod,
+  });
+
+  if(response.statusCode == 200){
+
+  }
+}
+
+//My Package Order List
+Future MyPackageOrderList() async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = (prefs.getString('token') ?? '0');
+  var user_id = (prefs.getString('user_id') ?? '0');
+  var url = '$_baseUrl/my-package-order-list/$user_id';
+  var response = await http.get(Uri.parse(url), headers: {
+    'Authorization' : 'Bearer $token'
+  });
+
+  if(response.statusCode == 200){}
+}
+
+//My Package Order Details
+Future MyPackageOrderdetails(invoice) async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = (prefs.getString('token') ?? '0');
+  var url = '$_baseUrl/my-package-order-details/$invoice';
+  var response = await http.get(Uri.parse(url), headers: {
+    'Authorization' : 'Bearer $token'
+  });
+
+  if(response.statusCode == 200){}
 }
