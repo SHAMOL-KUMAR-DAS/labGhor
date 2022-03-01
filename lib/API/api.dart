@@ -104,7 +104,7 @@ Future Diagonstics({thanaName}) async{
   }
 }
 
-//Test Category (/test-category/diagnosticsId)
+//Test Category (/test-category/diagnosticsId) - COMPLETE
 Future TestCategory({diagnosticsId}) async{
   var url = '$_baseUrl/test-category/$diagnosticsId';
   var response = await http.get(Uri.parse(url));
@@ -116,7 +116,7 @@ Future TestCategory({diagnosticsId}) async{
   }
 }
 
-//Show Test List (/show-test-list/categoryName/diagnosticsId)
+//Show Test List (/show-test-list/categoryName/diagnosticsId) - COMPLETE
 Future ShowTest({categoryName, diagnosticsId}) async{
   var url = '$_baseUrl/show-test-list/$categoryName/$diagnosticsId';
   var response = await http.get(Uri.parse(url));
@@ -141,7 +141,7 @@ Future TestSearch({text, diagnosticId}) async{
   }
 }
 
-//Test Details (/test-details/diagnosticTestId)
+//Test Details (/test-details/diagnosticTestId) - COMPLETE
 Future TestDetails({diagnosticTestId}) async{
   var url = '$_baseUrl/test-details/$diagnosticTestId';
   var response = await http.get(Uri.parse(url));
@@ -175,7 +175,6 @@ Future TestOrder({patientName, patientAddress, mobile, age, diagnosticTestId, pa
     TestOrderResponse testOrder = testOrderResponseFromJson(response.body);
   }
 }
-
 
 //*****************************************************28/02/22*********************************************
 
