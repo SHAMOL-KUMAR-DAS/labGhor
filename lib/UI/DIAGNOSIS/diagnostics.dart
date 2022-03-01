@@ -27,8 +27,6 @@ class Diagnosis extends StatelessWidget {
       ),
 
       body: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //Slider
           Padding(
@@ -149,36 +147,41 @@ class Diagnosis extends StatelessWidget {
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
-              child: GridView.builder(
-                  itemCount: 10,
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: 80,
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 0,
-                      crossAxisCount: 1),
-                  itemBuilder: (BuildContext context, int index){
-                    return Card(
-                        shadowColor: colors,
-                        elevation: 4,
-                        //margin: EdgeInsets.only(top: 5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: ListTile(
-                            title: Text('Package $index', textAlign: TextAlign.start,),
+              child: FutureBuilder(
+                future: TestPackageList(diagnosticId: diagnosisId),
+                  builder: (BuildContext context, AsyncSnapshot snapshot){
+                    if(snapshot.connectionState != ConnectionState.done){
+                      return const Center(child: CircularProgressIndicator(),);
+                    }
+                    if(snapshot.hasData){
+                      return GridView.builder(
+                          itemCount: snapshot.data.data.length,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              mainAxisExtent: 80,
+                              mainAxisSpacing: 0,
+                              crossAxisSpacing: 0,
+                              crossAxisCount: 1),
+                          itemBuilder: (BuildContext context, int index){
+                            var data = snapshot.data.data[index];
+                            return Card(
+                                shadowColor: colors,
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Center(
+                                  child: ListTile(
+                                    title: Text(data.name, textAlign: TextAlign.start,),
+                                  ),
+                                )
+                            );
+                          });
+                    }
 
-                            // trailing: CircleAvatar(
-                            //   radius: 25,
-                            //   backgroundColor: appBarColor,
-                            //   backgroundImage: AssetImage(data[index].item_image),
-                            // )
-                          ),
-                        )
-                    );
+                    return Text('');
                   })
             ),
           ),

@@ -10,6 +10,9 @@ import 'package:online_doctor_booking/UI/TEST/menu_dashboard_layout.dart';
 
 class LoginScreen extends StatelessWidget {
 
+  var dTestId;
+  LoginScreen({this.dTestId});
+
   var mobile   = TextEditingController();
   var password = TextEditingController();
 
@@ -83,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                     child: RaisedButton(
                       onPressed: () {
                         Loader().showLoaderDialog(context, text: 'Loading');
-                        Login(context, mobile: mobile.text, password: password.text);
+                        Login(context, mobile: mobile.text, password: password.text, dTestId: dTestId);
                       },
                       child: const Text(
                         'Login',
@@ -107,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Dont have an account ? ',
+                    'Don\'t have an account ? ',
                     style:  TextStyle(
                         color: Colors.white70,
                         fontWeight: FontWeight.w500,

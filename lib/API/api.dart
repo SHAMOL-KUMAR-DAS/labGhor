@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:online_doctor_booking/MODEL/diagnostic.dart';
 import 'package:online_doctor_booking/MODEL/login.dart';
 import 'package:online_doctor_booking/MODEL/my_test_order_details.dart';
@@ -14,7 +13,6 @@ import 'package:online_doctor_booking/MODEL/test_package_details.dart';
 import 'package:online_doctor_booking/MODEL/test_package_list.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
 import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
-import 'package:online_doctor_booking/UI/TEST/menu_dashboard_layout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 var _baseUrl = 'https://labghorapi.bddaimond.com/api';
@@ -33,7 +31,7 @@ Future Register(BuildContext context, {name, mobile, password}) async{
 }
 
 //User Login(/user-login) - COMPLETE
-Future Login(BuildContext context, {mobile, password}) async{
+Future Login(BuildContext context, {mobile, password, dTestId}) async{
   var url = '$_baseUrl/user-login';
   var response = await http.post(Uri.parse(url), body: {
     'mobile'    : mobile,
@@ -50,7 +48,14 @@ Future Login(BuildContext context, {mobile, password}) async{
 
       String user_id = await loginData.data.id.toString();
       await prefs.setString('user_id', user_id);
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => My_Cart()), (route) => false);
+
+      String name = await loginData.data.name;
+      await prefs.setString('user_name', name);
+
+      String mobile = await loginData.data.mobile;
+      await prefs.setString('user_mobile', mobile);
+
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => My_Cart(dTestId: dTestId)), (route) => false);
     }
 
     else
@@ -153,19 +158,22 @@ Future TestDetails({diagnosticTestId}) async{
 }
 
 //Test Order (test-order)
-Future TestOrder({patientName, patientAddress, mobile, age, diagnosticTestId, paymentTx, paymentMethod}) async{
+Future TestOrder({diagnosticTestId, paymentTx, paymentMethod}) async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = (prefs.getString('token') ?? '0');
   var user_id = (prefs.getString('user_id') ?? '0');
+  var user_name = (prefs.getString('user_name') ?? '');
+  var user_mobile = (prefs.getString('user_mobile') ?? '');
+
   var url = '$_baseUrl/test-order';
   var response = await http.post(Uri.parse(url), headers: {
     'Authorization' : 'Bearer $token'
   }, body: {
     'user_id'               : user_id,
-    'patient_name'          : patientName,
-    'patient_address'       : patientAddress,
-    'patient_contect_mobile': mobile,
-    'patient_age'           : age,
+    'patient_name'          : user_name,
+    'patient_address'       : '',
+    'patient_contect_mobile': user_mobile,
+    'patient_age'           : '',
     'd_test_id'             : diagnosticTestId,
     'payment_txn'           : paymentTx,
     'payment_method'        : paymentMethod,
@@ -207,13 +215,16 @@ Future MyTestOrderdetails(invoice) async{
   }
 }
 
-//Test Package List
-Future TestPackageList(diagnosticId) async{
+//Test Package List - COMPLETE
+Future TestPackageList({diagnosticId}) async{
   var url = '$_baseUrl/diagnostic-wise-package-list/$diagnosticId';
   var response = await http.get(Uri.parse(url));
 
   if(response.statusCode == 200){
     TestPackageListResponse testPackageData = testPackageListResponseFromJson(response.body);
+
+    print(testPackageData.data[0].name);
+    return testPackageData;
   }
 }
 

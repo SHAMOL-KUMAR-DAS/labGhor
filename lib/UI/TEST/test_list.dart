@@ -4,12 +4,35 @@ import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/category_p.dart';
 import 'package:online_doctor_booking/MODEL/sub_category_p.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
+import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 import 'package:online_doctor_booking/UI/OREDER/order_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class TestList extends StatelessWidget {
+class TestList extends StatefulWidget {
 
   var category, diagnosisId;
   TestList({this.category, this.diagnosisId});
+
+  @override
+  State<TestList> createState() => _TestListState();
+}
+
+class _TestListState extends State<TestList> {
+  var count = 0;
+  var dTestId;
+
+  SharedPreferences? prefs;
+  var userId;
+  sharedPreferences() async{
+    prefs = await SharedPreferences.getInstance();
+    userId = (prefs!.getString('token') ?? "");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    sharedPreferences();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +66,7 @@ class TestList extends StatelessWidget {
               const Text('Test List', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),),
 
               FutureBuilder(
-                future: ShowTest(categoryName: category, diagnosticsId: diagnosisId),
+                future: ShowTest(categoryName: widget.category, diagnosticsId: widget.diagnosisId),
                   builder: (BuildContext context, AsyncSnapshot snapshot){
                     if(snapshot.connectionState != ConnectionState.done){
                       return const Center(child: CircularProgressIndicator(),);
@@ -63,7 +86,17 @@ class TestList extends StatelessWidget {
                           itemBuilder: (BuildContext context, int index){
                             return GestureDetector(
                               onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: snapshot.data.data[index].dTestId,)));
+
+                                setState(() {
+                                  dTestId = snapshot.data.data[index].dTestId;
+                                });
+                                if (userId == "") {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(dTestId: snapshot.data.data[index].dTestId)));
+                                }
+                                else {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>OrderPage(dTestId: snapshot.data.data[index].dTestId)));
+                                }
+
                               },
                               child: Card(
                                   shadowColor: colors,
@@ -117,7 +150,13 @@ class TestList extends StatelessWidget {
 
       bottomNavigationBar: GestureDetector(
         onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+          print('***************************************$dTestId');
+          // if (userId == "") {
+          //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(dTestId: snapshot.data.data[index].dTestId)));
+          // }
+          // else {
+          //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>OrderPage(dTestId: snapshot.data.data[index].dTestId)));
+          // }
         },
         child: Container(
           color: appBarColor,

@@ -3,7 +3,9 @@ import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/UI/ADD_ADDRESS/add_address.dart';
 
 class My_Cart extends StatefulWidget {
-  const My_Cart({Key? key}) : super(key: key);
+
+  var dTestId;
+  My_Cart({this.dTestId});
 
   @override
   _My_CartState createState() => _My_CartState();
@@ -19,7 +21,7 @@ class _My_CartState extends State<My_Cart> {
       backgroundColor: Color(0xffE5E5E5),
       appBar: AppBar(
         backgroundColor: deepBlue,
-        title: Text("My Cart"),
+        title: Text("My Cart${widget.dTestId}"),
         centerTitle: true,
         automaticallyImplyLeading: true,
       ),

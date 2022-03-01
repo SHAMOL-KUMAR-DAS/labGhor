@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
-import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
-import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+
 class OrderPage extends StatefulWidget {
+
   var dTestId;
   OrderPage({this.dTestId});
+
   @override
   State<OrderPage> createState() => _OrderPageState();
 }
@@ -20,7 +21,7 @@ class _OrderPageState extends State<OrderPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
-        title: const Text('Book', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text('Book', style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
         automaticallyImplyLeading: true,
         elevation: 0,
@@ -147,7 +148,9 @@ class _OrderPageState extends State<OrderPage> {
         child:
         GestureDetector(
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+            setState(() {
+              TestOrder(diagnosticTestId: widget.dTestId);
+            });
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
