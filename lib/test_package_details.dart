@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/UI/ADD_ADDRESS/add_address.dart';
 
-class My_Cart extends StatefulWidget {
+class PackageDetails extends StatefulWidget {
 
-  var dTestId;
-  My_Cart({this.dTestId});
+  var testPackage;
+  PackageDetails({this.testPackage});
 
   @override
-  _My_CartState createState() => _My_CartState();
+  _PackageDetailsState createState() => _PackageDetailsState();
 }
 
-class _My_CartState extends State<My_Cart> {
+class _PackageDetailsState extends State<PackageDetails> {
+
   int _currentAmount = 0;
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class _My_CartState extends State<My_Cart> {
       backgroundColor: Color(0xffE5E5E5),
       appBar: AppBar(
         backgroundColor: deepBlue,
-        title: Text("My Cart"),
+        title: Text("${widget.testPackage} Details"),
         centerTitle: true,
         automaticallyImplyLeading: true,
       ),
@@ -29,7 +30,7 @@ class _My_CartState extends State<My_Cart> {
         children: [
           GestureDetector(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Add_Address()));
+              //Navigator.push(context, MaterialPageRoute(builder: (context)=>Add_Address()));
             },
             child: Container(
               padding: EdgeInsets.only(top: 10),

@@ -1,14 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:online_doctor_booking/UI/HOME/home_page.dart';
-import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
-import 'package:online_doctor_booking/UI/TEST/menu_dashboard_layout.dart';
 import 'package:online_doctor_booking/splash.dart';
 import 'package:online_doctor_booking/test.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'UI/SIGNUP/signup_page.dart';
 
 
 void main() {
@@ -39,11 +34,8 @@ class MyApp extends StatelessWidget {
         const Locale('en', 'US'), // English
         const Locale('th', 'TH'), // Thai
       ],
-      // home: Home(),
       home: AnimatedSplashScreen(),
-      // home: MenuDashboardPage(),
-      // home: DropdownScreen(),
-      // home: LoginScreen(),
+      //home: Testing(),
       debugShowCheckedModeBanner: false,
     );
   }

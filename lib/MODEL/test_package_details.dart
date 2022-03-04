@@ -17,14 +17,14 @@ class TestPackageDetailsResponse {
 
   factory TestPackageDetailsResponse.fromJson(Map<String, dynamic> json) => TestPackageDetailsResponse(
     result: json["result"],
-    mgs: json["mgs"],
-    data: Data.fromJson(json["data"]),
+    mgs   : json["mgs"],
+    data  : Data.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {
     "result": result,
-    "mgs": mgs,
-    "data": data.toJson(),
+    "mgs"   : mgs,
+    "data"  : data.toJson(),
   };
 }
 
@@ -44,7 +44,7 @@ class Data {
 
   Map<String, dynamic> toJson() => {
     "packageInfo": packageInfo.toJson(),
-    "testList": List<dynamic>.from(testList.map((x) => x.toJson())),
+    "testList"   : List<dynamic>.from(testList.map((x) => x.toJson())),
   };
 }
 
@@ -65,18 +65,18 @@ class PackageInfo {
 
   factory PackageInfo.fromJson(Map<String, dynamic> json) => PackageInfo(
     packageId: json["package_id"] ?? '',
-    name: json["name"] ?? '',
-    mrp: json["mrp"] ?? '',
+    name     : json["name"] ?? '',
+    mrp      : json["mrp"] ?? '',
     sellPrice: json["sell_price"] ?? '',
-    details: json["details"] ?? '',
+    details  : json["details"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
     "package_id": packageId,
-    "name": name,
-    "mrp": mrp,
+    "name"      : name,
+    "mrp"       : mrp,
     "sell_price": sellPrice,
-    "details": details,
+    "details"   : details,
   };
 }
 
@@ -90,12 +90,12 @@ class TestList {
   var testName;
 
   factory TestList.fromJson(Map<String, dynamic> json) => TestList(
-    testId: json["test_id"] ?? '',
+    testId  : json["test_id"] ?? '',
     testName: json["test_name"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
-    "test_id": testId,
+    "test_id"  : testId,
     "test_name": testName,
   };
 }

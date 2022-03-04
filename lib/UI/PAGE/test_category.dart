@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
-import 'package:online_doctor_booking/MODEL/category_p.dart';
 import 'package:online_doctor_booking/UI/TEST/test_list.dart';
 
 class TestCategories extends StatelessWidget {

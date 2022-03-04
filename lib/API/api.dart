@@ -164,19 +164,19 @@ Future TestOrder({diagnosticTestId, paymentTx, paymentMethod}) async{
   var user_id = (prefs.getString('user_id') ?? '0');
   var user_name = (prefs.getString('user_name') ?? '');
   var user_mobile = (prefs.getString('user_mobile') ?? '');
+  paymentTx     = '535345324D3';
+  paymentMethod = 'Bkash';
 
   var url = '$_baseUrl/test-order';
   var response = await http.post(Uri.parse(url), headers: {
     'Authorization' : 'Bearer $token'
   }, body: {
     'user_id'               : user_id,
-    'patient_name'          : user_name,
-    'patient_address'       : '',
-    'patient_contect_mobile': user_mobile,
-    'patient_age'           : '',
-    'd_test_id'             : diagnosticTestId,
     'payment_txn'           : paymentTx,
     'payment_method'        : paymentMethod,
+    'patient_address'       : '',
+    'patient_contect_mobile': user_mobile,
+    'cart_items'            : user_name,
   });
   
   if(response.statusCode == 200){
@@ -229,12 +229,16 @@ Future TestPackageList({diagnosticId}) async{
 }
 
 //Test Package Details
-Future TestPackageDetails(packageId) async{
+Future TestPackageDetails({packageId}) async{
   var url = '$_baseUrl/package-details/$packageId';
   var response = await http.get(Uri.parse(url));
 
   if(response.statusCode == 200){
     TestPackageDetailsResponse testPackageDetailData = testPackageDetailsResponseFromJson(response.body);
+    print('************************************************');
+    print(testPackageDetailData.data.testList[1].testName);
+    return testPackageDetailData;
+
   }
 }
 

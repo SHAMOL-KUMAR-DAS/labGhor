@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
-import 'package:online_doctor_booking/MODEL/category_p.dart';
-import 'package:online_doctor_booking/MODEL/sub_category_p.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
-import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 import 'package:online_doctor_booking/UI/OREDER/order_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TestList extends StatefulWidget {
 
-  var category, diagnosisId;
-  TestList({this.category, this.diagnosisId});
+  var category, diagnosisId, packageId;
+  TestList({this.category, this.diagnosisId, this.packageId});
 
   @override
   State<TestList> createState() => _TestListState();
@@ -65,6 +62,7 @@ class _TestListState extends State<TestList> {
             children: [
               const Text('Test List', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),),
 
+              widget.diagnosisId != null ?
               FutureBuilder(
                 future: ShowTest(categoryName: widget.category, diagnosticsId: widget.diagnosisId),
                   builder: (BuildContext context, AsyncSnapshot snapshot){
@@ -113,6 +111,66 @@ class _TestListState extends State<TestList> {
                                       ),
                                       title: Text(snapshot.data.data[index].name, textAlign: TextAlign.start,),
                                       subtitle: Text(snapshot.data.data[index].mrp, textAlign: TextAlign.start,),
+                                      trailing: Icon(Icons.radio_button_off),
+                                    ),
+                                  )
+                              ),
+                            );
+                          });
+                    }
+
+                    return Text('');
+                  })
+              :
+              FutureBuilder(
+                  future: TestPackageDetails(packageId: widget.packageId),
+                  builder: (BuildContext context, AsyncSnapshot snapshot){
+                    if(snapshot.connectionState != ConnectionState.done){
+                      return const Center(child: CircularProgressIndicator(),);
+                    }
+
+                    if(snapshot.hasData){
+                      return GridView.builder(
+                          itemCount: snapshot.data.data.testList.length,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              mainAxisExtent: 80,
+                              mainAxisSpacing: 0,
+                              crossAxisSpacing: 0,
+                              crossAxisCount: 1),
+                          itemBuilder: (BuildContext context, int index){
+                            return GestureDetector(
+                              onTap: (){
+
+                                // setState(() {
+                                //   dTestId = snapshot.data.data[index].dTestId;
+                                // });
+                                // if (userId == "") {
+                                //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(dTestId: snapshot.data.data[index].dTestId)));
+                                // }
+                                // else {
+                                //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>OrderPage(dTestId: snapshot.data.data[index].dTestId)));
+                                // }
+
+                              },
+                              child: Card(
+                                  shadowColor: colors,
+                                  elevation: 4,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Center(
+                                    child: ListTile(
+                                      leading: CircleAvatar(
+                                        radius: 25,
+                                        backgroundColor: appBarColor,
+                                        backgroundImage: AssetImage('assets/images/demo1.png'),
+                                      ),
+                                      //title: Text(snapshot.data.data[index].name, textAlign: TextAlign.start,),
+                                      title: Text(snapshot.data.data.testList[index].testName, textAlign: TextAlign.start,),
+                                     // subtitle: Text(snapshot.data.data[index].mrp, textAlign: TextAlign.start,),
                                       trailing: Icon(Icons.radio_button_off),
                                     ),
                                   )

@@ -15,6 +15,9 @@ class OrderPage extends StatefulWidget {
 class _OrderPageState extends State<OrderPage> {
   var rating = 0.0;
 
+  final List dTestId  = [];
+  final List quantity = [];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

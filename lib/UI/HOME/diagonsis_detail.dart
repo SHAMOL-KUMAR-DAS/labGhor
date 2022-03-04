@@ -50,14 +50,14 @@ class DiagonsisDetails extends StatelessWidget {
                 )
             ),
             child: Row(
-              children: const[
+              children: [
                 Padding(
                   padding: EdgeInsets.only(left: 10),
                   child: Icon(Icons.search),
                 ),
                 Text('    Search'),
                 Padding(
-                  padding: EdgeInsets.only(left: 215),
+                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.56),
                   child: Image(image: AssetImage("assets/images/img_6.png"),height: 25,width: 30,),
                 ),
               ],
@@ -113,8 +113,8 @@ class DiagonsisDetails extends StatelessWidget {
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
                                   physics: BouncingScrollPhysics(),
-                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                      mainAxisExtent: 150,
+                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                      mainAxisExtent: size.height * 0.18,
                                       mainAxisSpacing: 10,
                                       crossAxisSpacing: 0,
                                       crossAxisCount: 2),
@@ -142,7 +142,7 @@ class DiagonsisDetails extends StatelessWidget {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(top: 3, bottom: 2),
-                                              child: Text(snapshot.data.data[index].name, style: TextStyle(fontSize: 12,color: Colors.black),textAlign: TextAlign.center,),
+                                              child: Text(' ${snapshot.data.data[index].name} ', style: TextStyle(fontSize: 12,color: Colors.black),textAlign: TextAlign.center,),
                                             ),
                                             Text(snapshot.data.data[index].branchName, style: TextStyle(color: Colors.green),)
                                           ],

@@ -1,12 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/carousel_p.dart';
-import 'package:online_doctor_booking/MODEL/category_p.dart';
 import 'package:online_doctor_booking/UI/DOCTOR/doctors.dart';
 import 'package:online_doctor_booking/UI/PAGE/test_category.dart';
 import 'package:online_doctor_booking/UI/TEST/test_list.dart';
+import 'package:online_doctor_booking/test_package_details.dart';
 
 class Diagnosis extends StatelessWidget {
 
@@ -20,7 +21,6 @@ class Diagnosis extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: appBarColor,
         title: Text('Diagnostics', style: TextStyle(fontWeight: FontWeight.bold),),
-        //centerTitle: true,
         automaticallyImplyLeading: true,
         elevation: 0,
 
@@ -58,11 +58,13 @@ class Diagnosis extends StatelessWidget {
             ),
           ),
 
-           Text('Services',textAlign: TextAlign.start,style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
+          //Services
+          Text('Services',textAlign: TextAlign.start,style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
 
+          //Book a Doctor
           Row(
             children: [
-
+              //Book a Doctor
               GestureDetector(
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context) => Doctors()));
@@ -99,8 +101,9 @@ class Diagnosis extends StatelessWidget {
                   ),
                 ),
               ),
-              Spacer(),
 
+              Spacer(),
+              //Test
               GestureDetector(
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context) => TestCategories(diagnosisId: diagnosisId,)));
@@ -139,11 +142,13 @@ class Diagnosis extends StatelessWidget {
             ],
           ),
 
-          const Padding(
+          //Health Packages
+          Padding(
             padding: EdgeInsets.only(top: 15),
             child: Text('Health Packages', textAlign: TextAlign.center,style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
           ),
 
+          //Health Package View
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
@@ -166,17 +171,22 @@ class Diagnosis extends StatelessWidget {
                               crossAxisCount: 1),
                           itemBuilder: (BuildContext context, int index){
                             var data = snapshot.data.data[index];
-                            return Card(
-                                shadowColor: colors,
-                                elevation: 4,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Center(
-                                  child: ListTile(
-                                    title: Text(data.name, textAlign: TextAlign.start,),
+                            return GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => TestList(packageId: data.packageId,)));
+                              },
+                              child: Card(
+                                  shadowColor: colors,
+                                  elevation: 4,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                )
+                                  child: Center(
+                                    child: ListTile(
+                                      title: Text(data.name, textAlign: TextAlign.start,),
+                                    ),
+                                  )
+                              ),
                             );
                           });
                     }
