@@ -151,11 +151,11 @@ class _TestListState extends State<TestList> {
               {
           if (userId == "") {
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(product: product,
-              price: price, total: sum, productId: productId, item: 'single',)))
+              price: price, total: sum, productId: productId,)))
           }
           else {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>My_Cart(product: product,
-          price: price, total: sum, productId: productId, item: 'single',)))
+          price: price, total: sum, productId: productId,)))
           }
               } : {
 
@@ -236,11 +236,11 @@ class _TestListState extends State<TestList> {
             onTap: (){
               if (userId == "") {
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(productId: contacts[index].name,
-                price: contacts[index].mrp, total: '0', product: contacts[index].id,)));
+                price: contacts[index].mrp, total: '0', product: contacts[index].id, item: 'single',)));
               }
               else {
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => My_Cart(product: contacts[index].name,
-                  price: contacts[index].mrp, total: '0', productId: contacts[index].id,)));
+                  price: contacts[index].mrp, total: '0', productId: contacts[index].id, item: 'single')));
               }
             },
           ),
