@@ -34,7 +34,7 @@ Future Register(BuildContext context, {name, mobile, password}) async{
 }
 
 //User Login(/user-login) - COMPLETE
-Future Login(BuildContext context, {mobile, password, dTestId}) async{
+Future Login(BuildContext context, {mobile, password, dTestId, productId, product, price, total, item}) async{
   var url = '$_baseUrl/user-login';
   var response = await http.post(Uri.parse(url), body: {
     'mobile'    : mobile,
@@ -58,7 +58,8 @@ Future Login(BuildContext context, {mobile, password, dTestId}) async{
       String mobile = await loginData.data.mobile;
       await prefs.setString('user_mobile', mobile);
 
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => My_Cart(dTestId: dTestId)), (route) => false);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => My_Cart(dTestId: dTestId, product: product,
+      price: price, productId: productId, total: total, item: item,)));
     }
 
     else

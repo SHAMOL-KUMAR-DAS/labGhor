@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/test_list.dart';
+import 'package:online_doctor_booking/UI/ADD_ADDRESS/add_address.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
 import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 import 'package:online_doctor_booking/UI/OREDER/order_page.dart';
@@ -42,14 +43,15 @@ class _TestListState extends State<TestList> {
 
       for (var i=0; i< test.length; i++){
         setState(() {
-          contacts.add(ContactModel(test[i].name, test[i].mrp, false));
+          contacts.add(ContactModel(test[i].name, test[i].mrp, test[i].testId, false));
         });}
       return testList;
     }
   }
 
-  List price   = [];
-  List product = [];
+  List price      = [];
+  List product    = [];
+  List productId  = [];
   var sum = 0;
   var count = 0;
 
@@ -88,6 +90,19 @@ class _TestListState extends State<TestList> {
         child: Container(
           child: Column(
             children: [
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Add_Address()));
+                },
+                child: Container(
+                  padding: EdgeInsets.only(top: 10),
+                  height: size.height*.08,
+                  width: size.width,
+                  color: Colors.white,
+                  child: Text("+ Add New Address",textAlign: TextAlign.center,style: TextStyle(fontSize: 16),),
+                ),
+              ),
+
               Expanded(
                 child: ListView.builder(
                     itemCount: contacts.length,
@@ -96,6 +111,7 @@ class _TestListState extends State<TestList> {
                       return ContactItem(
                         contacts[index].name,
                         contacts[index].mrp,
+                        contacts[index].id,
                         contacts[index].isSelected,
                         index,
                       );
@@ -131,16 +147,20 @@ class _TestListState extends State<TestList> {
 
       bottomNavigationBar: GestureDetector(
         onTap: (){
-          print('***************************************$price');
-          print('***************************************$product');
-          print('***************************************${selectedContacts.length}');
+          selectedContacts.length >= 1 ?
+              {
           if (userId == "") {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(product: product,
+              price: price, total: sum, productId: productId, item: 'single',)))
           }
           else {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>OrderPage(product: product,
-              price: price, total: sum,)));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>My_Cart(product: product,
+          price: price, total: sum, productId: productId, item: 'single',)))
           }
+              } : {
+
+          };
+
         },
         child: Container(
           color: appBarColor,
@@ -159,7 +179,7 @@ class _TestListState extends State<TestList> {
   }
 
   Widget ContactItem(
-      String name, String phoneNumber, bool isSelected, int index) {
+      String name, String phoneNumber, String id, bool isSelected, int index) {
 
     return Card(
         shadowColor: colors,
@@ -184,15 +204,17 @@ class _TestListState extends State<TestList> {
                 setState(() {
                   contacts[index].isSelected = !contacts[index].isSelected;
                   if (contacts[index].isSelected == true) {
-                    selectedContacts.add(ContactModel(name, phoneNumber, true));
+                    selectedContacts.add(ContactModel(name, phoneNumber, id, true));
                     price.add(contacts[index].mrp);
                     product.add(contacts[index].name);
+                    productId.add(contacts[index].id);
                     sum = sum + int.parse(contacts[index].mrp);
                   }
 
                   else if (contacts[index].isSelected == false) {
                     price.remove(contacts[index].mrp);
                     product.remove(contacts[index].name);
+                    productId.remove(contacts[index].id);
                     sum = sum - int.parse(contacts[index].mrp);
                     selectedContacts
                         .removeWhere((element) => element.name == contacts[index].name);
@@ -212,8 +234,14 @@ class _TestListState extends State<TestList> {
             ),
 
             onTap: (){
-              print('Shamol');
-              Navigator.push(context, MaterialPageRoute(builder: (context) => My_Cart()));
+              if (userId == "") {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(productId: contacts[index].name,
+                price: contacts[index].mrp, total: '0', product: contacts[index].id,)));
+              }
+              else {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => My_Cart(product: contacts[index].name,
+                  price: contacts[index].mrp, total: '0', productId: contacts[index].id,)));
+              }
             },
           ),
         )
@@ -223,9 +251,9 @@ class _TestListState extends State<TestList> {
 
 class ContactModel{
 
-  String name, mrp;
+  String name, mrp, id;
   bool isSelected;
 
-  ContactModel(this.name, this.mrp, this.isSelected);
+  ContactModel(this.name, this.mrp, this.id, this.isSelected);
 
 }

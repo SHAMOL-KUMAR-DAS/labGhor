@@ -5,8 +5,8 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class OrderPage extends StatefulWidget {
 
-  var dTestId, product, price, total;
-  OrderPage({this.dTestId, this.product, this.price, this.total});
+  var dTestId;
+  OrderPage({this.dTestId});
 
   @override
   State<OrderPage> createState() => _OrderPageState();
@@ -40,137 +40,109 @@ class _OrderPageState extends State<OrderPage> {
         ],
       ),
 
-      body: ListView.builder(
-          itemCount: widget.product.length,
-          itemBuilder: (BuildContext context, int index) {
-            // return item
-            return Card(
-                shadowColor: colors,
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 25,
-                      backgroundColor: appBarColor,
-                      backgroundImage: AssetImage('assets/images/demo1.png'),
+      body: FutureBuilder(
+        future: TestDetails(diagnosticTestId: widget.dTestId),
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          if(snapshot.connectionState != ConnectionState.done){
+            return const Center(child: CircularProgressIndicator(),);
+          }
+          if(snapshot.hasData){
+            return  SingleChildScrollView(
+              child: Container(
+                // margin: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
+                child:
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children:  [
+                    Image.asset('assets/images/img_9.png',width: MediaQuery.of(context).size.width,fit: BoxFit.cover,height:  MediaQuery.of(context).size.height*.3,),
+                    Padding(
+                      padding:  EdgeInsets.only(left: 18.0,right: 16.0,top: 14.0,bottom: 14),
+                      child:  Text(snapshot.data.data[0].name, style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700,color: Colors.grey),),
                     ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      decoration: BoxDecoration(
+                          color: const Color(0xffe8f6fd),
+                          border: Border.all(
+                            color: const Color(0xffe8f6fd),
+                          ),
+                          borderRadius: const BorderRadius.all(Radius.circular(20))
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 18.0,right: 16.0,top: 10.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Card(
+                                  color: Color(0xffd4f0ff),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                  child:
+                                  Padding(
+                                    padding: const EdgeInsets.all(7.0),
+                                    child: Row(
+                                      children: [
+                                        Text(' ${snapshot.data.data[0].sellPrice} ৳ ', style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700),),
+                                        Text('/ piece ', style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.grey),),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Card(
+                                  color: Color(0xffd4f0ff),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(7.0),
+                                    child: Image.asset('assets/images/love.png',width: MediaQuery.of(context).size.width*.1,color: Color(0xff1b92ff),),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
+                              child: SmoothStarRating(
+                                  rating: rating,
+                                  size: 40,
+                                  starCount: 5,
+                                  allowHalfRating: false,
+                                  onRated: (v) {
+                                    setState(() {
+                                      rating = v;
+                                    });
+                                  },
+                                  // isReadOnly:true,
+                                  color: Color(0xff1b92ff),
+                                  borderColor: Color(0xff1b92ff),
+                                  spacing:0.0
+                              ),
+                            ),
+                            Flexible(child: Text('Description: \n${snapshot.data.data[0].details}', style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700,color: Colors.grey),)),
+                            SizedBox(height: MediaQuery.of(context).size.height*.1,),
+                            Text('Category: ${snapshot.data.data[0].category}', style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700,color: Colors.grey),),
 
-                    title: Text(widget.product[index], textAlign: TextAlign.start,),
+                          ],
+                        ),
+                      ),
+                    )
 
-                    subtitle: Text(widget.price[index], textAlign: TextAlign.start,),
 
-                  ),
-                )
+                  ],
+                ),
+              ),
             );
-          }),
-
-      // FutureBuilder(
-      //   future: TestDetails(diagnosticTestId: widget.dTestId),
-      //   builder: (BuildContext context, AsyncSnapshot snapshot){
-      //     if(snapshot.connectionState != ConnectionState.done){
-      //       return const Center(child: CircularProgressIndicator(),);
-      //     }
-      //     if(snapshot.hasData){
-      //       return  SingleChildScrollView(
-      //         child: Container(
-      //           // margin: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
-      //           child:
-      //           Column(
-      //             mainAxisAlignment: MainAxisAlignment.start,
-      //             crossAxisAlignment: CrossAxisAlignment.start,
-      //             children:  [
-      //               Image.asset('assets/images/img_9.png',width: MediaQuery.of(context).size.width,fit: BoxFit.cover,height:  MediaQuery.of(context).size.height*.3,),
-      //                Padding(
-      //                 padding:  EdgeInsets.only(left: 18.0,right: 16.0,top: 14.0,bottom: 14),
-      //                 child:  Text(snapshot.data.data[0].name, style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700,color: Colors.grey),),
-      //               ),
-      //               Container(
-      //                 width: MediaQuery.of(context).size.width,
-      //                 height: MediaQuery.of(context).size.height,
-      //                 decoration: BoxDecoration(
-      //                     color: const Color(0xffe8f6fd),
-      //                     border: Border.all(
-      //                       color: const Color(0xffe8f6fd),
-      //                     ),
-      //                     borderRadius: const BorderRadius.all(Radius.circular(20))
-      //                 ),
-      //                 child: Padding(
-      //                   padding: const EdgeInsets.only(left: 18.0,right: 16.0,top: 10.0),
-      //                   child: Column(
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     crossAxisAlignment: CrossAxisAlignment.start,
-      //                     children: [
-      //                       Row(
-      //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                         children: [
-      //                           Card(
-      //                             color: Color(0xffd4f0ff),
-      //                             shape: RoundedRectangleBorder(
-      //                               borderRadius: BorderRadius.circular(14),
-      //                             ),
-      //                             child:
-      //                             Padding(
-      //                               padding: const EdgeInsets.all(7.0),
-      //                               child: Row(
-      //                                 children: [
-      //                                   Text(' ${snapshot.data.data[0].sellPrice} ৳ ', style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700),),
-      //                                   Text('/ piece ', style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.grey),),
-      //                                 ],
-      //                               ),
-      //                             ),
-      //                           ),
-      //                           Card(
-      //                             color: Color(0xffd4f0ff),
-      //                             shape: RoundedRectangleBorder(
-      //                               borderRadius: BorderRadius.circular(14),
-      //                             ),
-      //                             child: Padding(
-      //                               padding: const EdgeInsets.all(7.0),
-      //                               child: Image.asset('assets/images/love.png',width: MediaQuery.of(context).size.width*.1,color: Color(0xff1b92ff),),
-      //                             ),
-      //                           ),
-      //                         ],
-      //                       ),
-      //                       Padding(
-      //                         padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
-      //                         child: SmoothStarRating(
-      //                             rating: rating,
-      //                             size: 40,
-      //                             starCount: 5,
-      //                             allowHalfRating: false,
-      //                             onRated: (v) {
-      //                               setState(() {
-      //                                 rating = v;
-      //                               });
-      //                             },
-      //                             // isReadOnly:true,
-      //                             color: Color(0xff1b92ff),
-      //                             borderColor: Color(0xff1b92ff),
-      //                             spacing:0.0
-      //                         ),
-      //                       ),
-      //                        Flexible(child: Text('Description: \n${snapshot.data.data[0].details}', style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700,color: Colors.grey),)),
-      //                       SizedBox(height: MediaQuery.of(context).size.height*.1,),
-      //                        Text('Category: ${snapshot.data.data[0].category}', style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700,color: Colors.grey),),
-      //
-      //                     ],
-      //                   ),
-      //                 ),
-      //               )
-      //
-      //
-      //             ],
-      //           ),
-      //         ),
-      //       );
-      //     }
-      //     return Text('');
-      //   },
-      // ),
-
+          }
+          return Text('');
+        },
+      ),
 
       bottomNavigationBar: Container(
         color: appBarColor,
@@ -186,12 +158,8 @@ class _OrderPageState extends State<OrderPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children:  [
-              Spacer(),
-              Text('Total: ${widget.total}'),
-              Spacer(),
               Icon(Icons.shopping_cart_outlined, color: Colors.blue,),
               Text('Add To Payment'),
-              Spacer()
             ],
           ),
         ),
