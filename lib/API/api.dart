@@ -139,7 +139,7 @@ Future TestSearch({text, diagnosticId}) async{
 }
 
 //Test Details (/test-details/diagnosticTestId) - COMPLETE
-Future TestDetails({diagnosticTestId}) async{
+Future  TestDetails({diagnosticTestId}) async{
   var url = '$_baseUrl/test-details/$diagnosticTestId';
   var response = await http.get(Uri.parse(url));
 

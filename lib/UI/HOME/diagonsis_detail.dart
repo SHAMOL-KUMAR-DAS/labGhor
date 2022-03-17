@@ -119,9 +119,10 @@ class DiagonsisDetails extends StatelessWidget {
                                       crossAxisSpacing: 0,
                                       crossAxisCount: 2),
                                   itemBuilder: (BuildContext context, int index){
+                                    var data = snapshot.data.data[index];
                                     return GestureDetector(
                                       onTap: (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Diagnosis(diagnosisId: snapshot.data.data[index].id,)));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Diagnosis(diagnosisId: data.id,diagnosisName: data.name,)));
                                       },
                                       child:
                                       Card(
@@ -142,9 +143,9 @@ class DiagonsisDetails extends StatelessWidget {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(top: 3, bottom: 2),
-                                              child: Text(' ${snapshot.data.data[index].name} ', style: TextStyle(fontSize: 12,color: Colors.black),textAlign: TextAlign.center,),
+                                              child: Text(' ${data.name} ', style: TextStyle(fontSize: 12,color: Colors.black),textAlign: TextAlign.center,),
                                             ),
-                                            Text(snapshot.data.data[index].branchName, style: TextStyle(color: Colors.green),)
+                                            Text(data.branchName, style: TextStyle(color: Colors.green),)
                                           ],
                                         ),
                                       ),

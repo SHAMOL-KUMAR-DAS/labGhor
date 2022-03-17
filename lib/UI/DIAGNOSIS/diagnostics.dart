@@ -11,8 +11,8 @@ import 'package:online_doctor_booking/test_package_details.dart';
 
 class Diagnosis extends StatelessWidget {
 
-  var diagnosisId;
-  Diagnosis({this.diagnosisId});
+  var diagnosisId, diagnosisName;
+  Diagnosis({this.diagnosisId, this.diagnosisName});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class Diagnosis extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
-        title: Text('Diagnostics', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text('${diagnosisName}', style: TextStyle(fontWeight: FontWeight.bold),),
         automaticallyImplyLeading: true,
         elevation: 0,
 

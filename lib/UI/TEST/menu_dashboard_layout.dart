@@ -49,36 +49,6 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
     screenWidth = size.width;
 
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: appBarColor,
-      //  title: Text("LabGhor"),
-      //   centerTitle: true,
-      //   elevation: 0,
-      //   leading: InkWell(
-      //         child: const Icon(Icons.menu, color: Colors.white),
-      //         onTap: () {
-      //           setState(() {
-      //             if (isCollapsed)
-      //               _controller!.forward();
-      //             else
-      //               _controller!.reverse();
-      //
-      //             isCollapsed = !isCollapsed;
-      //           });
-      //         },
-      //       ),
-      //   actions: [
-      //     Padding(
-      //       padding: const EdgeInsets.only(right: 10),
-      //       child: Row(
-      //         children: const [
-      //           Image(image: AssetImage("assets/images/img_15.png"),height: 30,),
-      //         ],
-      //       ),
-      //     )
-      //   ],
-      //
-      // ),
       backgroundColor: backgroundColor,
       body: Stack(
         children: <Widget>[
@@ -444,46 +414,40 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                   const Divider(
                     thickness: 2,
                   ),
-                  SizedBox(
-                    height:size.height * 0.15,
-                    child: Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 10),
-                      child: GridView.builder(
-                          itemCount: Category().lists.length,
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisExtent: 115,
-                              mainAxisSpacing: 20,
-                              crossAxisSpacing: 0,
-                              crossAxisCount: 1),
-                          itemBuilder: (BuildContext context, int index){
-                            var data = Category().lists;
-                            return Card(
-                              shadowColor: colors,
-                              elevation: 4,
-                              //margin: EdgeInsets.only(top: 5),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+
+                  GridView.builder(
+                      itemCount: Category().lists.length,
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          mainAxisExtent: 115,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 0,
+                          crossAxisCount: 3),
+                      itemBuilder: (BuildContext context, int index){
+                        var data = Category().lists;
+                        return Card(
+                          //shadowColor: colors,
+                          elevation: 4,
+                          //margin: EdgeInsets.only(top: 5),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 2, bottom: 2,left: 2,right: 2),
+                                child: Image(
+                                  image: AssetImage(data[index].item_image),
+                                  height: size.height * 0.05,
+                                ),
                               ),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 2, bottom: 2,left: 2,right: 2),
-                                    child: Image(
-                                      image: AssetImage(data[index].item_image),
-                                      height: size.height * 0.05,
-                                    ),
-                                  ),
-                                  Flexible(child: Text(data[index].item_name, style: const TextStyle(fontSize: 12,color: Colors.black),textAlign: TextAlign.center,))
-                                ],
-                              ),
-                            );
-                          }),
-                    ),
-                  )
+                              Flexible(child: Text(data[index].item_name, style: const TextStyle(fontSize: 12,color: Colors.black),textAlign: TextAlign.center,))
+                            ],
+                          ),
+                        );
+                      })
 
 
 

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   String hint;
   bool issecured;
-  var controller, maxLength;
+  var controller, maxLength, keyboardType;
 
-  CustomTextField({Key? key, required this.hint, required this.issecured, this.controller, this.maxLength}) : super(key: key);
+  CustomTextField({Key? key, required this.hint, required this.issecured, this.controller, this.maxLength, this.keyboardType}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
         child: TextField(obscureText: issecured,
           controller: controller,
           cursorColor: Colors.white,
+          keyboardType: keyboardType ?? null,
           style: const TextStyle(color: Colors.white),
           maxLength: maxLength,
           decoration: InputDecoration(

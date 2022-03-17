@@ -62,6 +62,7 @@ class LoginScreen extends StatelessWidget {
                 issecured: false,
                 controller: mobile,
                 maxLength: 11,
+                keyboardType: TextInputType.phone,
               ),
               const SizedBox(
                 height: 15,

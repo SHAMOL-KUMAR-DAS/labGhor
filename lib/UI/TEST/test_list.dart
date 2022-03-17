@@ -3,6 +3,7 @@ import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/test_list.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
+import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 import 'package:online_doctor_booking/UI/OREDER/order_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -110,33 +111,6 @@ class _TestListState extends State<TestList> {
               ),
 
               selectedContacts.length > 0 ?
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(
-              //     horizontal: 25,
-              //     vertical: 10,
-              //   ),
-              //   child: SizedBox(
-              //     width: double.infinity,
-              //     child: RaisedButton(
-              //       color: Colors.green[700],
-              //       child: Text(
-              //         "Delete (${selectedContacts.length})",
-              //         style: TextStyle(
-              //           color: Colors.white,
-              //           fontSize: 18,
-              //         ),
-              //       ),
-              //       onPressed: () {
-              //         print("Delete List Lenght: ${selectedContacts.length}");
-              //         for(var i = 0; i< selectedContacts.length; i++){
-              //           print('Name: ${selectedContacts[i].name}');
-              //           print('Name: ${selectedContacts[i].mrp}');
-              //         }
-              //       },
-              //     ),
-              //   ),
-              // )
-
               Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -160,12 +134,13 @@ class _TestListState extends State<TestList> {
           print('***************************************$price');
           print('***************************************$product');
           print('***************************************${selectedContacts.length}');
-          // if (userId == "") {
-          //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(dTestId: snapshot.data.data[index].dTestId)));
-          // }
-          // else {
-          //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>OrderPage(dTestId: snapshot.data.data[index].dTestId)));
-          // }
+          if (userId == "") {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+          }
+          else {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>OrderPage(product: product,
+              price: price, total: sum,)));
+          }
         },
         child: Container(
           color: appBarColor,
@@ -204,36 +179,41 @@ class _TestListState extends State<TestList> {
 
             subtitle: Text(phoneNumber, textAlign: TextAlign.start,),
 
-            trailing: isSelected ?
-            Icon(
-              Icons.radio_button_checked,
-              color: Colors.green[700],
-            )
-                : Icon(
-              Icons.radio_button_off,
-              color: Colors.grey,
-            ),
-            onTap: (){
-              print('Shamol: ${contacts[index].mrp}');
-              setState(() {
-                contacts[index].isSelected = !contacts[index].isSelected;
-                if (contacts[index].isSelected == true) {
-                  selectedContacts.add(ContactModel(name, phoneNumber, true));
-                   price.add(contacts[index].mrp);
-                   product.add(contacts[index].name);
-                  sum = sum + int.parse(contacts[index].mrp);
-                  // count ++;
-                }
+            trailing: GestureDetector(
+              onTap: (){
+                setState(() {
+                  contacts[index].isSelected = !contacts[index].isSelected;
+                  if (contacts[index].isSelected == true) {
+                    selectedContacts.add(ContactModel(name, phoneNumber, true));
+                    price.add(contacts[index].mrp);
+                    product.add(contacts[index].name);
+                    sum = sum + int.parse(contacts[index].mrp);
+                  }
 
-                else if (contacts[index].isSelected == false) {
-                  price.remove(contacts[index].mrp);
-                  product.remove(contacts[index].name);
-                  sum = sum - int.parse(contacts[index].mrp);
-                  //count --;
-                  selectedContacts
-                      .removeWhere((element) => element.name == contacts[index].name);
-                }
-              });
+                  else if (contacts[index].isSelected == false) {
+                    price.remove(contacts[index].mrp);
+                    product.remove(contacts[index].name);
+                    sum = sum - int.parse(contacts[index].mrp);
+                    selectedContacts
+                        .removeWhere((element) => element.name == contacts[index].name);
+                  }
+                });
+              },
+
+              child: isSelected ?
+              Icon(
+                Icons.radio_button_checked,
+                color: Colors.green[700],
+              )
+                  : Icon(
+                Icons.radio_button_off,
+                color: Colors.grey,
+              ),
+            ),
+
+            onTap: (){
+              print('Shamol');
+              Navigator.push(context, MaterialPageRoute(builder: (context) => My_Cart()));
             },
           ),
         )
