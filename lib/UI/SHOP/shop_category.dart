@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/carousel_p.dart';
 import 'package:online_doctor_booking/MODEL/sub_category_p.dart';
@@ -96,50 +97,61 @@ class ShopCategory extends StatelessWidget {
                     //Card
                     Container(
                       margin: const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 0),
-                      child: GridView.builder(
-                          itemCount: SubCategory().lists.length,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: BouncingScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisExtent: 150,
-                              mainAxisSpacing: 10,
-                              crossAxisSpacing: 0,
-                              crossAxisCount: 2),
-                          itemBuilder: (BuildContext context, int index){
-                            var data = SubCategory().lists;
-                            return GestureDetector(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>My_Cart()));
-                              },
-                              child:
-                              Card(
-                                shadowColor: colors,
-                                elevation: 4,
-                                //margin: EdgeInsets.only(top: 5),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 5, bottom: 5),
-                                      child: Image(
-                                        image: AssetImage(data[index].sub_image),
-                                        height: size.height * 0.06,
+                      child: FutureBuilder(
+                        future: ShopCategoryProductList(category: categoryName),
+                        builder: (BuildContext context, AsyncSnapshot snapshot){
+                          if(snapshot.connectionState != ConnectionState.done){
+                            return const Center(child: CircularProgressIndicator(),);
+                          }
+                          if(snapshot.hasData){
+                            return GridView.builder(
+                                itemCount: snapshot.data.data.length,
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                physics: BouncingScrollPhysics(),
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    mainAxisExtent: 150,
+                                    mainAxisSpacing: 10,
+                                    crossAxisSpacing: 0,
+                                    crossAxisCount: 2),
+                                itemBuilder: (BuildContext context, int index){
+                                  var data = SubCategory().lists;
+                                  return GestureDetector(
+                                    onTap: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>My_Cart()));
+                                    },
+                                    child:
+                                    Card(
+                                      shadowColor: colors,
+                                      elevation: 4,
+                                      //margin: EdgeInsets.only(top: 5),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 5, bottom: 5),
+                                            child: Image(
+                                              image: AssetImage(data[index].sub_image),
+                                              height: size.height * 0.06,
+                                            ),
+                                          ),
+                                          Flexible(child: Text(snapshot.data.data[index].name, style: TextStyle(fontSize: 12,color: Colors.black),)),
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 3, bottom: 2),
+                                            child: Text(snapshot.data.data[index].mrp),
+                                          ),
+                                          Text(snapshot.data.data[index].status == 'Live' ? 'In Stock' : 'Out Of Stock', style: TextStyle(color: snapshot.data.data[index].status == 'Live' ? Colors.green : Colors.red),)
+                                        ],
                                       ),
                                     ),
-                                    Flexible(child: Text(data[index].sub_name, style: TextStyle(fontSize: 12,color: Colors.black),)),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 3, bottom: 2),
-                                      child: Text(data[index].sub_price),
-                                    ),
-                                    Text(data[index].sub_description, style: TextStyle(color: data[index].sub_description == 'In Stock' ? Colors.green : Colors.red),)
-                                  ],
-                                ),
-                              ),
-                            );
-                          }),
+                                  );
+                                });
+                          }
+                          return Text('');
+                        },
+                      ),
                     ),
                   ],
                 ),

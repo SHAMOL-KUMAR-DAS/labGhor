@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
+import 'package:online_doctor_booking/MODEL/test_list.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
 import 'package:online_doctor_booking/UI/OREDER/order_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
 
 class TestList extends StatefulWidget {
 
@@ -15,7 +18,6 @@ class TestList extends StatefulWidget {
 }
 
 class _TestListState extends State<TestList> {
-  var count = 0;
   var dTestId;
 
   SharedPreferences? prefs;
@@ -25,10 +27,38 @@ class _TestListState extends State<TestList> {
     userId = (prefs!.getString('token') ?? "");
   }
 
+  var _baseUrl = 'https://labghorapi.bddaimond.com/api';
+  List contacts = [];
+
+  Future ShowTest() async{
+
+    var url = '$_baseUrl/show-test-list/${widget.category}/${widget.diagnosisId}';
+    var response = await http.get(Uri.parse(url));
+
+    if(response.statusCode == 200){
+      ShowTestListResponse testList = showTestListResponseFromJson(response.body);
+      List test = testList.data;
+
+      for (var i=0; i< test.length; i++){
+        setState(() {
+          contacts.add(ContactModel(test[i].name, test[i].mrp, false));
+        });}
+      return testList;
+    }
+  }
+
+  List price   = [];
+  List product = [];
+  var sum = 0;
+  var count = 0;
+
+  List<ContactModel> selectedContacts = [];
+
   @override
   void initState() {
     super.initState();
     sharedPreferences();
+    this.ShowTest();
   }
 
   @override
@@ -53,154 +83,73 @@ class _TestListState extends State<TestList> {
         ],
       ),
 
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Container(
-          margin: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Test List', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),),
+              Expanded(
+                child: ListView.builder(
+                    itemCount: contacts.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      // return item
+                      return ContactItem(
+                        contacts[index].name,
+                        contacts[index].mrp,
+                        contacts[index].isSelected,
+                        index,
+                      );
+                    }),
+              ),
 
-              widget.diagnosisId != null ?
-              FutureBuilder(
-                future: ShowTest(categoryName: widget.category, diagnosticsId: widget.diagnosisId),
-                  builder: (BuildContext context, AsyncSnapshot snapshot){
-                    if(snapshot.connectionState != ConnectionState.done){
-                      return const Center(child: CircularProgressIndicator(),);
-                    }
-
-                    if(snapshot.hasData){
-                      return GridView.builder(
-                          itemCount: snapshot.data.data.length,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: BouncingScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisExtent: 80,
-                              mainAxisSpacing: 0,
-                              crossAxisSpacing: 0,
-                              crossAxisCount: 1),
-                          itemBuilder: (BuildContext context, int index){
-                            return GestureDetector(
-                              onTap: (){
-
-                                setState(() {
-                                  dTestId = snapshot.data.data[index].dTestId;
-                                });
-                                if (userId == "") {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(dTestId: snapshot.data.data[index].dTestId)));
-                                }
-                                else {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>OrderPage(dTestId: snapshot.data.data[index].dTestId)));
-                                }
-
-                              },
-                              child: Card(
-                                  shadowColor: colors,
-                                  elevation: 4,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Center(
-                                    child: ListTile(
-                                      leading: CircleAvatar(
-                                        radius: 25,
-                                        backgroundColor: appBarColor,
-                                        backgroundImage: AssetImage('assets/images/demo1.png'),
-                                      ),
-                                      title: Text(snapshot.data.data[index].name, textAlign: TextAlign.start,),
-                                      subtitle: Text(snapshot.data.data[index].mrp, textAlign: TextAlign.start,),
-                                      trailing: Icon(Icons.radio_button_off),
-                                    ),
-                                  )
-                              ),
-                            );
-                          });
-                    }
-
-                    return Text('');
-                  })
-              :
-              FutureBuilder(
-                  future: TestPackageDetails(packageId: widget.packageId),
-                  builder: (BuildContext context, AsyncSnapshot snapshot){
-                    if(snapshot.connectionState != ConnectionState.done){
-                      return const Center(child: CircularProgressIndicator(),);
-                    }
-
-                    if(snapshot.hasData){
-                      return GridView.builder(
-                          itemCount: snapshot.data.data.testList.length,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: BouncingScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisExtent: 80,
-                              mainAxisSpacing: 0,
-                              crossAxisSpacing: 0,
-                              crossAxisCount: 1),
-                          itemBuilder: (BuildContext context, int index){
-                            return GestureDetector(
-                              onTap: (){
-
-                                // setState(() {
-                                //   dTestId = snapshot.data.data[index].dTestId;
-                                // });
-                                // if (userId == "") {
-                                //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(dTestId: snapshot.data.data[index].dTestId)));
-                                // }
-                                // else {
-                                //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>OrderPage(dTestId: snapshot.data.data[index].dTestId)));
-                                // }
-
-                              },
-                              child: Card(
-                                  shadowColor: colors,
-                                  elevation: 4,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Center(
-                                    child: ListTile(
-                                      leading: CircleAvatar(
-                                        radius: 25,
-                                        backgroundColor: appBarColor,
-                                        backgroundImage: AssetImage('assets/images/demo1.png'),
-                                      ),
-                                      //title: Text(snapshot.data.data[index].name, textAlign: TextAlign.start,),
-                                      title: Text(snapshot.data.data.testList[index].testName, textAlign: TextAlign.start,),
-                                     // subtitle: Text(snapshot.data.data[index].mrp, textAlign: TextAlign.start,),
-                                      trailing: Icon(Icons.radio_button_off),
-                                    ),
-                                  )
-                              ),
-                            );
-                          });
-                    }
-
-                    return Text('');
-                  }),
-
-
-              const Padding(
-                padding:  EdgeInsets.only(top: 20, right: 25, left: 25, bottom: 10),
+              Padding(
+                padding:  EdgeInsets.only(top: 0, right: 25, left: 25, bottom: 0),
                 child: Divider(
                   color: Colors.black,
                   thickness: 2,
                 ),
               ),
 
+              selectedContacts.length > 0 ?
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(
+              //     horizontal: 25,
+              //     vertical: 10,
+              //   ),
+              //   child: SizedBox(
+              //     width: double.infinity,
+              //     child: RaisedButton(
+              //       color: Colors.green[700],
+              //       child: Text(
+              //         "Delete (${selectedContacts.length})",
+              //         style: TextStyle(
+              //           color: Colors.white,
+              //           fontSize: 18,
+              //         ),
+              //       ),
+              //       onPressed: () {
+              //         print("Delete List Lenght: ${selectedContacts.length}");
+              //         for(var i = 0; i< selectedContacts.length; i++){
+              //           print('Name: ${selectedContacts[i].name}');
+              //           print('Name: ${selectedContacts[i].mrp}');
+              //         }
+              //       },
+              //     ),
+              //   ),
+              // )
+
               Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('Test Quantity: 2'),
-                    Text('Total Price : 250'),
+                    Text('Test Quantity: ${selectedContacts.length}'),
+
+                    Text('Total Price : ${sum}'),
                   ],
                 ),
               )
+                  :
+              Container(),
             ],
           ),
         ),
@@ -208,7 +157,9 @@ class _TestListState extends State<TestList> {
 
       bottomNavigationBar: GestureDetector(
         onTap: (){
-          print('***************************************$dTestId');
+          print('***************************************$price');
+          print('***************************************$product');
+          print('***************************************${selectedContacts.length}');
           // if (userId == "") {
           //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(dTestId: snapshot.data.data[index].dTestId)));
           // }
@@ -231,4 +182,70 @@ class _TestListState extends State<TestList> {
       ),
     );
   }
+
+  Widget ContactItem(
+      String name, String phoneNumber, bool isSelected, int index) {
+
+    return Card(
+        shadowColor: colors,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Center(
+          child: ListTile(
+            leading: CircleAvatar(
+              radius: 25,
+              backgroundColor: appBarColor,
+              backgroundImage: AssetImage('assets/images/demo1.png'),
+            ),
+
+            title: Text(name, textAlign: TextAlign.start,),
+
+            subtitle: Text(phoneNumber, textAlign: TextAlign.start,),
+
+            trailing: isSelected ?
+            Icon(
+              Icons.radio_button_checked,
+              color: Colors.green[700],
+            )
+                : Icon(
+              Icons.radio_button_off,
+              color: Colors.grey,
+            ),
+            onTap: (){
+              print('Shamol: ${contacts[index].mrp}');
+              setState(() {
+                contacts[index].isSelected = !contacts[index].isSelected;
+                if (contacts[index].isSelected == true) {
+                  selectedContacts.add(ContactModel(name, phoneNumber, true));
+                   price.add(contacts[index].mrp);
+                   product.add(contacts[index].name);
+                  sum = sum + int.parse(contacts[index].mrp);
+                  // count ++;
+                }
+
+                else if (contacts[index].isSelected == false) {
+                  price.remove(contacts[index].mrp);
+                  product.remove(contacts[index].name);
+                  sum = sum - int.parse(contacts[index].mrp);
+                  //count --;
+                  selectedContacts
+                      .removeWhere((element) => element.name == contacts[index].name);
+                }
+              });
+            },
+          ),
+        )
+    );
+  }
+}
+
+class ContactModel{
+
+  String name, mrp;
+  bool isSelected;
+
+  ContactModel(this.name, this.mrp, this.isSelected);
+
 }

@@ -5,6 +5,9 @@ import 'package:online_doctor_booking/MODEL/diagnostic.dart';
 import 'package:online_doctor_booking/MODEL/login.dart';
 import 'package:online_doctor_booking/MODEL/my_test_order_details.dart';
 import 'package:online_doctor_booking/MODEL/my_test_order_list.dart';
+import 'package:online_doctor_booking/MODEL/shop_category.dart';
+import 'package:online_doctor_booking/MODEL/shop_category_product.dart';
+import 'package:online_doctor_booking/MODEL/shop_product.dart';
 import 'package:online_doctor_booking/MODEL/test_category.dart';
 import 'package:online_doctor_booking/MODEL/test_details.dart';
 import 'package:online_doctor_booking/MODEL/test_list.dart';
@@ -121,17 +124,6 @@ Future TestCategory({diagnosticsId}) async{
   }
 }
 
-//Show Test List (/show-test-list/categoryName/diagnosticsId) - COMPLETE
-Future ShowTest({categoryName, diagnosticsId}) async{
-  var url = '$_baseUrl/show-test-list/$categoryName/$diagnosticsId';
-  var response = await http.get(Uri.parse(url));
-
-  if(response.statusCode == 200){
-    ShowTestListResponse testList = showTestListResponseFromJson(response.body);
-
-    return testList;
-  }
-}
 
 //Test Search (/search-test)
 Future TestSearch({text, diagnosticId}) async{
@@ -289,4 +281,43 @@ Future MyPackageOrderdetails(invoice) async{
   });
 
   if(response.statusCode == 200){}
+}
+
+//Shop Product List
+Future ShopProductList() async{
+
+  var url = '$_baseUrl/shop-product-list';
+  var response = await http.get(Uri.parse(url));
+
+  if(response.statusCode == 200){
+    ViewShopProductResponse shopData = viewShopProductResponseFromJson(response.body);
+
+    return shopData;
+  }
+}
+
+//Shop Product Category Wise
+Future ShopCategoryProductList({category}) async{
+
+  var url = '$_baseUrl/category-wise-shop-product-list/$category';
+  var response = await http.get(Uri.parse(url));
+
+  if(response.statusCode == 200){
+    CategoryWiseProductResponse shopCategoryProduct = categoryWiseProductResponseFromJson(response.body);
+
+    return shopCategoryProduct;
+  }
+}
+
+//Shop Category List
+Future ShopCategoryList() async{
+
+  var url = '$_baseUrl/shop-product-category';
+  var response = await http.get(Uri.parse(url));
+
+  if(response.statusCode == 200){
+    ViewShopCategoryResponse shopCategoryData = viewShopCategoryResponseFromJson(response.body);
+
+    return shopCategoryData;
+  }
 }
