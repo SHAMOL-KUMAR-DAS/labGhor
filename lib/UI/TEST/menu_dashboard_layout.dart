@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/carousel_p.dart';
 import 'package:online_doctor_booking/MODEL/category_p.dart';
@@ -200,30 +201,44 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: CarouselSlider.builder(
-                      itemCount: Carousel().lists.length,
-                      options: CarouselOptions(
-                          height: MediaQuery.of(context).size.height * 0.14,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(milliseconds: 2000),
-                          viewportFraction: 0.45,
-                        //reverse: true
-                      ),
-                      itemBuilder: (context, index, realIndex) {
-                        var data = Carousel().lists;
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 5),
-                          color: const Color(0xFFf3f6fb),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image(
-                              image: AssetImage(data[index].image),
-                              fit: BoxFit.cover,
-                              width: double.infinity,
+                    padding: EdgeInsets.only(top: 15),
+                    child: FutureBuilder(
+                      future: ActiveOfferList(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot){
+                        if(snapshot.connectionState != ConnectionState.done){
+                          return const Center(child: CircularProgressIndicator(),);
+                        }
+
+                        if(snapshot.hasData){
+                          return  CarouselSlider.builder(
+                            itemCount: snapshot.data.data.length,
+                            options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height * 0.14,
+                              autoPlay: true,
+                              autoPlayInterval: const Duration(milliseconds: 2000),
+                              viewportFraction: 0.45,
+                              //reverse: true
                             ),
-                          ),
-                        );
+                            itemBuilder: (context, index, realIndex) {
+                              var data = snapshot.data.data[index];
+                              return Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 5),
+                                color: const Color(0xFFf3f6fb),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Center(child: Text(data.title))
+                                  // Image(
+                                  //   image: AssetImage(data[index].image),
+                                  //   fit: BoxFit.cover,
+                                  //   width: double.infinity,
+                                  // ),
+                                ),
+                              );
+                            },
+                          );
+                        }
+
+                        return Text('');
                       },
                     ),
                   ),

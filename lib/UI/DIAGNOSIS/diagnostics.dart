@@ -31,31 +31,45 @@ class Diagnosis extends StatelessWidget {
           //Slider
           Padding(
             padding: const EdgeInsets.only(top: 15, bottom: 10),
-            child: CarouselSlider.builder(
-              itemCount: Carousel().lists.length,
-              options: CarouselOptions(
-                  height: MediaQuery.of(context).size.height * 0.16,
-                  autoPlay: true,
-                  autoPlayInterval: Duration(milliseconds: 2000),
-                  viewportFraction: 0.54
-                //reverse: true
-              ),
-              itemBuilder: (context, index, realIndex) {
-                var data = Carousel().lists;
-                return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5),
-                  color: Color(0xFFf3f6fb),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image(
-                      image: AssetImage(data[index].image),
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.height * 0.80,
+            child: FutureBuilder(
+              future: TestSuggestProduct(),
+              builder: (BuildContext context, AsyncSnapshot snapshot){
+                if(snapshot.connectionState != ConnectionState.done){
+                  return const Center(child: CircularProgressIndicator(),);
+                }
+
+                if(snapshot.hasData){
+                  return  CarouselSlider.builder(
+                    itemCount: snapshot.data.data.length,
+                    options: CarouselOptions(
+                        height: MediaQuery.of(context).size.height * 0.16,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(milliseconds: 2000),
+                        viewportFraction: 0.54
                     ),
-                  ),
-                );
+                    itemBuilder: (context, index, realIndex) {
+                      var data = snapshot.data.data[index];
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        width: size.width * 0.51,
+                        color: const Color(0xFFf3f6fb),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(data.name),
+
+                            Text(data.mrp)
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                }
+
+                return Text('');
               },
             ),
+
           ),
 
           //Services

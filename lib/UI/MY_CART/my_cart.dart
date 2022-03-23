@@ -1,18 +1,48 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
+import 'package:online_doctor_booking/LOCAL/Database/cart.dart';
+import 'package:online_doctor_booking/LOCAL/Model/cart.dart';
 import 'package:online_doctor_booking/UI/ADD_ADDRESS/add_address.dart';
+import 'package:online_doctor_booking/UI/PAYMENT/payment.dart';
+import 'package:online_doctor_booking/test.dart';
 
 class My_Cart extends StatefulWidget {
 
-  var dTestId, product, productId, price, total, item;
-  My_Cart({this.dTestId, this.product, this.productId, this.price, this.total, this.item});
+  var dTestId, product, productId, price, total, item, type;
+  My_Cart({this.dTestId, this.product, this.productId, this.price, this.total, this.item, this.type});
 
   @override
   _My_CartState createState() => _My_CartState();
 }
 
 class _My_CartState extends State<My_Cart> {
-  int _currentAmount = 0;
+
+  int _currentAmount = 1;
+  late List<Cart> carts;
+  bool isLoading = false;
+
+  @override
+  void initState(){
+    super.initState();
+    refreshNotes();
+  }
+
+  @override
+  void dispose(){
+    CartDatabase.instance.close();
+    super.dispose();
+  }
+
+  Future refreshNotes() async{
+    setState(() => isLoading = true);
+    this.carts = await CartDatabase.instance.ViewCart();
+    setState(() => isLoading = false);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -21,7 +51,11 @@ class _My_CartState extends State<My_Cart> {
       backgroundColor: Color(0xffE5E5E5),
       appBar: AppBar(
         backgroundColor: deepBlue,
-        title: Text("My Cart"),
+        title: GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => LocalsCustomer()));
+          },
+            child: Text("My Cart")),
         centerTitle: true,
         automaticallyImplyLeading: true,
       ),
@@ -35,6 +69,7 @@ class _My_CartState extends State<My_Cart> {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
+
                     // return item
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,7 +87,7 @@ class _My_CartState extends State<My_Cart> {
                                   children: [
                                     Text("    ৳${widget.item != 'single' ? widget.price[index] : widget.price}",textAlign: TextAlign.center,style: TextStyle(fontSize: 16,color: Color(0xff33907C,),fontWeight: FontWeight.w600),),
                                     SizedBox(width: size.width*.03,),
-                                    Text("৳${widget.item != 'single' ? int.parse(widget.price[index]) + (int.parse(widget.price[index]) / 10) : int.parse(widget.price) + (int.parse(widget.price) / 10)}"
+                                    Text("৳${widget.item != 'single' ? int.parse(widget.price[index]) + (int.parse(widget.price[index]) / 10) : int.parse(widget.price[index]) + (int.parse(widget.price[index]) / 10)}"
                                       ,textAlign: TextAlign.center,style: TextStyle(fontSize: 14,decoration: TextDecoration.lineThrough,color: Color(0xff8d8686) ),),
 
                                     Text(" 10% off",textAlign: TextAlign.center,style: TextStyle(fontSize: 14,color: Color(0xff8d8686)),),
@@ -62,45 +97,72 @@ class _My_CartState extends State<My_Cart> {
                                   children: <Widget> [
                                     Text("    Quantity: ",textAlign: TextAlign.center,style: TextStyle(fontSize: 16),),
                                     SizedBox(width: 15),
+                                    _currentAmount <= 0 ?
+                                        Container() :
                                     GestureDetector(
-                                      onTap: () {
+                                      onTap: (){
                                         setState(() {
-                                          _currentAmount -= 1;
+                                          _currentAmount--;
                                         });
                                       },
                                       child: Container(
-                                        padding: const EdgeInsets.all(5.0),
                                         decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.black,
-                                        ),
-                                        child: Icon(
-                                          Icons.remove,
                                           color: Colors.white,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey.shade400,
+                                                blurRadius: 3,
+                                                offset: Offset(0.5, 4)
+                                            ),
+                                            BoxShadow(
+                                                color: Colors.grey.shade300,
+                                                blurRadius: 3,
+                                                offset: Offset(0.0, 0.75)
+                                            )
+                                          ],
+                                        ),
+                                        child: CircleAvatar(
+                                          radius: 17,
+                                          backgroundColor: Colors.white,
+                                          child: Text('-',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                                         ),
                                       ),
                                     ),
-                                    SizedBox(width: 15),
+
+                                    SizedBox(width: 10),
                                     Text(
-                                      "$_currentAmount",
-                                      // style: Theme.of(context).textTheme.title,
+                                      "$_currentAmount",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                     ),
-                                    SizedBox(width: 15),
+                                    SizedBox(width: 10),
+
                                     GestureDetector(
-                                      onTap: () {
+                                      onTap: (){
                                         setState(() {
-                                          _currentAmount += 1;
+                                          _currentAmount++;
                                         });
                                       },
                                       child: Container(
-                                        padding: const EdgeInsets.all(5.0),
                                         decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.black,
-                                        ),
-                                        child: Icon(
-                                          Icons.add,
                                           color: Colors.white,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey.shade400,
+                                                blurRadius: 3,
+                                                offset: Offset(0.5, 4)
+                                            ),
+                                            BoxShadow(
+                                                color: Colors.grey.shade300,
+                                                blurRadius: 3,
+                                                offset: Offset(0.0, 0.75)
+                                            )
+                                          ],
+                                        ),
+                                        child: CircleAvatar(
+                                          radius: 17,
+                                          backgroundColor: Colors.white,
+                                          child: Text('+',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                                         ),
                                       ),
                                     ),
@@ -137,7 +199,7 @@ class _My_CartState extends State<My_Cart> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Price (1 item)",style: TextStyle(fontSize: 15,color: Colors.black87),),
-                      Text("\$25",style: TextStyle(fontSize: 15,color: Colors.black87),),
+                      Text("৳${widget.item != 'single' ? widget.price : widget.price}",style: TextStyle(fontSize: 15,color: Colors.black87),),
                     ],
                   ),
                   Row(
@@ -152,7 +214,7 @@ class _My_CartState extends State<My_Cart> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Total Amount",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
-                      Text("\$25",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
+                      Text("৳${widget.item != 'single' ? widget.price : int.parse(widget.price.toString()) * _currentAmount}",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
                     ],
                   ),
                 ],
@@ -174,6 +236,8 @@ class _My_CartState extends State<My_Cart> {
               height: 45,
               child: RaisedButton(
                 onPressed: () {
+                  widget.type != 'shop' ? AddUpdateCart(test_id: widget.productId, qty: _currentAmount) : AddUpdateCartShop(test_id: widget.productId, qty: _currentAmount);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentOption(type: 'shop',price: widget.item == 'single' ? int.parse(widget.price) * _currentAmount : widget.price, productId: widget.productId)));
                 },
                 child: const Text(
                   'Continue to Payment',

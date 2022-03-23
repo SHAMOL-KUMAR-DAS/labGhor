@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:online_doctor_booking/UI/PAYMENT/payment.dart';
 import 'package:online_doctor_booking/splash.dart';
 import 'package:online_doctor_booking/test.dart';
 
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         const Locale('th', 'TH'), // Thai
       ],
       home: AnimatedSplashScreen(),
-      //home: Testing(),
+      //home: PaymentOption(),
       debugShowCheckedModeBanner: false,
     );
   }

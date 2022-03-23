@@ -1,6 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:online_doctor_booking/CONFIGURE/button_config.dart';
+import 'package:online_doctor_booking/MODEL/active_offer.dart';
 import 'package:online_doctor_booking/MODEL/diagnostic.dart';
 import 'package:online_doctor_booking/MODEL/login.dart';
 import 'package:online_doctor_booking/MODEL/my_test_order_details.dart';
@@ -8,12 +11,12 @@ import 'package:online_doctor_booking/MODEL/my_test_order_list.dart';
 import 'package:online_doctor_booking/MODEL/shop_category.dart';
 import 'package:online_doctor_booking/MODEL/shop_category_product.dart';
 import 'package:online_doctor_booking/MODEL/shop_product.dart';
+import 'package:online_doctor_booking/MODEL/shop_suggest.dart';
 import 'package:online_doctor_booking/MODEL/test_category.dart';
 import 'package:online_doctor_booking/MODEL/test_details.dart';
-import 'package:online_doctor_booking/MODEL/test_list.dart';
-import 'package:online_doctor_booking/MODEL/test_order.dart';
 import 'package:online_doctor_booking/MODEL/test_package_details.dart';
 import 'package:online_doctor_booking/MODEL/test_package_list.dart';
+import 'package:online_doctor_booking/MODEL/test_suggest.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
 import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -151,14 +154,12 @@ Future  TestDetails({diagnosticTestId}) async{
 }
 
 //Test Order (test-order)
-Future TestOrder({diagnosticTestId, paymentTx, paymentMethod}) async{
+Future TestOrder(BuildContext context, {testId, paymentTx, paymentMethod}) async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = (prefs.getString('token') ?? '0');
   var user_id = (prefs.getString('user_id') ?? '0');
-  var user_name = (prefs.getString('user_name') ?? '');
   var user_mobile = (prefs.getString('user_mobile') ?? '');
   paymentTx     = '535345324D3';
-  paymentMethod = 'Bkash';
 
   var url = '$_baseUrl/test-order';
   var response = await http.post(Uri.parse(url), headers: {
@@ -169,11 +170,54 @@ Future TestOrder({diagnosticTestId, paymentTx, paymentMethod}) async{
     'payment_method'        : paymentMethod,
     'patient_address'       : '',
     'patient_contect_mobile': user_mobile,
-    'cart_items'            : user_name,
+    'cart_items'            : testId,
   });
   
   if(response.statusCode == 200){
-    TestOrderResponse testOrder = testOrderResponseFromJson(response.body);
+    //TestOrderResponse testOrder = testOrderResponseFromJson(response.body);
+    showDialog(
+        context: context, 
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Column(
+              children: [
+                Image.asset('assets/images/delivery.png'),
+
+                Text('Your Order Has Been Placed Successfully'),
+
+                Text('Your Order Has Been Successfully Completed. Within Moments You will Received A Notification With The Receipt Of Your Purchase And Track Every Step Of Your Order.'),
+
+                ButtonConfig.FlatButton(
+                  text: 'Close',
+                  press: (){
+                    Navigator.of(context, rootNavigator: true).pop();
+                    //Navigator.pop(context);
+                  },
+                )
+              ],
+            ),
+          );
+        });
+  }
+}
+
+//Add and Update Cart
+AddUpdateCart({test_id, qty}) async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = (prefs.getString('token') ?? '0');
+  var user_id = (prefs.getString('user_id') ?? '0');
+
+  var url = '$_baseUrl/test-update-and-add-cart';
+  var response = await http.post(Uri.parse(url), headers: {
+    'Authorization' : 'Bearer $token'
+  }, body: {
+    'user_id'    : '$user_id',
+    'd_test_id'  : '$test_id',
+    'qty'        : '$qty',
+  });
+
+  if(response.statusCode == 200){
+    print('successfully Add to Cart');
   }
 }
 
@@ -320,5 +364,118 @@ Future ShopCategoryList() async{
     ViewShopCategoryResponse shopCategoryData = viewShopCategoryResponseFromJson(response.body);
 
     return shopCategoryData;
+  }
+}
+
+//Active Offer List
+Future ActiveOfferList() async{
+
+  var url = '$_baseUrl/active-offer-list';
+  var response = await http.get(Uri.parse(url));
+
+  if(response.statusCode == 200){
+    ActiveOfferResponse activeOfferData = activeOfferResponseFromJson(response.body);
+
+    return activeOfferData;
+  }
+}
+
+//Test Suggest Product
+Future TestSuggestProduct() async{
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var user_id = (prefs.getString('user_id') ?? '0');
+
+  var url = '$_baseUrl/suggest-tests/$user_id';
+  var response = await http.get(Uri.parse(url));
+
+  if(response.statusCode == 200){
+    TestSuggestProductResponse testSuggestData = testSuggestProductResponseFromJson(response.body);
+
+    return testSuggestData;
+  }
+}
+
+//Test Suggest Product
+Future ShopSuggestProduct() async{
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var user_id = (prefs.getString('user_id') ?? '0');
+
+  var url = '$_baseUrl/suggest-shop-proudct/$user_id';
+  var response = await http.get(Uri.parse(url));
+
+  if(response.statusCode == 200){
+    ShopSuggestProductResponse shopSuggestData = shopSuggestProductResponseFromJson(response.body);
+
+    return shopSuggestData;
+  }
+}
+
+//Add and Update Cart
+AddUpdateCartShop({test_id, qty}) async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = (prefs.getString('token') ?? '0');
+  var user_id = (prefs.getString('user_id') ?? '0');
+
+  var url = '$_baseUrl/shop-update-and-add-cart';
+  var response = await http.post(Uri.parse(url), headers: {
+    'Authorization' : 'Bearer $token'
+  }, body: {
+    'user_id'    : '$user_id',
+    'd_test_id'  : '$test_id',
+    'qty'        : '$qty',
+  });
+
+  if(response.statusCode == 200){
+    print('successfully Add to Cart');
+  }
+}
+
+//Shop Order (test-order)
+Future ShopOrder(BuildContext context, {testId, paymentTx, paymentMethod}) async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = (prefs.getString('token') ?? '0');
+  var user_id = (prefs.getString('user_id') ?? '0');
+  paymentTx     = '535345324D3';
+
+  var url = '$_baseUrl/shop-product-order';
+  var response = await http.post(Uri.parse(url), headers: {
+    'Authorization' : 'Bearer $token'
+  }, body: {
+    'user_id'               : user_id,
+    'payment_txn'           : paymentTx,
+    'payment_method'        : paymentMethod,
+    'delivery_address'      : '',
+    'delivery_district'     : 'Tangail',
+    'delivery_thana'        : 'Tangail Sadar',
+    'cart_items'            : testId,
+  });
+
+  if(response.statusCode == 200){
+    //TestOrderResponse testOrder = testOrderResponseFromJson(response.body);
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Column(
+              children: [
+                Image.asset('assets/images/delivery.png'),
+
+                Text('Your Order Has Been Placed Successfully'),
+
+                Text('Your Order Has Been Successfully Completed. Within Moments You will Received A Notification With The Receipt Of Your Purchase And Track Every Step Of Your Order.'),
+
+                ButtonConfig.FlatButton(
+                  text: 'Close',
+                  press: (){
+                    //Navigator.pop(context);
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                )
+              ],
+            ),
+          );
+        });
   }
 }

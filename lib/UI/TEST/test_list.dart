@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
+import 'package:online_doctor_booking/LOCAL/Database/cart.dart';
+import 'package:online_doctor_booking/LOCAL/Model/cart.dart';
 import 'package:online_doctor_booking/MODEL/test_list.dart';
 import 'package:online_doctor_booking/UI/ADD_ADDRESS/add_address.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
@@ -21,6 +23,7 @@ class TestList extends StatefulWidget {
 
 class _TestListState extends State<TestList> {
   var dTestId;
+  int _currentAmount = 0;
 
   SharedPreferences? prefs;
   var userId;
@@ -43,7 +46,7 @@ class _TestListState extends State<TestList> {
 
       for (var i=0; i< test.length; i++){
         setState(() {
-          contacts.add(ContactModel(test[i].name, test[i].mrp, test[i].testId, false));
+          contacts.add(ContactModel(test[i].name, test[i].mrp, test[i].testId, '0', false));
         });}
       return testList;
     }
@@ -52,7 +55,8 @@ class _TestListState extends State<TestList> {
   List price      = [];
   List product    = [];
   List productId  = [];
-  var sum = 0;
+
+  var sum   = 0;
   var count = 0;
 
   List<ContactModel> selectedContacts = [];
@@ -112,6 +116,7 @@ class _TestListState extends State<TestList> {
                         contacts[index].name,
                         contacts[index].mrp,
                         contacts[index].id,
+                        contacts[index].qty,
                         contacts[index].isSelected,
                         index,
                       );
@@ -147,6 +152,17 @@ class _TestListState extends State<TestList> {
 
       bottomNavigationBar: GestureDetector(
         onTap: (){
+
+
+          final cart =  Cart(
+              product_id : '${productId}',
+              products   : '${product.toString()}',
+              price      : '${price.toString()}',
+              total      : '${sum.toString()}'      ,
+              status     : '1'
+          );
+          CartDatabase.instance.createCart(cart);
+
           selectedContacts.length >= 1 ?
               {
           if (userId == "") {
@@ -179,7 +195,7 @@ class _TestListState extends State<TestList> {
   }
 
   Widget ContactItem(
-      String name, String phoneNumber, String id, bool isSelected, int index) {
+      String name, String phoneNumber, String id, String qty, bool isSelected, int index) {
 
     return Card(
         shadowColor: colors,
@@ -197,14 +213,14 @@ class _TestListState extends State<TestList> {
 
             title: Text(name, textAlign: TextAlign.start,),
 
-            subtitle: Text(phoneNumber, textAlign: TextAlign.start,),
+            subtitle: Text('${phoneNumber}', textAlign: TextAlign.start,),
 
             trailing: GestureDetector(
               onTap: (){
                 setState(() {
                   contacts[index].isSelected = !contacts[index].isSelected;
                   if (contacts[index].isSelected == true) {
-                    selectedContacts.add(ContactModel(name, phoneNumber, id, true));
+                    selectedContacts.add(ContactModel(name, phoneNumber, id, '0', true));
                     price.add(contacts[index].mrp);
                     product.add(contacts[index].name);
                     productId.add(contacts[index].id);
@@ -251,9 +267,9 @@ class _TestListState extends State<TestList> {
 
 class ContactModel{
 
-  String name, mrp, id;
+  String name, mrp, id, qty;
   bool isSelected;
 
-  ContactModel(this.name, this.mrp, this.id, this.isSelected);
+  ContactModel(this.name, this.mrp, this.id, this.qty, this.isSelected);
 
 }

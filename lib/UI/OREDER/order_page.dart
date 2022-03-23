@@ -151,7 +151,7 @@ class _OrderPageState extends State<OrderPage> {
         GestureDetector(
           onTap: (){
             setState(() {
-              TestOrder(diagnosticTestId: widget.dTestId);
+              TestOrder(context, testId: widget.dTestId, paymentMethod: 'cashOnDelivery');
             });
           },
           child: Row(
