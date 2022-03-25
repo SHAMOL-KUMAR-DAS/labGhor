@@ -10,9 +10,11 @@ import 'package:online_doctor_booking/UI/DIAGNOSIS/diagnostics.dart';
 import 'package:online_doctor_booking/UI/DOCTOR/doctors.dart';
 import 'package:online_doctor_booking/UI/HOME/diagonsis_detail.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
+import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 import 'package:online_doctor_booking/UI/ORDER_HISTORY/order_history.dart';
 import 'package:online_doctor_booking/UI/PROFILE/profile.dart';
 import 'package:online_doctor_booking/UI/SHOP/shop.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final Color backgroundColor =  const Color(0xFF6FC1F9);
 
@@ -30,6 +32,13 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
   Animation<double>? _menuScaleAnimation;
   Animation<Offset>? _slideAnimation;
 
+  SharedPreferences? prefs;
+  var userId;
+  sharedPreferences() async{
+    prefs = await SharedPreferences.getInstance();
+    userId = (prefs!.getString('token') ?? "");
+  }
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +46,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
     _scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(_controller!);
     _menuScaleAnimation = Tween<double>(begin: 0.5, end: 1).animate(_controller!);
     _slideAnimation = Tween<Offset>(begin: const Offset(-1, 0), end: const Offset(0, 0)).animate(_controller!);
+    sharedPreferences();
   }
 
   @override
@@ -219,10 +229,10 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                           return  CarouselSlider.builder(
                             itemCount: snapshot.data.data.length,
                             options: CarouselOptions(
-                              height: MediaQuery.of(context).size.height * 0.14,
+                              height: MediaQuery.of(context).size.height * 0.15,
                               autoPlay: true,
                               autoPlayInterval: const Duration(milliseconds: 2000),
-                              viewportFraction: 0.45,
+                              viewportFraction: 1,
                               //reverse: true
                             ),
                             itemBuilder: (context, index, realIndex) {
@@ -421,25 +431,38 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                                 crossAxisCount: 3),
                             itemBuilder: (BuildContext context, int index){
                               var data = Category().lists;
-                              return Card(
-                                //shadowColor: colors,
-                                elevation: 4,
-                                //margin: EdgeInsets.only(top: 5),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 0, bottom: 2,left: 2,right: 2),
-                                      child: Image(
-                                        image: AssetImage(data[index].item_image),
-                                        height: size.height * 0.05,
+                              var datas = snapshot.data.data[index];
+                              return GestureDetector(
+                                onTap: (){
+                                  if (userId == "") {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(productId: datas.name,
+                                      price: datas.mrp, total: '0', product: datas.id, item: 'single',)));
+                                  }
+                                  else {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => My_Cart(product: datas.name,
+                                        price: datas.mrp, total: '0', productId: datas.id, item: 'single')));
+                                  }
+                                },
+                                child: Card(
+                                  //shadowColor: colors,
+                                  elevation: 4,
+                                  //margin: EdgeInsets.only(top: 5),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 0, bottom: 2,left: 2,right: 2),
+                                        child: Image(
+                                          image: AssetImage(data[index].item_image),
+                                          height: size.height * 0.05,
+                                        ),
                                       ),
-                                    ),
-                                    Flexible(child: Text(snapshot.data.data[index].name, style: const TextStyle(fontSize: 12,color: Colors.black),textAlign: TextAlign.center,))
-                                  ],
+                                      Flexible(child: Text(snapshot.data.data[index].name, style: const TextStyle(fontSize: 12,color: Colors.black),textAlign: TextAlign.center,))
+                                    ],
+                                  ),
                                 ),
                               );
                             });
