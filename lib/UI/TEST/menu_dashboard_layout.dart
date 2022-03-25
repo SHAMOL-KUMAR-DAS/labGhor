@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/API/api.dart';
@@ -173,6 +175,8 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+
+                  //AppBar
                   Container(
                     color: appBarColor,
                     child: Padding(
@@ -200,6 +204,8 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                       ),
                     ),
                   ),
+
+                  //Carousal Slider
                   Padding(
                     padding: EdgeInsets.only(top: 15),
                     child: FutureBuilder(
@@ -222,17 +228,20 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                             itemBuilder: (context, index, realIndex) {
                               var data = snapshot.data.data[index];
                               return Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 5),
-                                color: const Color(0xFFf3f6fb),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Center(child: Text(data.title))
-                                  // Image(
-                                  //   image: AssetImage(data[index].image),
-                                  //   fit: BoxFit.cover,
-                                  //   width: double.infinity,
-                                  // ),
+                                margin:  EdgeInsets.symmetric(horizontal: 5),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Color(0xFFf3f6fb),
+                                  image: DecorationImage(image: AssetImage('assets/images/medi1.png'),fit: BoxFit.cover)
                                 ),
+                                child: Container(
+
+                                  decoration: BoxDecoration(
+                                    color: Colors.black38,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Center(child: Text(snapshot.data.data[index].title,style: TextStyle(color: Colors.white),)),
+                                )
                               );
                             },
                           );
@@ -242,6 +251,8 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                       },
                     ),
                   ),
+
+                  //Diagnosis + Shops
                   Row(
                     children: [
 
@@ -251,7 +262,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                         },
                         child: Container(
                           margin: const EdgeInsets.only(left: 15, right: 0,top: 15),
-                          height: size.height * 0.32,
+                          height: size.height * 0.3,
                           width: size.width * 0.44,
                           decoration: BoxDecoration(
                               color: backColors,
@@ -285,98 +296,58 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                       ),
                       const Spacer(),
 
-                      Column(
-                        children: [
-
-                          GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Shop()));
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.only(left: 0, right: 0,top: 15),
-
-                              height: size.height * 0.19,
-                              width: size.width * 0.415,
-                              decoration: BoxDecoration(
-                                  color: backColors,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black26,
-                                        blurRadius: 4.0,
-                                        spreadRadius: 2.0,
-                                        //offset: Offset(2.0, 2.0), // shadow direction: bottom right
-                                        offset: Offset(2.0, 2.0)
-                                    )
-                                  ],
-                                  borderRadius: BorderRadius.circular(8)
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image(image: const AssetImage('assets/images/img_11.png'),height: size.height * 0.12,),
-                                    const Padding(
-                                      padding: EdgeInsets.only(top: 10),
-                                      child: Text('Shops',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                                    ),
-                                  ],
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Shop()));
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 0, right: 15,top: 15),
+                          height: size.height * 0.3,
+                          width: size.width * 0.44,
+                          decoration: BoxDecoration(
+                              color: backColors,
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 4.0,
+                                    spreadRadius: 2.0,
+                                    //offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                                    offset: Offset(2.0, 2.0)
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image(image: const AssetImage('assets/images/img_11.png'),height: size.height * 0.2,),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text('Shops',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
-
-                          GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Doctors()));
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.only(left: 15, right: 15,top: 15),
-
-                              height: size.height * 0.11,
-                              width: size.width * 0.415,
-                              decoration: BoxDecoration(
-                                  color: backColors,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black26,
-                                        blurRadius: 4.0,
-                                        spreadRadius: 2.0,
-                                        //offset: Offset(2.0, 2.0), // shadow direction: bottom right
-                                        offset: Offset(2.0, 2.0)
-                                    )
-                                  ],
-                                  borderRadius: BorderRadius.circular(8)
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image(image: const AssetImage('assets/images/img_12.png'),height: size.height * 0.05,),
-                                  const Padding(
-                                    padding: EdgeInsets.only(top: 5),
-                                    child: Text('Book a Doctor',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       )
                     ],
                   ),
+
+                  //Offers
                   Padding(
                     padding: const EdgeInsets.only(top: 12, left: 25, right: 25,bottom: 0),
                     child: Row(
                       children: const [
                         Text("Offers", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),),
                         Spacer(),
-                        Text("See All", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+                        //Text("See All", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
                       ],
                     ),
                   ),
-                  const Divider(
+                  Divider(
                     thickness: 2,
                   ),
                   Container(
@@ -418,54 +389,65 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                     ),
                   ),
 
+                  //Suggestion
                   Padding(
-                    padding: const EdgeInsets.only(top: 15, left: 25, right: 25,bottom: 0),
+                    padding: EdgeInsets.only(top: 15, left: 25, right: 25),
                     child: Row(
-                      children: const [
+                      children: [
                         Text("Suggestions", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),),
                       ],
                     ),
                   ),
-                  const Divider(
+                  Divider(
                     thickness: 2,
                   ),
+                  FutureBuilder(
+                    future: ShopSuggestProduct(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot){
+                      if(snapshot.connectionState != ConnectionState.done){
+                        return Text('');
+                      }
 
-                  GridView.builder(
-                      itemCount: Category().lists.length,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          mainAxisExtent: 115,
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 0,
-                          crossAxisCount: 3),
-                      itemBuilder: (BuildContext context, int index){
-                        var data = Category().lists;
-                        return Card(
-                          //shadowColor: colors,
-                          elevation: 4,
-                          //margin: EdgeInsets.only(top: 5),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 2, bottom: 2,left: 2,right: 2),
-                                child: Image(
-                                  image: AssetImage(data[index].item_image),
-                                  height: size.height * 0.05,
+                      if(snapshot.hasData){
+                        return  GridView.builder(
+                            itemCount: snapshot.data.data.length,
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                mainAxisExtent: 115,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 0,
+                                crossAxisCount: 3),
+                            itemBuilder: (BuildContext context, int index){
+                              var data = Category().lists;
+                              return Card(
+                                //shadowColor: colors,
+                                elevation: 4,
+                                //margin: EdgeInsets.only(top: 5),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
-                              Flexible(child: Text(data[index].item_name, style: const TextStyle(fontSize: 12,color: Colors.black),textAlign: TextAlign.center,))
-                            ],
-                          ),
-                        );
-                      })
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 0, bottom: 2,left: 2,right: 2),
+                                      child: Image(
+                                        image: AssetImage(data[index].item_image),
+                                        height: size.height * 0.05,
+                                      ),
+                                    ),
+                                    Flexible(child: Text(snapshot.data.data[index].name, style: const TextStyle(fontSize: 12,color: Colors.black),textAlign: TextAlign.center,))
+                                  ],
+                                ),
+                              );
+                            });
+                      }
 
-
-
+                      return Text('');
+                    },
+                  ),
                 ],
               ),
             ),

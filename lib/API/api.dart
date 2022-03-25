@@ -202,7 +202,7 @@ Future TestOrder(BuildContext context, {testId, paymentTx, paymentMethod}) async
 }
 
 //Add and Update Cart
-AddUpdateCart({test_id, qty}) async{
+Future AddUpdateCart({test_id, qty}) async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = (prefs.getString('token') ?? '0');
   var user_id = (prefs.getString('user_id') ?? '0');
