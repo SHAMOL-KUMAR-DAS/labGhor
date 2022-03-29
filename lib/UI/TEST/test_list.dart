@@ -1,21 +1,17 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
-import 'package:online_doctor_booking/LOCAL/Database/cart.dart';
-import 'package:online_doctor_booking/LOCAL/Model/cart.dart';
 import 'package:online_doctor_booking/MODEL/test_list.dart';
 import 'package:online_doctor_booking/UI/ADD_ADDRESS/add_address.dart';
-import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
-import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
-import 'package:online_doctor_booking/UI/OREDER/order_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
+import '../OREDER/order_page.dart';
 
 class TestList extends StatefulWidget {
 
-  var category, diagnosisId, packageId;
-  TestList({this.category, this.diagnosisId, this.packageId});
+  var category, diagnosisId, packageId, page;
+  TestList({this.category, this.diagnosisId, this.packageId, this.page});
 
   @override
   State<TestList> createState() => _TestListState();
@@ -23,12 +19,13 @@ class TestList extends StatefulWidget {
 
 class _TestListState extends State<TestList> {
   var dTestId;
-  int _currentAmount = 0;
+  var totalPrice = 0;
+  var quantity   = 0;
 
   SharedPreferences? prefs;
   var userId;
   sharedPreferences() async{
-    prefs = await SharedPreferences.getInstance();
+    prefs  = await SharedPreferences.getInstance();
     userId = (prefs!.getString('token') ?? "");
   }
 
@@ -66,6 +63,7 @@ class _TestListState extends State<TestList> {
     super.initState();
     sharedPreferences();
     this.ShowTest();
+    this.totalPrice;
   }
 
   @override
@@ -107,6 +105,59 @@ class _TestListState extends State<TestList> {
                 ),
               ),
 
+              widget.page == 'package' ?
+              Expanded(
+                child: FutureBuilder(
+                  future: TestPackageDetails(packageId: widget.packageId),
+                  builder: (BuildContext context, AsyncSnapshot snapshot){
+                    if(snapshot.connectionState != ConnectionState.done){
+                      return Center(child: CircularProgressIndicator(),);
+                    }
+                    if(snapshot.hasData){
+                      return  ListView.builder(
+                        itemCount: snapshot.data.data.testList.length,
+                          itemBuilder: (BuildContext context, int index){
+
+                          var data   = snapshot.data.data.testList[index];
+
+                          totalPrice = int.parse(snapshot.data.data.packageInfo.mrp);
+                          quantity   = snapshot.data.data.testList.length;
+
+                          return Card(
+                              shadowColor: colors,
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Center(
+                                child: ListTile(
+                                  leading: CircleAvatar(
+                                    radius: 25,
+                                    backgroundColor: appBarColor,
+                                    backgroundImage: AssetImage('assets/images/demo1.png'),
+                                  ),
+
+                                  title: Text(data.testName, textAlign: TextAlign.start,),
+
+                                  //subtitle: Text('${snapshot.data.data.packageInfo.mrp}', textAlign: TextAlign.start,),
+
+
+                                  onTap: (){
+
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: contacts[index].id,)));
+                                  },
+                                ),
+                              )
+                          );
+
+                          }
+                      );
+                    }
+                    return Text('');
+                  },
+                ),
+              )
+              :
               Expanded(
                 child: ListView.builder(
                     itemCount: contacts.length,
@@ -131,6 +182,19 @@ class _TestListState extends State<TestList> {
                 ),
               ),
 
+              widget.page == 'package' ?
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('Test Quantity: ${quantity}'),
+
+                    Text('Total Price : ${totalPrice}'),
+                  ],
+                ),
+              )
+                  :
               selectedContacts.length > 0 ?
               Center(
                 child: Column(
@@ -152,27 +216,17 @@ class _TestListState extends State<TestList> {
 
       bottomNavigationBar: GestureDetector(
         onTap: (){
-
-
-          final cart =  Cart(
-              product_id : '${productId}',
-              products   : '${product.toString()}',
-              price      : '${price.toString()}',
-              total      : '${sum.toString()}'      ,
-              status     : '1'
-          );
-          CartDatabase.instance.createCart(cart);
-
           selectedContacts.length >= 1 ?
               {
-          if (userId == "") {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(product: product,
-              price: price, total: sum, productId: productId,)))
-          }
-          else {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>My_Cart(product: product,
-          price: price, total: sum, productId: productId,)))
-          }
+          Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: productId,)))
+          // if (userId == "") {
+          //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(product: product,
+          //     price: price, total: sum, productId: productId,)))
+          // }
+          // else {
+          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>My_Cart(product: product,
+          // price: price, total: sum, productId: productId,)))
+          // }
               } : {
 
           };
@@ -250,14 +304,17 @@ class _TestListState extends State<TestList> {
             ),
 
             onTap: (){
-              if (userId == "") {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(productId: contacts[index].name,
-                price: contacts[index].mrp, total: '0', product: contacts[index].id, item: 'single',)));
-              }
-              else {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => My_Cart(product: contacts[index].name,
-                  price: contacts[index].mrp, total: '0', productId: contacts[index].id, item: 'single')));
-              }
+
+              Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: contacts[index].id,)));
+
+              // if (userId == "") {
+              //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(productId: contacts[index].name,
+              //   price: contacts[index].mrp, total: '0', product: contacts[index].id, item: 'single',)));
+              // }
+              // else {
+              //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => My_Cart(product: contacts[index].name,
+              //     price: contacts[index].mrp, total: '0', productId: contacts[index].id, item: 'single')));
+              // }
             },
           ),
         )
@@ -266,8 +323,7 @@ class _TestListState extends State<TestList> {
 }
 
 class ContactModel{
-
-  String name, mrp, id, qty;
+  var name, mrp, id, qty;
   bool isSelected;
 
   ContactModel(this.name, this.mrp, this.id, this.qty, this.isSelected);

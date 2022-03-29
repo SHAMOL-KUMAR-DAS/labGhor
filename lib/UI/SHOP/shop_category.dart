@@ -5,6 +5,7 @@ import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/carousel_p.dart';
 import 'package:online_doctor_booking/MODEL/sub_category_p.dart';
 import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
+import 'package:online_doctor_booking/UI/OREDER/order_page.dart';
 
 class ShopCategory extends StatelessWidget {
 
@@ -133,8 +134,9 @@ class ShopCategory extends StatelessWidget {
                                   var data = SubCategory().lists;
                                   return GestureDetector(
                                     onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>My_Cart(type: 'shop',
-                                        item: 'single',price: snapshot.data.data[index].mrp,product: snapshot.data.data[index].name,productId: snapshot.data.data[index].id,)));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: snapshot.data.data[index].id,)));
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>My_Cart(type: 'shop',
+                                      //   item: 'single',price: snapshot.data.data[index].mrp,product: snapshot.data.data[index].name,productId: snapshot.data.data[index].id,)));
                                     },
                                     child:
                                     Card(

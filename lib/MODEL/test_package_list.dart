@@ -32,18 +32,22 @@ class TestPackageData {
   TestPackageData({
     this.packageId,
     this.name,
+    this.image,
   });
 
   var packageId;
   var name;
+  var image;
 
   factory TestPackageData.fromJson(Map<String, dynamic> json) => TestPackageData(
     packageId: json["package_id"],
     name: json["name"],
+    image: json['img'],
   );
 
   Map<String, dynamic> toJson() => {
     "package_id": packageId,
     "name": name,
+    'img': image
   };
 }

@@ -3,11 +3,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
-import 'package:online_doctor_booking/MODEL/carousel_p.dart';
 import 'package:online_doctor_booking/UI/DOCTOR/doctors.dart';
 import 'package:online_doctor_booking/UI/PAGE/test_category.dart';
 import 'package:online_doctor_booking/UI/TEST/test_list.dart';
-import 'package:online_doctor_booking/test_package_details.dart';
 
 class Diagnosis extends StatelessWidget {
 
@@ -187,7 +185,9 @@ class Diagnosis extends StatelessWidget {
                             var data = snapshot.data.data[index];
                             return GestureDetector(
                               onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => TestList(packageId: data.packageId,)));
+
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => TestList(packageId: data.packageId, page: 'package',)));
+
                               },
                               child: Card(
                                   shadowColor: colors,
@@ -197,6 +197,7 @@ class Diagnosis extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: ListTile(
+                                      leading: data.image != null ? Image.network(data.image) : Image.asset('assets/images/demo1.png'),
                                       title: Text(data.name, textAlign: TextAlign.start,),
                                     ),
                                   )

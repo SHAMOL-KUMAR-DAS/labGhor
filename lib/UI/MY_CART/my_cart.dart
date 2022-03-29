@@ -4,11 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
-import 'package:online_doctor_booking/LOCAL/Database/cart.dart';
-import 'package:online_doctor_booking/LOCAL/Model/cart.dart';
-import 'package:online_doctor_booking/UI/ADD_ADDRESS/add_address.dart';
 import 'package:online_doctor_booking/UI/PAYMENT/payment.dart';
-import 'package:online_doctor_booking/test.dart';
 
 class My_Cart extends StatefulWidget {
 
@@ -22,26 +18,6 @@ class My_Cart extends StatefulWidget {
 class _My_CartState extends State<My_Cart> {
 
   int _currentAmount = 1;
-  late List<Cart> carts;
-  bool isLoading = false;
-
-  @override
-  void initState(){
-    super.initState();
-    refreshNotes();
-  }
-
-  @override
-  void dispose(){
-    CartDatabase.instance.close();
-    super.dispose();
-  }
-
-  Future refreshNotes() async{
-    setState(() => isLoading = true);
-    this.carts = await CartDatabase.instance.ViewCart();
-    setState(() => isLoading = false);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +27,7 @@ class _My_CartState extends State<My_Cart> {
       backgroundColor: Color(0xffE5E5E5),
       appBar: AppBar(
         backgroundColor: deepBlue,
-        title: GestureDetector(
-          onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => LocalsCustomer()));
-          },
-            child: Text("My Cart")),
+        title: Text("My Cart"),
         centerTitle: true,
         automaticallyImplyLeading: true,
       ),

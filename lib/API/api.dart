@@ -144,6 +144,7 @@ Future TestSearch({text, diagnosticId}) async{
 
 //Test Details (/test-details/diagnosticTestId) - COMPLETE
 Future  TestDetails({diagnosticTestId}) async{
+
   var url = '$_baseUrl/test-details/$diagnosticTestId';
   var response = await http.get(Uri.parse(url));
 
@@ -344,6 +345,8 @@ Future ShopProductList() async{
 //Shop Product Category Wise
 Future ShopCategoryProductList({category}) async{
 
+  print('Category Name: $category');
+
   var url = '$_baseUrl/category-wise-shop-product-list/$category';
   var response = await http.get(Uri.parse(url));
 
@@ -413,7 +416,7 @@ Future ShopSuggestProduct() async{
 }
 
 //Add and Update Cart
-AddUpdateCartShop({test_id, qty}) async{
+Future AddUpdateCartShop({test_id, qty}) async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = (prefs.getString('token') ?? '0');
   var user_id = (prefs.getString('user_id') ?? '0');

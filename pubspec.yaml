@@ -46,7 +46,7 @@ dependencies:
   shared_preferences: ^0.5.3+4
   flutter_vector_icons: ^1.0.0
   flutter_rounded_date_picker: 2.0.2
-  sqflite: ^2.0.2 #local_database
+  flutter_launcher_icons: ^0.9.2
 
 
   flutter_localizations:
@@ -56,6 +56,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'assets/images/appIcon.png'
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

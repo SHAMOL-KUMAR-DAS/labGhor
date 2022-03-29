@@ -4,9 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/custom_text_field.dart';
 import 'package:online_doctor_booking/CONFIGURE/loader_config.dart';
-import 'package:online_doctor_booking/UI/HOME/home_page.dart';
 import 'package:online_doctor_booking/UI/SIGNUP/signup_page.dart';
-import 'package:online_doctor_booking/UI/TEST/menu_dashboard_layout.dart';
 
 class LoginScreen extends StatelessWidget {
 

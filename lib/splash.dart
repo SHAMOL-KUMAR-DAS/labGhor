@@ -2,9 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/UI/TEST/menu_dashboard_layout.dart';
 
-import 'UI/LOGIN/login_page.dart';
-
-
 class AnimatedSplashScreen extends StatefulWidget {
   @override
   _AnimatedSplashScreenState createState() => _AnimatedSplashScreenState();
@@ -14,9 +11,6 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
     with SingleTickerProviderStateMixin{
   late AnimationController animationController;
   late Animation<double> animation;
-  // var _visible = true;
-  // var _userId;
-
 
   startTime() async {
     var _duration = new Duration(milliseconds: 1800);
@@ -37,10 +31,7 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
     animation.addListener(() => this.setState(() {}));
     animationController.forward();
     startTime();
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,21 +39,12 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          // Column(
-          //   mainAxisAlignment: MainAxisAlignment.end,
-          //   mainAxisSize: MainAxisSize.min,
-          //   children: <Widget>[
-          //
-          //     // Padding(padding: EdgeInsets.only(bottom: 30.0),child:new Image.asset('assets/powered_by.png',height: 25.0,fit: BoxFit.scaleDown,))
-          //     Padding(padding: EdgeInsets.only(bottom: 30.0),child:Text("Powered By Smart Software Ltd")),
-          //
-          //   ],),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image(image: AssetImage('assets/images/splash.png',),
-                width: animation.value * 250,
-                height: animation.value * 250,
+                width : animation.value * 650,
+                height: animation.value * 650,
               ),
               Text('L a b G h o r',style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),),
             ],
