@@ -22,12 +22,7 @@ class _TestListState extends State<TestList> {
   var totalPrice = 0;
   var quantity   = 0;
 
-  SharedPreferences? prefs;
-  var userId;
-  sharedPreferences() async{
-    prefs  = await SharedPreferences.getInstance();
-    userId = (prefs!.getString('token') ?? "");
-  }
+
 
   var _baseUrl = 'https://labghorapi.bddaimond.com/api';
   List contacts = [];
@@ -61,7 +56,6 @@ class _TestListState extends State<TestList> {
   @override
   void initState() {
     super.initState();
-    sharedPreferences();
     this.ShowTest();
     this.totalPrice;
   }
@@ -221,14 +215,6 @@ class _TestListState extends State<TestList> {
               {
           Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: productId,product: product,
           price: price)))
-          // if (userId == "") {
-          //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(product: product,
-          //     price: price, total: sum, productId: productId,)))
-          // }
-          // else {
-          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>My_Cart(product: product,
-          // price: price, total: sum, productId: productId,)))
-          // }
               } : {
 
           };

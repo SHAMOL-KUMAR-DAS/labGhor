@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
+import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
 import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class OrderPage extends StatefulWidget {
@@ -18,6 +20,19 @@ class _OrderPageState extends State<OrderPage> {
 
   final List dTestId  = [];
   final List quantity = [];
+
+  SharedPreferences? prefs;
+  var userId;
+  sharedPreferences() async{
+    prefs  = await SharedPreferences.getInstance();
+    userId = (prefs!.getString('token') ?? "");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    sharedPreferences();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,12 +167,15 @@ class _OrderPageState extends State<OrderPage> {
         GestureDetector(
           onTap: (){
             setState(() {
-              print('dTestId: ${widget.dTestId}');
-              print('product: ${widget.product}');
-              print('price: ${widget.price}');
+              if (userId == "") {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(dTestId: widget.dTestId, product: widget.product,
+                  price: widget.price, item: 'single',)));
+              }
+              else {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => My_Cart(dTestId: widget.dTestId, product: widget.product,
+                  price: widget.price, item: 'single',)));
+              }
               AddUpdateCart(test_id: widget.dTestId, qty: '1');
-              Navigator.push(context, MaterialPageRoute(builder: (context) => My_Cart(dTestId: widget.dTestId, product: widget.product,
-              price: widget.price, item: 'single',)));
             });
           },
           child: Row(

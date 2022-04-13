@@ -435,8 +435,8 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                               return GestureDetector(
                                 onTap: (){
                                   if (userId == "") {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(productId: datas.name,
-                                      price: datas.mrp, total: '0', product: datas.id, item: 'single',)));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(dTestId: datas.id,
+                                      price: datas.mrp, total: '0', product: datas.name, item: 'single',)));
                                   }
                                   else {
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => My_Cart(product: datas.name,
