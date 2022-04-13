@@ -61,8 +61,8 @@ Future Login(BuildContext context, {mobile, password, dTestId, productId, produc
       String mobile = await loginData.data.mobile;
       await prefs.setString('user_mobile', mobile);
 
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => My_Cart(dTestId: dTestId, product: product,
-      price: price, productId: productId, total: total, item: item,)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => My_Cart(product: product,
+      price: price, dTestId: productId, item: item,)));
     }
 
     else
@@ -438,12 +438,12 @@ Future AddUpdateCartShop({test_id, qty}) async{
 //Shop Order (test-order)
 Future ShopOrder(BuildContext context, {testId, paymentTx, paymentMethod}) async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  var token = (prefs.getString('token') ?? '0');
+  var token   = (prefs.getString('token') ?? '0');
   var user_id = (prefs.getString('user_id') ?? '0');
-  paymentTx     = '535345324D3';
+  paymentTx   = '535345324D3';
 
   var url = '$_baseUrl/shop-product-order';
-  var response = await http.post(Uri.parse(url), headers: {
+  var response = await http. post(Uri.parse(url), headers: {
     'Authorization' : 'Bearer $token'
   }, body: {
     'user_id'               : user_id,

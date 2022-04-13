@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
+import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class OrderPage extends StatefulWidget {
 
-  var dTestId;
-  OrderPage({this.dTestId});
+  var dTestId, product, price;
+  OrderPage({this.dTestId, this.product, this.price});
 
   @override
   State<OrderPage> createState() => _OrderPageState();
@@ -89,22 +90,22 @@ class _OrderPageState extends State<OrderPage> {
                                     padding: const EdgeInsets.all(7.0),
                                     child: Row(
                                       children: [
-                                        Text(' ${snapshot.data.data[0].sellPrice} ৳ ', style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700),),
+                                        Text(' ${snapshot.data.data[0].mrp} ৳ ', style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700),),
                                         Text('/ piece ', style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.grey),),
                                       ],
                                     ),
                                   ),
                                 ),
-                                Card(
-                                  color: Color(0xffd4f0ff),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(7.0),
-                                    child: Image.asset('assets/images/love.png',width: MediaQuery.of(context).size.width*.1,color: Color(0xff1b92ff),),
-                                  ),
-                                ),
+                                // Card(
+                                //   color: Color(0xffd4f0ff),
+                                //   shape: RoundedRectangleBorder(
+                                //     borderRadius: BorderRadius.circular(14),
+                                //   ),
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(7.0),
+                                //     child: Image.asset('assets/images/love.png',width: MediaQuery.of(context).size.width*.1,color: Color(0xff1b92ff),),
+                                //   ),
+                                // ),
                               ],
                             ),
                             Padding(
@@ -151,7 +152,12 @@ class _OrderPageState extends State<OrderPage> {
         GestureDetector(
           onTap: (){
             setState(() {
-              TestOrder(context, testId: widget.dTestId, paymentMethod: 'cashOnDelivery');
+              print('dTestId: ${widget.dTestId}');
+              print('product: ${widget.product}');
+              print('price: ${widget.price}');
+              AddUpdateCart(test_id: widget.dTestId, qty: '1');
+              Navigator.push(context, MaterialPageRoute(builder: (context) => My_Cart(dTestId: widget.dTestId, product: widget.product,
+              price: widget.price, item: 'single',)));
             });
           },
           child: Row(
@@ -159,7 +165,7 @@ class _OrderPageState extends State<OrderPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children:  [
               Icon(Icons.shopping_cart_outlined, color: Colors.blue,),
-              Text('Add To Payment'),
+              Text('Add To Cart'),
             ],
           ),
         ),

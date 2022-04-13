@@ -17,7 +17,7 @@ class _PaymentOptionState extends State<PaymentOption> {
   var bkash           = false;
   var nagad           = false;
   var sureCash        = false;
-  var cashOnDelivery  = false;
+  var cashOnDelivery  = true;
   var paymentMethod;
 
   @override
@@ -64,11 +64,11 @@ class _PaymentOptionState extends State<PaymentOption> {
 
                       onTap: (){
                         setState(() {
-                          rocket         = !rocket;
-                          bkash          = false;
-                          nagad          = false;
-                          sureCash       = false;
-                          cashOnDelivery = false;
+                          // rocket         = !rocket;
+                          // bkash          = false;
+                          // nagad          = false;
+                          // sureCash       = false;
+                          // cashOnDelivery = false;
                           paymentMethod  = 'Rocket';
                         });
                       },
@@ -88,11 +88,11 @@ class _PaymentOptionState extends State<PaymentOption> {
 
                       onTap: (){
                         setState(() {
-                          bkash          = !bkash;
-                          rocket         = false;
-                          nagad          = false;
-                          sureCash       = false;
-                          cashOnDelivery = false;
+                          // bkash          = !bkash;
+                          // rocket         = false;
+                          // nagad          = false;
+                          // sureCash       = false;
+                          // cashOnDelivery = false;
                           paymentMethod  = 'BKash';
                         });
                       },
@@ -112,11 +112,11 @@ class _PaymentOptionState extends State<PaymentOption> {
 
                       onTap: (){
                         setState(() {
-                          nagad          = !nagad;
-                          rocket         = false;
-                          bkash          = false;
-                          sureCash       = false;
-                          cashOnDelivery = false;
+                          // nagad          = !nagad;
+                          // rocket         = false;
+                          // bkash          = false;
+                          // sureCash       = false;
+                          // cashOnDelivery = false;
                           paymentMethod  = 'Nagad';
                         });
                       },
@@ -136,11 +136,11 @@ class _PaymentOptionState extends State<PaymentOption> {
 
                       onTap: (){
                         setState(() {
-                          sureCash       = !sureCash;
-                          rocket         = false;
-                          bkash          = false;
-                          nagad          = false;
-                          cashOnDelivery = false;
+                          // sureCash       = !sureCash;
+                          // rocket         = false;
+                          // bkash          = false;
+                          // nagad          = false;
+                          // cashOnDelivery = false;
                           paymentMethod  = 'SureCash';
                         });
                       },
@@ -160,7 +160,7 @@ class _PaymentOptionState extends State<PaymentOption> {
 
                       onTap: (){
                         setState(() {
-                          cashOnDelivery = !cashOnDelivery;
+                          cashOnDelivery = true;
                           rocket         = false;
                           bkash          = false;
                           nagad          = false;

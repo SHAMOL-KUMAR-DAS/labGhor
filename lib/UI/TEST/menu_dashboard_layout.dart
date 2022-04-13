@@ -440,7 +440,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                                   }
                                   else {
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => My_Cart(product: datas.name,
-                                        price: datas.mrp, total: '0', productId: datas.id, item: 'single')));
+                                        price: datas.mrp, dTestId: datas.id, item: 'single')));
                                   }
                                 },
                                 child: Card(

@@ -1,15 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/UI/PAYMENT/payment.dart';
 
 class My_Cart extends StatefulWidget {
 
-  var dTestId, product, productId, price, total, item, type;
-  My_Cart({this.dTestId, this.product, this.productId, this.price, this.total, this.item, this.type});
+  var dTestId, product, price, item, type;
+  My_Cart({this.dTestId, this.product, this.price, this.item, this.type});
 
   @override
   _My_CartState createState() => _My_CartState();
@@ -208,8 +204,8 @@ class _My_CartState extends State<My_Cart> {
               height: 45,
               child: RaisedButton(
                 onPressed: () {
-                  widget.type != 'shop' ? AddUpdateCart(test_id: widget.productId, qty: _currentAmount) : AddUpdateCartShop(test_id: widget.productId, qty: _currentAmount);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentOption(type: 'shop',price: widget.item == 'single' ? int.parse(widget.price) * _currentAmount : widget.price, productId: widget.productId)));
+                  //widget.type != 'shop' ? AddUpdateCart(test_id: widget.productId, qty: _currentAmount) : AddUpdateCartShop(test_id: widget.productId, qty: _currentAmount);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentOption(type: 'shop',price: widget.item == 'single' ? int.parse(widget.price) * _currentAmount : widget.price, productId: widget.dTestId)));
                 },
                 child: const Text(
                   'Continue to Payment',

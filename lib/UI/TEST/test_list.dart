@@ -43,7 +43,7 @@ class _TestListState extends State<TestList> {
 
       for (var i=0; i< test.length; i++){
         setState(() {
-          contacts.add(ContactModel(test[i].name, test[i].mrp, test[i].testId, '0', false));
+          contacts.add(ContactModel(test[i].name, test[i].mrp, test[i].dTestId, '0', false));
         });}
       return testList;
     }
@@ -137,14 +137,15 @@ class _TestListState extends State<TestList> {
                                     backgroundImage: AssetImage('assets/images/demo1.png'),
                                   ),
 
-                                  title: Text(data.testName, textAlign: TextAlign.start,),
+                                  title: Text('shamol${data.testName}', textAlign: TextAlign.start,),
 
                                   //subtitle: Text('${snapshot.data.data.packageInfo.mrp}', textAlign: TextAlign.start,),
 
 
                                   onTap: (){
 
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: contacts[index].id,)));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: contacts[index].id,
+                                    product: data.testName, price: data.mrp, )));
                                   },
                                 ),
                               )
@@ -218,7 +219,8 @@ class _TestListState extends State<TestList> {
         onTap: (){
           selectedContacts.length >= 1 ?
               {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: productId,)))
+          Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: productId,product: product,
+          price: price)))
           // if (userId == "") {
           //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen(product: product,
           //     price: price, total: sum, productId: productId,)))
@@ -265,7 +267,7 @@ class _TestListState extends State<TestList> {
               backgroundImage: AssetImage('assets/images/demo1.png'),
             ),
 
-            title: Text(name, textAlign: TextAlign.start,),
+            title: Text('$name', textAlign: TextAlign.start,),
 
             subtitle: Text('${phoneNumber}', textAlign: TextAlign.start,),
 
@@ -305,8 +307,9 @@ class _TestListState extends State<TestList> {
 
             onTap: (){
 
-              Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: contacts[index].id,)));
-
+              Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: contacts[index].id,
+              product: contacts[index].name, price: contacts[index].mrp,)));
+              print('********************');
               // if (userId == "") {
               //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(productId: contacts[index].name,
               //   price: contacts[index].mrp, total: '0', product: contacts[index].id, item: 'single',)));
