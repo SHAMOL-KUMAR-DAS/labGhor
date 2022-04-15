@@ -38,6 +38,7 @@ class DiagnosticData {
     this.district,
     this.thana,
     this.fullAddress,
+    this.img
   });
 
   var id;
@@ -48,6 +49,7 @@ class DiagnosticData {
   var district;
   var thana;
   var fullAddress;
+  var img;
 
   factory DiagnosticData.fromJson(Map<String, dynamic> json) => DiagnosticData(
     id: json["id"] ?? '',
@@ -58,6 +60,7 @@ class DiagnosticData {
     district: json["district"] ?? '',
     thana: json["thana"] ?? '',
     fullAddress: json["full_address"] ?? '',
+    img: json["img"] ?? ''
   );
 
   Map<String, dynamic> toJson() => {
@@ -69,5 +72,6 @@ class DiagnosticData {
     "district": district,
     "thana": thana,
     "full_address": fullAddress,
+    "img" : img
   };
 }

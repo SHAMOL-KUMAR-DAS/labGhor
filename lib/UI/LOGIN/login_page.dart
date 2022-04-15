@@ -8,8 +8,8 @@ import 'package:online_doctor_booking/UI/SIGNUP/signup_page.dart';
 
 class LoginScreen extends StatelessWidget {
 
-  var dTestId, product, price, total, item;
-  LoginScreen({this.dTestId, this.product, this.price, this.total, this.item});
+  var dTestId, product, price, total, item, quantity, page;
+  LoginScreen({this.dTestId, this.product, this.price, this.total, this.item, this.quantity, this.page});
 
   var mobile   = TextEditingController();
   var password = TextEditingController();
@@ -86,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                       onPressed: () {
                         Loader().showLoaderDialog(context, text: 'Loading');
                         Login(context, mobile: mobile.text, password: password.text, dTestId: dTestId,
-                        product: product, price: price, productId: dTestId, total: total, item: item);
+                        product: product, price: price, productId: dTestId, total: total, item: item, quantity: quantity);
                       },
                       child: const Text(
                         'Login',

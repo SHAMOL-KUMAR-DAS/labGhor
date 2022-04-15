@@ -18,7 +18,7 @@ class _PaymentOptionState extends State<PaymentOption> {
   var nagad           = false;
   var sureCash        = false;
   var cashOnDelivery  = true;
-  var paymentMethod;
+  var paymentMethod   = 'cashOnDelivery';
 
   @override
   Widget build(BuildContext context) {
@@ -227,9 +227,14 @@ class _PaymentOptionState extends State<PaymentOption> {
               height: 45,
               child: RaisedButton(
                 onPressed: () {
-                  widget.type != 'shop' ? TestOrder(context, paymentMethod: paymentMethod, testId: widget.productId)
-                  :
-                  ShopOrder(context, paymentMethod: paymentMethod, testId: widget.productId);
+                  widget.type != 'shop' ?
+                      {
+                        TestOrder(context, paymentMethod: paymentMethod, testId: widget.productId)
+                      }
+                      :
+                      {
+                        ShopOrder(context, paymentMethod: paymentMethod, testId: widget.productId)
+                      };
 
                 },
                 child: const Text(

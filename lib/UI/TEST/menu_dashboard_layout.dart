@@ -136,17 +136,39 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                 Divider(
                   color: Colors.white70,
                 ),
-                Row(
-                  children: const [
-                    Icon(Icons.settings,color: Colors.white,size: 30,),
-                    Text(" Settings", style: TextStyle(color: Colors.white, fontSize: 18)),
-                  ],
-                ),
+                // Row(
+                //   children: const [
+                //     Icon(Icons.settings,color: Colors.white,size: 30,),
+                //     Text(" Settings", style: TextStyle(color: Colors.white, fontSize: 18)),
+                //   ],
+                // ),
+
+                if(userId != '')...{
+                  SizedBox(height: 200),
+                  GestureDetector(
+                    onTap: (){
+
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(page: 'Layout',)));
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.logout,color: Colors.white,size: 30,),
+                        Text(" Log In", style: TextStyle(color: Colors.white, fontSize: 18)),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.white70,
+                  ),
+                },
                 SizedBox(height: 200),
 
                 GestureDetector(
-                  onTap: (){
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
+                  onTap: () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setString('token', '');
+
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MenuDashboardPage()), (route) => false);
                   },
                   child: Row(
                     children: const [

@@ -4,6 +4,7 @@ import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/MODEL/carousel_p.dart';
 import 'package:online_doctor_booking/MODEL/sub_category_p.dart';
+import 'package:online_doctor_booking/SEARCH/diagnostic.dart';
 import 'package:online_doctor_booking/UI/DIAGNOSIS/diagnostics.dart';
 import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 
@@ -37,30 +38,35 @@ class DiagonsisDetails extends StatelessWidget {
         children: [
           //Text('$categoryName',textAlign: TextAlign.center,style: TextStyle(fontSize: 22),),
 
-          Container(
-            height: size.height * 0.06,
-            width: size.width,
-            margin: EdgeInsets.only(bottom: 10,left: 15, right: 15, top: 15),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(
-                    color: Color(0xFFdbdbdb),
-                    width: 2
-                )
-            ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Icon(Icons.search),
-                ),
-                Text('    Search'),
-                Padding(
-                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.56),
-                  child: Image(image: AssetImage("assets/images/img_6.png"),height: 25,width: 30,),
-                ),
-              ],
+          GestureDetector(
+            onTap: (){
+              showSearch(context: context, delegate: DiagnosisSearch());
+            },
+            child: Container(
+              height: size.height * 0.06,
+              width: size.width,
+              margin: EdgeInsets.only(bottom: 10,left: 15, right: 15, top: 15),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                      color: Color(0xFFdbdbdb),
+                      width: 2
+                  )
+              ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Icon(Icons.search),
+                  ),
+                  Text('    Search'),
+                  // Padding(
+                  //   padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.56),
+                  //   child: Image(image: AssetImage("assets/images/img_6.png"),height: 25,width: 30,),
+                  // ),
+                ],
+              ),
             ),
           ),
 
@@ -130,7 +136,7 @@ class DiagonsisDetails extends StatelessWidget {
                                   shrinkWrap: true,
                                   physics: BouncingScrollPhysics(),
                                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                      mainAxisExtent: size.height * 0.18,
+                                      mainAxisExtent: 1,
                                       mainAxisSpacing: 10,
                                       crossAxisSpacing: 0,
                                       crossAxisCount: 2),
@@ -152,8 +158,14 @@ class DiagonsisDetails extends StatelessWidget {
                                           children: [
                                             Padding(
                                               padding: const EdgeInsets.only(top: 5, bottom: 5),
-                                              child: Image(
+                                              child:
+                                              data.img == '' || data.img == null ? Image(
                                                 image: AssetImage('assets/images/medi0.png'),
+                                                height: size.height * 0.06,
+                                              )
+                                              :
+                                              Image(
+                                                image: NetworkImage(data.img),
                                                 height: size.height * 0.06,
                                               ),
                                             ),

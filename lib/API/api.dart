@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:online_doctor_booking/CONFIGURE/button_config.dart';
 import 'package:online_doctor_booking/MODEL/active_offer.dart';
 import 'package:online_doctor_booking/MODEL/diagnostic.dart';
+import 'package:online_doctor_booking/MODEL/get_cart_item.dart';
 import 'package:online_doctor_booking/MODEL/login.dart';
 import 'package:online_doctor_booking/MODEL/my_test_order_details.dart';
 import 'package:online_doctor_booking/MODEL/my_test_order_list.dart';
@@ -19,6 +20,7 @@ import 'package:online_doctor_booking/MODEL/test_package_list.dart';
 import 'package:online_doctor_booking/MODEL/test_suggest.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
 import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
+import 'package:online_doctor_booking/UI/TEST/menu_dashboard_layout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 var _baseUrl = 'https://labghorapi.bddaimond.com/api';
@@ -37,7 +39,7 @@ Future Register(BuildContext context, {name, mobile, password}) async{
 }
 
 //User Login(/user-login) - COMPLETE
-Future Login(BuildContext context, {mobile, password, dTestId, productId, product, price, total, item}) async{
+Future Login(BuildContext context, {mobile, password, dTestId, productId, product, price, total, item, quantity, page}) async{
   var url = '$_baseUrl/user-login';
   var response = await http.post(Uri.parse(url), body: {
     'mobile'    : mobile,
@@ -61,8 +63,11 @@ Future Login(BuildContext context, {mobile, password, dTestId, productId, produc
       String mobile = await loginData.data.mobile;
       await prefs.setString('user_mobile', mobile);
 
+      page == 'Layout' ?
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MenuDashboardPage()))
+      :
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => My_Cart(product: product,
-      price: price, dTestId: productId, item: item,)));
+      price: price, dTestId: productId, item: item, quantity: quantity,)));
     }
 
     else
@@ -219,6 +224,26 @@ Future AddUpdateCart({test_id, qty}) async{
 
   if(response.statusCode == 200){
     print('successfully Add to Cart');
+  }
+}
+
+//View Cart
+Future ViewCart() async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = (prefs.getString('token') ?? '0');
+  var user_id = (prefs.getString('user_id') ?? '0');
+
+  var url = '$_baseUrl/get-user-cart-itmes-tests/$user_id';
+  var response = await http.get(Uri.parse(url), headers: {
+    'Authorization' : 'Bearer $token'
+  });
+
+  if(response.statusCode == 200){
+    print('11111111111111111');
+    List  getData = getCartItemShopFromJson(response.body);
+
+    print('Cart Item Name: ${getData[0].testName}');
+    return getData;
   }
 }
 
@@ -465,9 +490,9 @@ Future ShopOrder(BuildContext context, {testId, paymentTx, paymentMethod}) async
               children: [
                 Image.asset('assets/images/delivery.png'),
 
-                Text('Your Order Has Been Placed Successfully'),
+                //Text('Your Order Has Been Placed Successfully'),
 
-                Text('Your Order Has Been Successfully Completed. Within Moments You will Received A Notification With The Receipt Of Your Purchase And Track Every Step Of Your Order.'),
+                Text('Your Order Has Been Successfully Completed. Within Moments You will Received A Notification With The Receipt Of Your Purchase And Track Every Step Of Your Order.',textAlign: TextAlign.justify,),
 
                 ButtonConfig.FlatButton(
                   text: 'Close',

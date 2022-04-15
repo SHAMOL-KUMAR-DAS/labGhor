@@ -28,6 +28,8 @@ class _OrderPageState extends State<OrderPage> {
     userId = (prefs!.getString('token') ?? "");
   }
 
+  int _currentAmount = 1;
+
   @override
   void initState() {
     super.initState();
@@ -121,8 +123,120 @@ class _OrderPageState extends State<OrderPage> {
                                 //     child: Image.asset('assets/images/love.png',width: MediaQuery.of(context).size.width*.1,color: Color(0xff1b92ff),),
                                 //   ),
                                 // ),
+
+                                Row(
+                                  children: [
+                                    _currentAmount <= 0 ?
+                                    Container() :
+                                    GestureDetector(
+                                      onTap: (){
+                                        setState(() {
+                                          _currentAmount--;
+                                        });
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey.shade400,
+                                                blurRadius: 3,
+                                                offset: Offset(0.5, 4)
+                                            ),
+                                            BoxShadow(
+                                                color: Colors.grey.shade300,
+                                                blurRadius: 3,
+                                                offset: Offset(0.0, 0.75)
+                                            )
+                                          ],
+                                        ),
+                                        child: CircleAvatar(
+                                          radius: 17,
+                                          backgroundColor: Colors.white,
+                                          child: Text('-',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      "$_currentAmount",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(width: 10),
+                                    GestureDetector(
+                                      onTap: (){
+                                        setState(() {
+                                          _currentAmount++;
+                                        });
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey.shade400,
+                                                blurRadius: 3,
+                                                offset: Offset(0.5, 4)
+                                            ),
+                                            BoxShadow(
+                                                color: Colors.grey.shade300,
+                                                blurRadius: 3,
+                                                offset: Offset(0.0, 0.75)
+                                            )
+                                          ],
+                                        ),
+                                        child: CircleAvatar(
+                                          radius: 17,
+                                          backgroundColor: Colors.white,
+                                          child: Text('+',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
+
+                            Container(
+                              padding: EdgeInsets.only(top: 0,left: 10.0,right: 10.0, bottom: 0),
+                              margin: EdgeInsets.only(top: 10, bottom: 10),
+                              height: 100,
+                              width: size.width,
+                              color: Colors.white,
+                              child:
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // Text("Price Details",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.black),),
+                                  // SizedBox(height: size.height*.03,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Price (1 item)",style: TextStyle(fontSize: 15,color: Colors.black87),),
+                                      Text("৳${snapshot.data.data[0].mrp}",style: TextStyle(fontSize: 15,color: Colors.black87),),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Delivery Fee",style: TextStyle(fontSize: 15,color: Colors.black87),),
+                                      Text("Info",style: TextStyle(fontSize: 15,color: Colors.black87),),
+                                    ],
+                                  ),
+                                  Divider(),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Total Amount",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
+                                      Text("৳${int.parse(snapshot.data.data[0].mrp) * _currentAmount}",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+
                             Padding(
                               padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
                               child: SmoothStarRating(
@@ -142,7 +256,8 @@ class _OrderPageState extends State<OrderPage> {
                               ),
                             ),
                             Flexible(child: Text('Description: \n${snapshot.data.data[0].details}', style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700,color: Colors.grey),)),
-                            SizedBox(height: MediaQuery.of(context).size.height*.1,),
+                            //SizedBox(height: MediaQuery.of(context).size.height*.1,),
+
                             Text('Category: ${snapshot.data.data[0].category}', style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700,color: Colors.grey),),
 
                           ],
@@ -173,9 +288,9 @@ class _OrderPageState extends State<OrderPage> {
               }
               else {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => My_Cart(dTestId: widget.dTestId, product: widget.product,
-                  price: widget.price, item: 'single',)));
+                  price: widget.price, item: 'single',quantity: _currentAmount,)));
               }
-              AddUpdateCart(test_id: widget.dTestId, qty: '1');
+              AddUpdateCart(test_id: widget.dTestId, qty: _currentAmount);
             });
           },
           child: Row(
