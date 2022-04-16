@@ -5,6 +5,7 @@ import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 import 'package:online_doctor_booking/CONFIGURE/snack_bar.dart';
 import 'package:online_doctor_booking/UI/DOCTOR/doctors.dart';
+import 'package:online_doctor_booking/UI/OREDER/order_page.dart';
 import 'package:online_doctor_booking/UI/PAGE/test_category.dart';
 import 'package:online_doctor_booking/UI/TEST/test_list.dart';
 
@@ -48,19 +49,33 @@ class Diagnosis extends StatelessWidget {
                     ),
                     itemBuilder: (context, index, realIndex) {
                       var data = snapshot.data.data[index];
-                      return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 5),
-                        width: size.width * 0.51,
-                        color: const Color(0xFFf3f6fb),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(data.name),
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: data.dTestId,
+                            product: data.name, price: data.mrp,)));
+                        },
+                        child: Container(
+                            margin:  EdgeInsets.symmetric(horizontal: 5),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Color(0xFFf3f6fb),
+                                image:
+                                data.img != '' ?
+                                DecorationImage(image: NetworkImage(data.img), fit: BoxFit.cover)
+                                    :
+                                DecorationImage(image: AssetImage('assets/images/medi1.png'), fit: BoxFit.cover)
+                            ),
+                            child: Container(
 
-                            Text(data.mrp)
-                          ],
+                              decoration: BoxDecoration(
+                                color: Colors.black38,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Center(child: Text(data.name,style: TextStyle(color: Colors.white),)),
+                            )
                         ),
                       );
+
                     },
                   );
                 }

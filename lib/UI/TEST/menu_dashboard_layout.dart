@@ -304,7 +304,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                           );
                         }
 
-                        return Text('');
+                        return Container();
                       },
                     ),
                   ),

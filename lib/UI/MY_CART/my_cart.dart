@@ -111,7 +111,7 @@ class _My_CartState extends State<My_Cart> {
               child: RaisedButton(
                 onPressed: () {
                   //widget.type != 'shop' ? AddUpdateCart(test_id: widget.productId, qty: _currentAmount) : AddUpdateCartShop(test_id: widget.productId, qty: _currentAmount);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentOption(type: 'shop',price: widget.item == 'single' ? widget.price * widget.quantity : widget.price, productId: widget.dTestId)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentOption(type: '', productId: widget.dTestId)));
                 },
                 child: const Text(
                   'Continue to Payment',

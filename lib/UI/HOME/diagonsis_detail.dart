@@ -97,23 +97,30 @@ class DiagonsisDetails extends StatelessWidget {
                               itemBuilder: (context, index, realIndex) {
                                 var data = snapshot.data.data[index];
                                 return Container(
-                                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                                  color: const Color(0xFFf3f6fb),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Center(child: Text(data.title))
-                                    // Image(
-                                    //   image: AssetImage(data[index].image),
-                                    //   fit: BoxFit.cover,
-                                    //   width: double.infinity,
-                                    // ),
-                                  ),
+                                    margin:  EdgeInsets.symmetric(horizontal: 5),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Color(0xFFf3f6fb),
+                                        image:
+                                        data.img != '' ?
+                                        DecorationImage(image: NetworkImage(data.img), fit: BoxFit.cover)
+                                            :
+                                        DecorationImage(image: AssetImage('assets/images/medi1.png'), fit: BoxFit.cover)
+                                    ),
+                                    child: Container(
+
+                                      decoration: BoxDecoration(
+                                        color: Colors.black38,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Center(child: Text(data.title,style: TextStyle(color: Colors.white),)),
+                                    )
                                 );
                               },
                             );
                           }
 
-                          return Text('');
+                          return Container();
                         },
                       ),
 

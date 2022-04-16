@@ -4,8 +4,8 @@ import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 
 class PaymentOption extends StatefulWidget {
 
-  var price, productId, type;
-  PaymentOption({this.price, this.productId, this.type});
+  var productId, type;
+  PaymentOption({this.productId, this.type});
 
   @override
   State<PaymentOption> createState() => _PaymentOptionState();
@@ -172,44 +172,44 @@ class _PaymentOptionState extends State<PaymentOption> {
                   )
               ),
 
-              Container(
-                padding: EdgeInsets.only(top: 10,left: 10.0,right: 10.0),
-                margin: EdgeInsets.only(top: 15),
-                height: height*.28,
-                width: width,
-                color: Colors.white,
-                child:
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Price Details",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.black),),
-                    SizedBox(height: height*.03,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Price (1 item)",style: TextStyle(fontSize: 15,color: Colors.black87),),
-                        Text("৳ ${widget.price}",style: TextStyle(fontSize: 15,color: Colors.black87),),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Delivery Fee",style: TextStyle(fontSize: 15,color: Colors.black87),),
-                        Text("৳ 0.0",style: TextStyle(fontSize: 15,color: Colors.black87),),
-                      ],
-                    ),
-                    Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Total Amount",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
-                        Text("৳ ${widget.price}",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   padding: EdgeInsets.only(top: 10,left: 10.0,right: 10.0),
+              //   margin: EdgeInsets.only(top: 15),
+              //   height: height*.28,
+              //   width: width,
+              //   color: Colors.white,
+              //   child:
+              //   Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       Text("Price Details",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.black),),
+              //       SizedBox(height: height*.03,),
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: [
+              //           Text("Price (1 item)",style: TextStyle(fontSize: 15,color: Colors.black87),),
+              //           Text("৳ ${widget.price}",style: TextStyle(fontSize: 15,color: Colors.black87),),
+              //         ],
+              //       ),
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: [
+              //           Text("Delivery Fee",style: TextStyle(fontSize: 15,color: Colors.black87),),
+              //           Text("৳ 0.0",style: TextStyle(fontSize: 15,color: Colors.black87),),
+              //         ],
+              //       ),
+              //       Divider(),
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: [
+              //           Text("Total Amount",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
+              //           Text("৳ ${widget.price}",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

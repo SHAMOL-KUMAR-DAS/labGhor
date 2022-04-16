@@ -36,6 +36,7 @@ class TestsuggestData {
     this.category,
     this.mrp,
     this.sellPrice,
+    this.img,
   });
 
   var testId;
@@ -44,6 +45,7 @@ class TestsuggestData {
   var category;
   var mrp;
   var sellPrice;
+  var img;
 
   factory TestsuggestData.fromJson(Map<String, dynamic> json) => TestsuggestData(
     testId: json["test_id"],
@@ -52,6 +54,7 @@ class TestsuggestData {
     category: json["category"],
     mrp: json["mrp"],
     sellPrice: json["sell_price"],
+    img: json["img"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +64,6 @@ class TestsuggestData {
     "category": category,
     "mrp": mrp,
     "sell_price": sellPrice,
+    "img": img
   };
 }
