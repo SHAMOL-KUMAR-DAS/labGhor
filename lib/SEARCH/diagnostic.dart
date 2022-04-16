@@ -36,16 +36,11 @@ class DiagnosisSearch extends SearchDelegate{
         }
 
         if(snapshot.hasData){
-          return GridView.builder(
+          return ListView.builder(
               itemCount: snapshot.data.data.length,
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               physics: BouncingScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisExtent: 90,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 0,
-                  crossAxisCount: 1),
               itemBuilder: (BuildContext context, int index){
                 var data = snapshot.data.data[index];
                 if(data.name.toString().toLowerCase().contains(query.toLowerCase())){
@@ -94,16 +89,11 @@ class DiagnosisSearch extends SearchDelegate{
         }
 
         if(snapshot.hasData){
-          return GridView.builder(
+          return ListView.builder(
               itemCount: snapshot.data.data.length,
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               physics: BouncingScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisExtent: 90,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 0,
-                  crossAxisCount: 1),
               itemBuilder: (BuildContext context, int index){
                 var data = snapshot.data.data[index];
                 if(data.name.toString().toLowerCase().contains(query.toLowerCase())){
@@ -121,8 +111,14 @@ class DiagnosisSearch extends SearchDelegate{
                       child: ListTile(
                         leading: Padding(
                           padding: const EdgeInsets.only(top: 5, bottom: 5),
-                          child: Image(
+                          child: data.img == '' || data.img == null ?
+                          Image(
                             image: AssetImage('assets/images/medi0.png'),
+                            height: size.height * 0.06,
+                          )
+                              :
+                          Image(
+                            image: NetworkImage(data.img),
                             height: size.height * 0.06,
                           ),
                         ),

@@ -136,12 +136,13 @@ class DiagonsisDetails extends StatelessWidget {
                                   shrinkWrap: true,
                                   physics: BouncingScrollPhysics(),
                                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                      mainAxisExtent: 1,
+                                      mainAxisExtent: 135,
                                       mainAxisSpacing: 10,
                                       crossAxisSpacing: 0,
                                       crossAxisCount: 2),
                                   itemBuilder: (BuildContext context, int index){
                                     var data = snapshot.data.data[index];
+                                    print('sssssssssss${data.name}');
                                     return GestureDetector(
                                       onTap: (){
                                         Navigator.push(context, MaterialPageRoute(builder: (context) => Diagnosis(diagnosisId: data.id,diagnosisName: data.name,)));
@@ -159,7 +160,8 @@ class DiagonsisDetails extends StatelessWidget {
                                             Padding(
                                               padding: const EdgeInsets.only(top: 5, bottom: 5),
                                               child:
-                                              data.img == '' || data.img == null ? Image(
+                                              data.img == '' || data.img == null ?
+                                              Image(
                                                 image: AssetImage('assets/images/medi0.png'),
                                                 height: size.height * 0.06,
                                               )

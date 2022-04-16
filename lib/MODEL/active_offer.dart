@@ -32,18 +32,22 @@ class ActiveOfferData {
   ActiveOfferData({
     this.id,
     this.title,
+    this.img,
   });
 
   var id;
   var title;
+  var img;
 
   factory ActiveOfferData.fromJson(Map<String, dynamic> json) => ActiveOfferData(
     id: json["id"],
     title: json["title"],
+    img: json['img']
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "title": title,
+    'img': img
   };
 }

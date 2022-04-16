@@ -143,8 +143,8 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                 //   ],
                 // ),
 
-                if(userId != '')...{
-                  SizedBox(height: 200),
+                SizedBox(height: 10),
+                if(userId == '')...{
                   GestureDetector(
                     onTap: (){
 
@@ -152,7 +152,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                     },
                     child: Row(
                       children: const [
-                        Icon(Icons.logout,color: Colors.white,size: 30,),
+                        Icon(Icons.login,color: Colors.white,size: 30,),
                         Text(" Log In", style: TextStyle(color: Colors.white, fontSize: 18)),
                       ],
                     ),
@@ -160,23 +160,44 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                   Divider(
                     color: Colors.white70,
                   ),
-                },
-                SizedBox(height: 200),
 
-                GestureDetector(
-                  onTap: () async {
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.setString('token', '');
-
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MenuDashboardPage()), (route) => false);
-                  },
-                  child: Row(
-                    children: const [
-                      Icon(Icons.logout,color: Colors.white,size: 30,),
-                      Text(" Log out", style: TextStyle(color: Colors.white, fontSize: 18)),
-                    ],
+                  SizedBox(height: 10),
+                }
+                else...{
+                  GestureDetector(
+                    onTap: () async {
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => My_Cart()));
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.logout,color: Colors.white,size: 30,),
+                        Text(" My Cart", style: TextStyle(color: Colors.white, fontSize: 18)),
+                      ],
+                    ),
                   ),
-                ),
+                  Divider(
+                    color: Colors.white70,
+                  ),
+                  SizedBox(height: 10),
+                  GestureDetector(
+                    onTap: () async {
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      prefs.setString('token', '');
+
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MenuDashboardPage()), (route) => false);
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.logout,color: Colors.white,size: 30,),
+                        Text(" Log out", style: TextStyle(color: Colors.white, fontSize: 18)),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.white70,
+                  ),
+                }
+
               ],
             ),
           ),
@@ -264,7 +285,11 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
                                     color: Color(0xFFf3f6fb),
-                                  image: DecorationImage(image: AssetImage('assets/images/medi1.png'),fit: BoxFit.cover)
+                                  image:
+                                      data.img != '' ?
+                                      DecorationImage(image: NetworkImage(data.img), fit: BoxFit.cover)
+                                          :
+                                      DecorationImage(image: AssetImage('assets/images/medi1.png'), fit: BoxFit.cover)
                                 ),
                                 child: Container(
 
@@ -272,7 +297,7 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                                     color: Colors.black38,
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  child: Center(child: Text(snapshot.data.data[index].title,style: TextStyle(color: Colors.white),)),
+                                  child: Center(child: Text(data.title,style: TextStyle(color: Colors.white),)),
                                 )
                               );
                             },

@@ -62,212 +62,208 @@ class _OrderPageState extends State<OrderPage> {
         future: TestDetails(diagnosticTestId: widget.dTestId),
         builder: (BuildContext context, AsyncSnapshot snapshot){
           if(snapshot.connectionState != ConnectionState.done){
-            return const Center(child: CircularProgressIndicator(),);
+            return  Center(child: CircularProgressIndicator(),);
           }
           if(snapshot.hasData){
             return  SingleChildScrollView(
-              child: Container(
-                // margin: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
-                child:
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:  [
-                    Image.asset('assets/images/img_9.png',width: MediaQuery.of(context).size.width,fit: BoxFit.cover,height:  MediaQuery.of(context).size.height*.3,),
-                    Padding(
-                      padding:  EdgeInsets.only(left: 18.0,right: 16.0,top: 14.0,bottom: 14),
-                      child:  Text(snapshot.data.data[0].name, style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700,color: Colors.grey),),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      decoration: BoxDecoration(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children:  [
+                  Image.asset('assets/images/img_9.png',width: MediaQuery.of(context).size.width,fit: BoxFit.cover,height:  MediaQuery.of(context).size.height*.3,),
+                  Padding(
+                    padding:  EdgeInsets.only(left: 18.0,right: 16.0,top: 14.0,bottom: 14),
+                    child:  Text(snapshot.data.data[0].name, style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700,color: Colors.grey),),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffe8f6fd),
+                        border: Border.all(
                           color: const Color(0xffe8f6fd),
-                          border: Border.all(
-                            color: const Color(0xffe8f6fd),
-                          ),
-                          borderRadius: const BorderRadius.all(Radius.circular(20))
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0,right: 16.0,top: 10.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Card(
-                                  color: Color(0xffd4f0ff),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14),
-                                  ),
-                                  child:
-                                  Padding(
-                                    padding: const EdgeInsets.all(7.0),
-                                    child: Row(
-                                      children: [
-                                        Text(' ${snapshot.data.data[0].mrp} ৳ ', style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700),),
-                                        Text('/ piece ', style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.grey),),
-                                      ],
-                                    ),
+                        ),
+                        borderRadius: const BorderRadius.all(Radius.circular(20))
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 18.0,right: 16.0,top: 10.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Card(
+                                color: Color(0xffd4f0ff),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                child:
+                                Padding(
+                                  padding: const EdgeInsets.all(7.0),
+                                  child: Row(
+                                    children: [
+                                      Text(' ${snapshot.data.data[0].mrp} ৳ ', style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700),),
+                                      Text('/ piece ', style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.grey),),
+                                    ],
                                   ),
                                 ),
-                                // Card(
-                                //   color: Color(0xffd4f0ff),
-                                //   shape: RoundedRectangleBorder(
-                                //     borderRadius: BorderRadius.circular(14),
-                                //   ),
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(7.0),
-                                //     child: Image.asset('assets/images/love.png',width: MediaQuery.of(context).size.width*.1,color: Color(0xff1b92ff),),
-                                //   ),
-                                // ),
+                              ),
+                              // Card(
+                              //   color: Color(0xffd4f0ff),
+                              //   shape: RoundedRectangleBorder(
+                              //     borderRadius: BorderRadius.circular(14),
+                              //   ),
+                              //   child: Padding(
+                              //     padding: const EdgeInsets.all(7.0),
+                              //     child: Image.asset('assets/images/love.png',width: MediaQuery.of(context).size.width*.1,color: Color(0xff1b92ff),),
+                              //   ),
+                              // ),
 
-                                Row(
-                                  children: [
-                                    _currentAmount <= 0 ?
-                                    Container() :
-                                    GestureDetector(
-                                      onTap: (){
-                                        setState(() {
-                                          _currentAmount--;
-                                        });
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.grey.shade400,
-                                                blurRadius: 3,
-                                                offset: Offset(0.5, 4)
-                                            ),
-                                            BoxShadow(
-                                                color: Colors.grey.shade300,
-                                                blurRadius: 3,
-                                                offset: Offset(0.0, 0.75)
-                                            )
-                                          ],
-                                        ),
-                                        child: CircleAvatar(
-                                          radius: 17,
-                                          backgroundColor: Colors.white,
-                                          child: Text('-',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      "$_currentAmount",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(width: 10),
-                                    GestureDetector(
-                                      onTap: (){
-                                        setState(() {
-                                          _currentAmount++;
-                                        });
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.grey.shade400,
-                                                blurRadius: 3,
-                                                offset: Offset(0.5, 4)
-                                            ),
-                                            BoxShadow(
-                                                color: Colors.grey.shade300,
-                                                blurRadius: 3,
-                                                offset: Offset(0.0, 0.75)
-                                            )
-                                          ],
-                                        ),
-                                        child: CircleAvatar(
-                                          radius: 17,
-                                          backgroundColor: Colors.white,
-                                          child: Text('+',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-
-                            Container(
-                              padding: EdgeInsets.only(top: 0,left: 10.0,right: 10.0, bottom: 0),
-                              margin: EdgeInsets.only(top: 10, bottom: 10),
-                              height: 100,
-                              width: size.width,
-                              color: Colors.white,
-                              child:
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              Row(
                                 children: [
-                                  // Text("Price Details",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.black),),
-                                  // SizedBox(height: size.height*.03,),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Price (1 item)",style: TextStyle(fontSize: 15,color: Colors.black87),),
-                                      Text("৳${snapshot.data.data[0].mrp}",style: TextStyle(fontSize: 15,color: Colors.black87),),
-                                    ],
+                                  _currentAmount <= 0 ?
+                                  Container() :
+                                  GestureDetector(
+                                    onTap: (){
+                                      setState(() {
+                                        _currentAmount--;
+                                      });
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.grey.shade400,
+                                              blurRadius: 3,
+                                              offset: Offset(0.5, 4)
+                                          ),
+                                          BoxShadow(
+                                              color: Colors.grey.shade300,
+                                              blurRadius: 3,
+                                              offset: Offset(0.0, 0.75)
+                                          )
+                                        ],
+                                      ),
+                                      child: CircleAvatar(
+                                        radius: 17,
+                                        backgroundColor: Colors.white,
+                                        child: Text('-',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                                      ),
+                                    ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Delivery Fee",style: TextStyle(fontSize: 15,color: Colors.black87),),
-                                      Text("Info",style: TextStyle(fontSize: 15,color: Colors.black87),),
-                                    ],
+                                  SizedBox(width: 10),
+                                  Text(
+                                    "$_currentAmount",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                   ),
-                                  Divider(),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Total Amount",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
-                                      Text("৳${int.parse(snapshot.data.data[0].mrp) * _currentAmount}",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
-                                    ],
+                                  SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: (){
+                                      setState(() {
+                                        _currentAmount++;
+                                      });
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.grey.shade400,
+                                              blurRadius: 3,
+                                              offset: Offset(0.5, 4)
+                                          ),
+                                          BoxShadow(
+                                              color: Colors.grey.shade300,
+                                              blurRadius: 3,
+                                              offset: Offset(0.0, 0.75)
+                                          )
+                                        ],
+                                      ),
+                                      child: CircleAvatar(
+                                        radius: 17,
+                                        backgroundColor: Colors.white,
+                                        child: Text('+',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                                      ),
+                                    ),
                                   ),
                                 ],
-                              ),
+                              )
+                            ],
+                          ),
+
+                          Container(
+                            padding: EdgeInsets.only(top: 0,left: 10.0,right: 10.0, bottom: 0),
+                            margin: EdgeInsets.only(top: 10, bottom: 10),
+                            height: 100,
+                            width: size.width,
+                            color: Colors.white,
+                            child:
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // Text("Price Details",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.black),),
+                                // SizedBox(height: size.height*.03,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Price (1 item)",style: TextStyle(fontSize: 15,color: Colors.black87),),
+                                    Text("৳${snapshot.data.data[0].mrp}",style: TextStyle(fontSize: 15,color: Colors.black87),),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Delivery Fee",style: TextStyle(fontSize: 15,color: Colors.black87),),
+                                    Text("Info",style: TextStyle(fontSize: 15,color: Colors.black87),),
+                                  ],
+                                ),
+                                Divider(),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Total Amount",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
+                                    Text("৳${int.parse(snapshot.data.data[0].mrp) * _currentAmount}",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
+                                  ],
+                                ),
+                              ],
                             ),
+                          ),
 
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
-                              child: SmoothStarRating(
-                                  rating: rating,
-                                  size: 40,
-                                  starCount: 5,
-                                  allowHalfRating: false,
-                                  onRated: (v) {
-                                    setState(() {
-                                      rating = v;
-                                    });
-                                  },
-                                  // isReadOnly:true,
-                                  color: Color(0xff1b92ff),
-                                  borderColor: Color(0xff1b92ff),
-                                  spacing:0.0
-                              ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
+                            child: SmoothStarRating(
+                                rating: rating,
+                                size: 40,
+                                starCount: 5,
+                                allowHalfRating: false,
+                                onRated: (v) {
+                                  setState(() {
+                                    rating = v;
+                                  });
+                                },
+                                // isReadOnly:true,
+                                color: Color(0xff1b92ff),
+                                borderColor: Color(0xff1b92ff),
+                                spacing:0.0
                             ),
-                            Flexible(child: Text('Description: \n${snapshot.data.data[0].details}', style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700,color: Colors.grey),)),
-                            //SizedBox(height: MediaQuery.of(context).size.height*.1,),
+                          ),
+                          Flexible(child: Text('Description: \n${snapshot.data.data[0].details}', style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700,color: Colors.grey),)),
+                          //SizedBox(height: MediaQuery.of(context).size.height*.1,),
 
-                            Text('Category: ${snapshot.data.data[0].category}', style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700,color: Colors.grey),),
+                          Text('Category: ${snapshot.data.data[0].category}', style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700,color: Colors.grey),),
 
-                          ],
-                        ),
+                        ],
                       ),
-                    )
+                    ),
+                  )
 
 
-                  ],
-                ),
+                ],
               ),
             );
           }
