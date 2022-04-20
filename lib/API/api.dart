@@ -116,7 +116,7 @@ Future Diagonstics({thanaName}) async{
 
   if(response.statusCode == 200){
     ViewDiagnosticResponse diagnosticData = viewDiagnosticResponseFromJson(response.body);
-    print(diagnosticData.data[0].id);
+
     return diagnosticData;
   }
 }
@@ -182,7 +182,8 @@ Future TestOrder(BuildContext context, {testId, paymentTx, paymentMethod}) async
   if(response.statusCode == 200){
     //TestOrderResponse testOrder = testOrderResponseFromJson(response.body);
     showDialog(
-        context: context, 
+        context: context,
+        barrierDismissible: false,
         builder: (BuildContext context){
           return AlertDialog(
             title: Column(
@@ -196,8 +197,8 @@ Future TestOrder(BuildContext context, {testId, paymentTx, paymentMethod}) async
                 ButtonConfig.FlatButton(
                   text: 'Close',
                   press: (){
-                    Navigator.of(context, rootNavigator: true).pop();
-                    //Navigator.pop(context);
+                    // Navigator.of(context, rootNavigator: true).pop();
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MenuDashboardPage()), (route) => false);
                   },
                 )
               ],
@@ -239,10 +240,7 @@ Future ViewCart() async{
   });
 
   if(response.statusCode == 200){
-    print('11111111111111111');
     List  getData = getCartItemShopFromJson(response.body);
-
-    print('Cart Item Name: ${getData[0].testName}');
     return getData;
   }
 }
@@ -286,7 +284,6 @@ Future TestPackageList({diagnosticId}) async{
   if(response.statusCode == 200){
     TestPackageListResponse testPackageData = testPackageListResponseFromJson(response.body);
 
-    print(testPackageData.data[0].name);
     return testPackageData;
   }
 }
@@ -298,8 +295,7 @@ Future TestPackageDetails({packageId}) async{
 
   if(response.statusCode == 200){
     TestPackageDetailsResponse testPackageDetailData = testPackageDetailsResponseFromJson(response.body);
-    print('************************************************');
-    print(testPackageDetailData.data.testList[1].testName);
+
     return testPackageDetailData;
 
   }
@@ -369,9 +365,6 @@ Future ShopProductList() async{
 
 //Shop Product Category Wise
 Future ShopCategoryProductList({category}) async{
-
-  print('Category Name: $category');
-
   var url = '$_baseUrl/category-wise-shop-product-list/$category';
   var response = await http.get(Uri.parse(url));
 

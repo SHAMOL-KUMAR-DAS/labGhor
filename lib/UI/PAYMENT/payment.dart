@@ -4,8 +4,8 @@ import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
 
 class PaymentOption extends StatefulWidget {
 
-  var productId, type;
-  PaymentOption({this.productId, this.type});
+  var productId, price, type;
+  PaymentOption({this.productId, this.price, this.type});
 
   @override
   State<PaymentOption> createState() => _PaymentOptionState();
@@ -38,6 +38,12 @@ class _PaymentOptionState extends State<PaymentOption> {
         child: Container(
           child: Column(
             children: [
+
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Text("Total Amount: ${widget.price}",style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold),),
+              ),
+
               Row(
                 children: [
                   Image.asset('assets/images/bkash.png',width: width * 0.5,),

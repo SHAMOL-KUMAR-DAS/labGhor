@@ -33,11 +33,8 @@ class DiagonsisDetails extends StatelessWidget {
       ),
 
       body: Column(
-        //mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          //Text('$categoryName',textAlign: TextAlign.center,style: TextStyle(fontSize: 22),),
-
           GestureDetector(
             onTap: (){
               showSearch(context: context, delegate: DiagnosisSearch());
@@ -149,7 +146,6 @@ class DiagonsisDetails extends StatelessWidget {
                                       crossAxisCount: 2),
                                   itemBuilder: (BuildContext context, int index){
                                     var data = snapshot.data.data[index];
-                                    print('sssssssssss${data.name}');
                                     return GestureDetector(
                                       onTap: (){
                                         Navigator.push(context, MaterialPageRoute(builder: (context) => Diagnosis(diagnosisId: data.id,diagnosisName: data.name,)));

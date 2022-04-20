@@ -131,7 +131,7 @@ class _TestListState extends State<TestList> {
                                     backgroundImage: AssetImage('assets/images/demo1.png'),
                                   ),
 
-                                  title: Text('shamol${data.testName}', textAlign: TextAlign.start,),
+                                  title: Text('${data.testName}', textAlign: TextAlign.start,),
 
                                   //subtitle: Text('${snapshot.data.data.packageInfo.mrp}', textAlign: TextAlign.start,),
 

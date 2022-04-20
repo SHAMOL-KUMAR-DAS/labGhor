@@ -71,7 +71,7 @@ class Diagnosis extends StatelessWidget {
                                 color: Colors.black38,
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Center(child: Text(data.name,style: TextStyle(color: Colors.white),)),
+                              child: Center(child: Text('${data.name ?? ''}',style: TextStyle(color: Colors.white),)),
                             )
                         ),
                       );
@@ -80,7 +80,7 @@ class Diagnosis extends StatelessWidget {
                   );
                 }
 
-                return Text('');
+                return Container();
               },
             ),
 
@@ -223,7 +223,7 @@ class Diagnosis extends StatelessWidget {
                           });
                     }
 
-                    return Text('');
+                    return Container();
                   })
             ),
           ),

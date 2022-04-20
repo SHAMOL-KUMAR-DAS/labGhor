@@ -12,6 +12,7 @@ import 'package:online_doctor_booking/UI/HOME/diagonsis_detail.dart';
 import 'package:online_doctor_booking/UI/LOGIN/login_page.dart';
 import 'package:online_doctor_booking/UI/MY_CART/my_cart.dart';
 import 'package:online_doctor_booking/UI/ORDER_HISTORY/order_history.dart';
+import 'package:online_doctor_booking/UI/OREDER/order_page.dart';
 import 'package:online_doctor_booking/UI/PROFILE/profile.dart';
 import 'package:online_doctor_booking/UI/SHOP/shop.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -409,44 +410,106 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                   ),
                   Container(
                     width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.13,
-                    child: ListView.builder(
-                      itemCount: Category().lists.length,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        var data = Category().lists;
-                        return Card(
-                          margin: const EdgeInsets.only(left: 18.0, bottom: 2.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: Colors.red,width: 2)
-                            ),
-                            width: MediaQuery.of(context).size.width * 0.40,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset(
-                                  data[index].item_image,
-                                  fit: BoxFit.cover,
-                                  height: MediaQuery.of(context).size.height * 0.08,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                    height: MediaQuery.of(context).size.height * 0.14,
+                    child: FutureBuilder(
+                      future: TestSuggestProduct(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot){
+                        if(snapshot.connectionState != ConnectionState.done){
+                          return const Center(child: CircularProgressIndicator(),);
+                        }
 
+                        if(snapshot.hasData){
+                          return  ListView.builder(
+                            itemCount: snapshot.data.data.length,
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              var data = snapshot.data.data[index];
+                              return GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: data.dTestId,
+                                    product: data.name, price: data.mrp,)));
+                                },
+                                child: Card(
+                                  margin: const EdgeInsets.only(left: 18.0, bottom: 2.0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: Colors.red,width: 2)
+                                    ),
+                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        data.img == '' ?
+                                        Image.asset(
+                                          data[index].item_image,
+                                          fit: BoxFit.cover,
+                                          height: 10,
+                                        ):
+                                        Image.network(data.img, fit: BoxFit.contain)
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+
+                            },
+                          );
+                          //   CarouselSlider.builder(
+                          //   itemCount: snapshot.data.data.length,
+                          //   options: CarouselOptions(
+                          //       height: MediaQuery.of(context).size.height * 0.16,
+                          //       autoPlay: true,
+                          //       autoPlayInterval: Duration(milliseconds: 2000),
+                          //       viewportFraction: 0.54
+                          //   ),
+                          //   itemBuilder: (context, index, realIndex) {
+                          //     var data = snapshot.data.data[index];
+                          //     return GestureDetector(
+                          //       onTap: (){
+                          //         Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: data.dTestId,
+                          //           product: data.name, price: data.mrp,)));
+                          //       },
+                          //       child: Container(
+                          //           margin:  EdgeInsets.symmetric(horizontal: 5),
+                          //           decoration: BoxDecoration(
+                          //               borderRadius: BorderRadius.circular(5),
+                          //               color: Color(0xFFf3f6fb),
+                          //               image:
+                          //               data.img != '' ?
+                          //               DecorationImage(image: NetworkImage(data.img), fit: BoxFit.cover)
+                          //                   :
+                          //               DecorationImage(image: AssetImage('assets/images/medi1.png'), fit: BoxFit.cover)
+                          //           ),
+                          //           child: Container(
+                          //
+                          //             decoration: BoxDecoration(
+                          //               color: Colors.black38,
+                          //               borderRadius: BorderRadius.circular(5),
+                          //             ),
+                          //             child: Center(child: Text('${data.name ?? ''}',style: TextStyle(color: Colors.white),)),
+                          //           )
+                          //       ),
+                          //     );
+                          //
+                          //   },
+                          // );
+                        }
+
+                        return Container();
                       },
                     ),
                   ),
 
                   //Suggestion
+
+                  userId != '' ?
                   Padding(
                     padding: EdgeInsets.only(top: 15, left: 25, right: 25),
                     child: Row(
@@ -454,10 +517,18 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                         Text("Suggestions", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),),
                       ],
                     ),
-                  ),
+                  )
+                  :
+                  Container(),
+
+                  userId != '' ?
                   Divider(
                     thickness: 2,
-                  ),
+                  )
+                  :
+                  Container(),
+
+                  userId != '' ?
                   FutureBuilder(
                     future: ShopSuggestProduct(),
                     builder: (BuildContext context, AsyncSnapshot snapshot){
@@ -517,7 +588,9 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
 
                       return Text('');
                     },
-                  ),
+                  )
+                      :
+                  Container()
                 ],
               ),
             ),

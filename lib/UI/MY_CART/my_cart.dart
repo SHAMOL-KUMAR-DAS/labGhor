@@ -14,6 +14,8 @@ class My_Cart extends StatefulWidget {
 
 class _My_CartState extends State<My_Cart> {
 
+  var sum = 0.0;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -44,6 +46,8 @@ class _My_CartState extends State<My_Cart> {
                       itemBuilder: (BuildContext context, int index) {
 
                         var data = snapshot.data[index];
+
+                        sum = sum + (double.parse(data.mrp) * int.parse(data.qty));
 
                         // return item
                         return Column(
@@ -111,7 +115,7 @@ class _My_CartState extends State<My_Cart> {
               child: RaisedButton(
                 onPressed: () {
                   //widget.type != 'shop' ? AddUpdateCart(test_id: widget.productId, qty: _currentAmount) : AddUpdateCartShop(test_id: widget.productId, qty: _currentAmount);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentOption(type: '', productId: widget.dTestId)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentOption(type: '', productId: widget.dTestId, price: sum)));
                 },
                 child: const Text(
                   'Continue to Payment',
