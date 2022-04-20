@@ -3,12 +3,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:online_doctor_booking/API/api.dart';
 import 'package:online_doctor_booking/CONFIGURE/color_config.dart';
-import 'package:online_doctor_booking/MODEL/carousel_p.dart';
 import 'package:online_doctor_booking/MODEL/category_p.dart';
 import 'package:online_doctor_booking/UI/HOME/home_page.dart';
 import 'package:online_doctor_booking/UI/SHOP/shop_category.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Shop extends StatelessWidget {
+class Shop extends StatefulWidget {
+  @override
+  State<Shop> createState() => _ShopState();
+}
+
+class _ShopState extends State<Shop> {
+
+  SharedPreferences? prefs;
+  var userId;
+  sharedPreferences() async{
+    prefs = await SharedPreferences.getInstance();
+    userId = (prefs!.getString('token') ?? "");
+  }
+  @override
+  void initState() {
+    super.initState();
+    sharedPreferences();
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -36,6 +53,7 @@ class Shop extends StatelessWidget {
       body: Column(
         children:  [
 
+          userId != '' ?
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: FutureBuilder(
@@ -77,7 +95,9 @@ class Shop extends StatelessWidget {
               },
             ),
 
-          ),
+          )
+          :
+          Container(),
 
           Container(
               margin: const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 15),

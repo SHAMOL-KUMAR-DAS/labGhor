@@ -56,6 +56,7 @@ Future Login(BuildContext context, {mobile, password, dTestId, productId, produc
 
       String user_id = await loginData.data.id.toString();
       await prefs.setString('user_id', user_id);
+      print('******************UserId: $user_id');
 
       String name = await loginData.data.name;
       await prefs.setString('user_name', name);

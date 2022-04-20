@@ -86,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                       onPressed: () {
                         Loader().showLoaderDialog(context, text: 'Loading');
                         Login(context, mobile: mobile.text, password: password.text, dTestId: dTestId,
-                        product: product, price: price, productId: dTestId, total: total, item: item, quantity: quantity);
+                        product: product, price: price, productId: dTestId, total: total, item: item, quantity: quantity, page: page);
                       },
                       child: const Text(
                         'Login',

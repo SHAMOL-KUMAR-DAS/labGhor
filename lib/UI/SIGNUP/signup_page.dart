@@ -116,7 +116,7 @@ class SignUpScreen extends StatelessWidget {
                         onPressed: () {
 
                           (fname.text != '' && lname.text != '') && mobile.text != '' && mobile.text.startsWith('01') && mobile.text.length == 11 &&
-                              RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$').hasMatch(password.text) && password.text == rePassword.text?
+                              password.text == rePassword.text?
                           {
                             print('${fname.text} ${lname.text}'),
                             Register(context, name: '${fname.text} ${lname.text}', mobile: mobile.text, password: password.text),
@@ -137,42 +137,6 @@ class SignUpScreen extends StatelessWidget {
                               showDialog(context: context, builder: (BuildContext context){
                                 return const AlertDialog(
                                   title: Text('Enter Valid Phone Number'),
-                                );
-                              })
-                            }
-                            :
-                            !RegExp(r'^.{6,}$').hasMatch(password.text) ?
-                            {
-                              showDialog(context: context, builder: (BuildContext context){
-                                return const AlertDialog(
-                                  title: Text('Enter Password more than 5 Characters'),
-                                );
-                              })
-                            }
-                            :
-                            !RegExp(r'^(?=.*?[A-Z])').hasMatch(password.text) ?
-                            {
-                            showDialog(context: context, builder: (BuildContext context){
-                            return AlertDialog(
-                            title: Text('Enter an Upper Case'),
-                            );
-                            })
-                            }
-                            :
-                            !RegExp(r'^(?=.*?[a-z])').hasMatch(password.text) ?
-                            {
-                              showDialog(context: context, builder: (BuildContext context){
-                                return AlertDialog(
-                                  title: Text('Enter an Lower Case'),
-                                );
-                              })
-                            }
-                            :
-                            !RegExp(r'^(?=.*?[!@#\$&*~])').hasMatch(password.text) ?
-                            {
-                              showDialog(context: context, builder: (BuildContext context){
-                                return AlertDialog(
-                                  title: Text('Enter an Special Character'),
                                 );
                               })
                             }

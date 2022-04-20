@@ -184,7 +184,6 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                     onTap: () async {
                       SharedPreferences prefs = await SharedPreferences.getInstance();
                       prefs.setString('token', '');
-
                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MenuDashboardPage()), (route) => false);
                     },
                     child: Row(
@@ -329,7 +328,6 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                                     color: Colors.black26,
                                     blurRadius: 4.0,
                                     spreadRadius: 2.0,
-                                    //offset: Offset(2.0, 2.0), // shadow direction: bottom right
                                     offset: Offset(0.0, 3.0)
                                 )
                               ],
@@ -439,67 +437,24 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                                   child: Container(
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(color: Colors.red,width: 2)
+                                        border: Border.all(color: Colors.red,width: 2),
+                                        image: data.img != '' ?
+                                        DecorationImage(
+                                            image: NetworkImage(data.img)
+                                        )
+                                            :
+                                        DecorationImage(
+                                            image: AssetImage('assets/images/demo1.png')
+                                        )
                                     ),
                                     width: MediaQuery.of(context).size.width * 0.4,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        data.img == '' ?
-                                        Image.asset(
-                                          data[index].item_image,
-                                          fit: BoxFit.cover,
-                                          height: 10,
-                                        ):
-                                        Image.network(data.img, fit: BoxFit.contain)
-                                      ],
-                                    ),
                                   ),
                                 ),
                               );
 
                             },
                           );
-                          //   CarouselSlider.builder(
-                          //   itemCount: snapshot.data.data.length,
-                          //   options: CarouselOptions(
-                          //       height: MediaQuery.of(context).size.height * 0.16,
-                          //       autoPlay: true,
-                          //       autoPlayInterval: Duration(milliseconds: 2000),
-                          //       viewportFraction: 0.54
-                          //   ),
-                          //   itemBuilder: (context, index, realIndex) {
-                          //     var data = snapshot.data.data[index];
-                          //     return GestureDetector(
-                          //       onTap: (){
-                          //         Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(dTestId: data.dTestId,
-                          //           product: data.name, price: data.mrp,)));
-                          //       },
-                          //       child: Container(
-                          //           margin:  EdgeInsets.symmetric(horizontal: 5),
-                          //           decoration: BoxDecoration(
-                          //               borderRadius: BorderRadius.circular(5),
-                          //               color: Color(0xFFf3f6fb),
-                          //               image:
-                          //               data.img != '' ?
-                          //               DecorationImage(image: NetworkImage(data.img), fit: BoxFit.cover)
-                          //                   :
-                          //               DecorationImage(image: AssetImage('assets/images/medi1.png'), fit: BoxFit.cover)
-                          //           ),
-                          //           child: Container(
-                          //
-                          //             decoration: BoxDecoration(
-                          //               color: Colors.black38,
-                          //               borderRadius: BorderRadius.circular(5),
-                          //             ),
-                          //             child: Center(child: Text('${data.name ?? ''}',style: TextStyle(color: Colors.white),)),
-                          //           )
-                          //       ),
-                          //     );
-                          //
-                          //   },
-                          // );
+
                         }
 
                         return Container();
@@ -508,7 +463,6 @@ class _MenuDashboardPageState extends State<MenuDashboardPage> with SingleTicker
                   ),
 
                   //Suggestion
-
                   userId != '' ?
                   Padding(
                     padding: EdgeInsets.only(top: 15, left: 25, right: 25),
