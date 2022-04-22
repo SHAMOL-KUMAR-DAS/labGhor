@@ -100,7 +100,7 @@ class _ShopState extends State<Shop> {
           Container(),
 
           Container(
-              margin: const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 15),
+              margin: const EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 15),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
